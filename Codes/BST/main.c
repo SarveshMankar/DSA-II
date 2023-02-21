@@ -26,8 +26,19 @@ void main(){
     printf("\nDisplaying Level: ");
     displayLevel(tree,0,2);
 
-    printf("\nDepth of the BST: %d", deptTree(tree));
+    printf("\nDepth of the BST: %d", treeDepth(tree));
 
     printf("\nDisplay Complete Tree: \n");
     displayTree(tree);
+
+    printf("\n Pre-Order Traversal: \n");
+    preOrderTraversal(tree);
+
+    printf("\n In-Order Traversal: \n");
+    inOrderTraversal(tree);
+
+    printf("\n Post-Order Traversal: \n");
+    postOrderTraversal(tree);
+
+    printf("\n");
 }

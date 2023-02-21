@@ -37,18 +37,17 @@ void displayLevel(node *t, int curr, int tl){
         return;
     if(curr == tl){
         printf("%d\t",t->data);
-        return;
     }
     displayLevel(t->left, curr+1, tl);
     displayLevel(t->right, curr+1, tl);
 }
 
-int deptTree(node *t){
+int treeDepth(node *t){
 	if (t==NULL){
 		return 0;
 	}
-	int left = deptTree(t->left);
-	int right = deptTree(t->right);
+	int left = treeDepth(t->left);
+	int right = treeDepth(t->right);
 
 	if (left>right){
 		return left+1;
@@ -59,11 +58,37 @@ int deptTree(node *t){
 
 void displayTree(node *t){
 	int curr=0;
-	int depth = deptTree(t) - 1;
+	int depth = treeDepth(t) - 1;
 
 	for(int i=0; i<=depth; i++){
 		printf("\n");
 		displayLevel(t,curr,i);
 	}
+}
 
+void preOrderTraversal(node *t){
+	if (t==NULL){
+		return;
+	}
+	printf("%d\t",t->data);
+	preOrderTraversal(t->left);
+	preOrderTraversal(t->right);
+}
+
+void inOrderTraversal(node *t){
+	if(t==NULL){
+		return;
+	}
+	inOrderTraversal(t->left);
+	printf("%d\t",t->data);
+	inOrderTraversal(t->right);	
+}
+
+void postOrderTraversal(node *t){
+	if(t==NULL){
+		return;
+	}
+	postOrderTraversal(t->left);
+	postOrderTraversal(t->right);
+	printf("%d\t", t->data);
 }

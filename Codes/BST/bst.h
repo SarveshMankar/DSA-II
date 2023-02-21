@@ -9,3 +9,7 @@ int search(node *t, int data);
 void displayTLevel(node *t, int curr, int tl);
 void displayTree(node *t);
 int treeDepth(node *t);
+
+void preOrderTraversal(node *t);
+void inOrderTraversal(node *t);
+void postOrderTraversal(node *t);
