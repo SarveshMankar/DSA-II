@@ -40,5 +40,17 @@ void main(){
     printf("\n Post-Order Traversal: \n");
     postOrderTraversal(tree);
 
+    printf("\nDeleting Node 3 \n");
+    tree = deleteNode(tree, 3);
+
+    printf("\nDisplay Complete Tree: \n");
+    displayTree(tree);
+
+    //printf("\n Post-Order Traversal without Recursion: \n");
+    //postOrderTraversalWithoutRecursion(tree);
+
+    printf("\nDeleting Tree \n");
+    tree = deleteTree(tree);
+
     printf("\n");
 }

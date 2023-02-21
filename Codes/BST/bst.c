@@ -76,12 +76,11 @@ void preOrderTraversal(node *t){
 }
 
 void inOrderTraversal(node *t){
-	if(t==NULL){
-		return;
+	if(t!=NULL){
+		inOrderTraversal(t->left);
+		printf("%d\t",t->data);
+		inOrderTraversal(t->right);	
 	}
-	inOrderTraversal(t->left);
-	printf("%d\t",t->data);
-	inOrderTraversal(t->right);	
 }
 
 void postOrderTraversal(node *t){
@@ -91,4 +90,86 @@ void postOrderTraversal(node *t){
 	postOrderTraversal(t->left);
 	postOrderTraversal(t->right);
 	printf("%d\t", t->data);
+}
+
+
+node *minValueNode(node* node){
+    /* loop down to find the leftmost leaf */
+    while (node && node->left != NULL)
+        node = node->left;
+ 
+    return node;
+}
+
+
+node* deleteNode(node* t, int data)
+{
+    // base case
+    if (t == NULL)
+        return t;
+
+    if (data < t->data)
+        t->left = deleteNode(t->left, data);
+    else if (data > t->data)
+        t->right = deleteNode(t->right, data);
+ 
+    // if data is same as t's data
+    else {
+        // node with only one child or no child
+        if (t->left == NULL) {
+            node* temp = t->right;
+            free(t);
+            return temp;
+        }
+        else if (t->right == NULL) {
+            node* temp = t->left;
+            free(t);
+            return temp;
+        }
+        // (smallest in the right subtree)
+        node* temp = minValueNode(t->right);
+        // Copy the inorder successor's content to this node
+        t->data = temp->data;
+        // Delete the inorder successor
+        t->right = deleteNode(t->right, temp->data);
+    }
+    return t;
+}
+
+node *deleteTree(node *t){
+	if (t==NULL){
+		return t;
+	}
+	deleteTree(t->left);
+	deleteTree(t->right);
+	free(t);
+}
+
+void push(node *t, int size, int *top, node stack[]){
+	if (*top==size-1){
+		printf("Stack is full");
+	}else{
+		*top=*top+1;
+		stack[*top]=*t;
+	}	
+}
+
+//https://prepinsta.com/data-structures/post-order-tree-traversal-without-recursion/
+void postOrderTraversalWithoutRecursion(node *t){
+	int top=-1;
+	int size=10;
+	node stack[size];
+	node *temp = (node*)malloc(sizeof(node));
+	temp=t;
+	while (temp)
+	{
+		if(temp->right){
+			push(temp,size,&top,stack);
+		}
+		push(temp,size,&top,stack);
+
+		temp=temp->left;
+	}
+	
+	
 }
