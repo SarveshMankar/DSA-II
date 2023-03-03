@@ -22,8 +22,14 @@ void append(node **head, int data){
 
 void evaluate(char str[], node **head1, node **head2){
     int len=strlen(str);
-    int i;
-    for(i=len-1;i>=0;i--){
+
+    int j=0;
+    while (!(isOperator(str[j])))
+        j++;
+    //printf("Operator Index=%d",j);
+    
+    int i=j-1;
+    for(i;i>=0;i--){
         if (isOperator(str[i])){
             break;
         }else{
@@ -31,8 +37,8 @@ void evaluate(char str[], node **head1, node **head2){
         }
     }
 
-    i=i-1;
-    for(i;i>=0;i--){
+    i=len-1;
+    for(i;i>=j;i--){
         if (isOperator(str[i])){
             break;
         }else{
@@ -96,7 +102,7 @@ node *add(node *head1, node *head2, node *result){
     int carry=0;
     char c1[2];
     int ans;
-    
+
     while(head1!=NULL){
         ans=head1->data+head2->data+carry;
         if(ans>=10){

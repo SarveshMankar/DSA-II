@@ -22,4 +22,11 @@ void main(){
 
     seperator();
     
+    char str1[]="45801-123";
+    head1=head2=NULL;
+    evaluate(str1,&head1,&head2);
+    printHeads(head1,head2);
+    result=NULL;
+    subtract(head1,head2,result);
+
 }
