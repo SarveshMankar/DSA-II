@@ -116,19 +116,40 @@ node *add(node *head1, node *head2, node *result){
         head1=head1->next;
         head2=head2->next;
     }
-    printf("\n");
 
     return result;
 }
 
-void subtract(node *head1, node *head2, node *result){
-    addZeros(head1,head2);
-    printHeads(head1,head2);
-
+void borrow(node **head1){
+    node *temp = (node *)malloc(sizeof(node));
+    temp = *head1;
+    if(temp->next->data-1<0){
+        borrow(&temp->next);
+    }
+    temp->next->data=temp->next->data-1;
+    temp->data=temp->data+10;
+    //printf("\n");display(temp);printf("\n");
 }
 
-void tranfer(node **head1, node **result){
-    *head1=*result;
+node *subtract(node *head1, node *head2, node *result){
+    addZeros(head1,head2);
+    printHeads(head1,head2);
+    //borrow(&head1);
+
+    while (head1!=NULL){
+        if(head1->data-head2->data<0){
+            borrow(&head1);
+        }
+        append(&result,head1->data-head2->data);
+        //printf("%d-%d \t", head1->data, head2->data);
+
+        head1=head1->next;
+        head2=head2->next;
+    }
+    //printf("\nMain Answer:\n");
+    //display(result);
+
+    return result;
 }
 
 void printHeads(node *head1, node *head2){

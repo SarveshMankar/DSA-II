@@ -18,6 +18,7 @@ void main(){
     node *result = (node*) malloc(sizeof(node));
     result = NULL; 
     result = add(head1,head2,result);
+    printf("\n");
     display(result);
 
     seperator();
@@ -27,6 +28,7 @@ void main(){
     evaluate(str1,&head1,&head2);
     printHeads(head1,head2);
     result=NULL;
-    subtract(head1,head2,result);
-
+    result = subtract(head1,head2,result);
+    printf("\n");
+    display(result);
 }
