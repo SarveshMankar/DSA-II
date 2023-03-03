@@ -12,6 +12,7 @@ node *add(node *head1, node *head2, node *result);
 node *subtract(node *head1, node *head2,node *result);
 void borrow(node **head1);
 
-
 void printHeads(node *head1, node *head2);
 void seperator();
+
+void displayAnswer(node *result);

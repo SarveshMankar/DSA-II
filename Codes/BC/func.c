@@ -152,6 +152,27 @@ node *subtract(node *head1, node *head2, node *result){
     return result;
 }
 
+void displayAnswer(node *result){
+    node *prev= NULL;
+    node *curr= result;
+    node *next= NULL;
+
+    while (curr != NULL) {
+        next = curr->next;
+
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    result = prev;
+
+    while (result!=NULL){
+        printf("%d",result->data);
+        result=result->next;
+    }
+    
+}
+
 void printHeads(node *head1, node *head2){
     printf("\n");
     display(head1);

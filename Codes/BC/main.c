@@ -20,6 +20,8 @@ void main(){
     result = add(head1,head2,result);
     printf("\n");
     display(result);
+    printf("\n%s=",str);
+    displayAnswer(result);
 
     seperator();
     
@@ -31,4 +33,6 @@ void main(){
     result = subtract(head1,head2,result);
     printf("\n");
     display(result);
+    printf("\n%s=",str1);
+    displayAnswer(result);
 }
