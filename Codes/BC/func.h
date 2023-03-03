@@ -5,7 +5,12 @@ typedef struct node
 } node;
 
 void append(node **head, int data);
+void evaluate(char str[], node **head1, node **head2);
 int isOperator(char c);
 void addZeros(node *head1, node *head2);
+node *add(node *head1, node *head2, node *result);
+void subtract(node *head1, node *head2,node *result);
+
+
 void printHeads(node *head1, node *head2);
-void add(node *head1, node *head2, node *result);
+void seperator();

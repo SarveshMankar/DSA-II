@@ -20,6 +20,27 @@ void append(node **head, int data){
     }
 }
 
+void evaluate(char str[], node **head1, node **head2){
+    int len=strlen(str);
+    int i;
+    for(i=len-1;i>=0;i--){
+        if (isOperator(str[i])){
+            break;
+        }else{
+            append(&(*head1),str[i]-'0');
+        }
+    }
+
+    i=i-1;
+    for(i;i>=0;i--){
+        if (isOperator(str[i])){
+            break;
+        }else{
+            append(&(*head2),str[i]-'0');
+        }
+    }
+}
+
 void display(node *head){
     while (head!=NULL)
     {
@@ -68,12 +89,14 @@ void addZeros(node *head1, node *head2){
     append(&(head2),0);
 }
 
-void add(node *head1, node *head2, node *result){
+node *add(node *head1, node *head2, node *result){
     addZeros(head1,head2);
     printHeads(head1,head2);
+
     int carry=0;
     char c1[2];
     int ans;
+    
     while(head1!=NULL){
         ans=head1->data+head2->data+carry;
         if(ans>=10){
@@ -88,7 +111,18 @@ void add(node *head1, node *head2, node *result){
         head2=head2->next;
     }
     printf("\n");
-    display(result);
+
+    return result;
+}
+
+void subtract(node *head1, node *head2, node *result){
+    addZeros(head1,head2);
+    printHeads(head1,head2);
+
+}
+
+void tranfer(node **head1, node **result){
+    *head1=*result;
 }
 
 void printHeads(node *head1, node *head2){
@@ -97,4 +131,8 @@ void printHeads(node *head1, node *head2){
     printf("\n");
     display(head2);
     printf("\n");
+}
+
+void seperator(){
+    printf("\n-----------------------------\n");
 }
