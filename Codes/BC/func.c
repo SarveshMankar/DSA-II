@@ -71,7 +71,6 @@ void addZeros(node *head1, node *head2){
         c1++;
         temp=temp->next;
     }
-    //printf("c1=%d\t",c1);
 
     int c2=0;
     temp=head2;
@@ -79,7 +78,6 @@ void addZeros(node *head1, node *head2){
         c2++;
         temp=temp->next;
     }
-    //printf("c2=%d\t",c2);
     
     int i;
     if (c1>c2){
@@ -97,7 +95,7 @@ void addZeros(node *head1, node *head2){
 
 node *add(node *head1, node *head2, node *result){
     addZeros(head1,head2);
-    printHeads(head1,head2);
+    //printHeads(head1,head2);
 
     int carry=0;
     char c1[2];
@@ -128,33 +126,116 @@ void borrow(node **head1){
     }
     temp->next->data=temp->next->data-1;
     temp->data=temp->data+10;
-    //printf("\n");display(temp);printf("\n");
 }
 
 node *subtract(node *head1, node *head2, node *result){
     addZeros(head1,head2);
     printHeads(head1,head2);
-    //borrow(&head1);
 
     while (head1!=NULL){
         if(head1->data-head2->data<0){
             borrow(&head1);
         }
         append(&result,head1->data-head2->data);
-        //printf("%d-%d \t", head1->data, head2->data);
 
         head1=head1->next;
         head2=head2->next;
     }
-    //printf("\nMain Answer:\n");
-    //display(result);
-
     return result;
 }
 
+node *makeAns(char str[], node **mAns){
+    int len = strlen(str);
+    int i=len-1;
+
+    for(i;i>=0;i--){
+        append(&(*mAns),str[i]-'0');
+    }
+    return *mAns;
+}
+
+/*node *makeMulAns(node **head, int data){
+    node *n = (node*)malloc(sizeof(node));
+    n->data=data;
+    n->next=NULL;
+    if(*head==NULL){
+        
+    }
+}*/
+
+void multiply(node *head1, node *head2, node *result){
+    addZeros(head1,head2);
+    node *temp1 = (node *)malloc(sizeof(node));
+    node *temp2 = (node *)malloc(sizeof(node));
+    temp2=head2;
+
+    int ans;
+    char str[100];
+    node *mCarry = (node *)malloc(sizeof(node));
+    mCarry=NULL;
+    node *mAns = (node *)malloc(sizeof(node));
+    mAns=NULL;
+    node *sAns = (node *)malloc(sizeof(node));
+    sAns=NULL;
+    node *tempAns = (node *)malloc(sizeof(node));
+    tempAns=NULL;
+
+    while (temp2!=NULL){
+        temp1=head1;
+        mCarry=NULL;
+        mAns=NULL;  
+        tempAns=NULL;  
+        while (temp1!=NULL){
+            printf("\nMul=");
+            ans=temp1->data*temp2->data;
+
+            sprintf(str, "%d", ans);
+            printf("%s\t",str);
+
+            mAns = makeAns(str, &mAns);
+
+            if(mCarry==NULL){
+                printf("\nAnswer:");
+                display(mAns);
+                printf("\nMultiplication Ans= %d",mAns->data);
+            }else{
+                tempAns = add(mAns,mCarry,tempAns);
+                printf("\nAnswer has Carry:");
+                display(tempAns);
+                printf("\nMultiplication Ans has Carry= %d",tempAns->data);
+                mCarry=NULL;
+            }
+
+            /*if(mCarry!=NULL){
+                printf("\nMultiplication Ans has Carry= %d",tempAns->data);
+                //append(&sAns,tempAns->data);
+            }else{
+                printf("\nMultiplication Ans= %d",mAns->data);
+                //append(&sAns,mAns->data);
+            }*/
+
+            mCarry = mAns->next;
+            printf("\nCarry:");
+            display(mCarry);
+
+            temp1=temp1->next;
+            mAns=NULL;
+            tempAns=NULL;
+            printf("\n");
+        }
+        temp2=temp2->next;
+        printf("\n");
+        seperator();
+    }
+    
+}
+
 void displayAnswer(node *result){
+    node *temp = (node *)malloc(sizeof(node));
+    temp=result;
+
     node *prev= NULL;
-    node *curr= result;
+    node *curr= temp;
     node *next= NULL;
 
     while (curr != NULL) {
@@ -164,11 +245,11 @@ void displayAnswer(node *result){
         prev = curr;
         curr = next;
     }
-    result = prev;
+    temp = prev;
 
-    while (result!=NULL){
-        printf("%d",result->data);
-        result=result->next;
+    while (temp!=NULL){
+        printf("%d",temp->data);
+        temp=temp->next;
     }
     
 }

@@ -4,19 +4,20 @@
 #include"func.c"
 
 void main(){
-    char str[]="45678+123";
-
     node *head1 = (node*)malloc(sizeof(node));
     head1=NULL;
 
     node *head2 = (node*)malloc(sizeof(node));
     head2=NULL;
-    
-    evaluate(str,&head1,&head2);
 
-    printHeads(head1,head2);
     node *result = (node*) malloc(sizeof(node));
     result = NULL; 
+    
+    char str[]="9999+10";
+
+    /*evaluate(str,&head1,&head2);
+    printHeads(head1,head2);
+
     result = add(head1,head2,result);
     printf("\n");
     display(result);
@@ -35,4 +36,31 @@ void main(){
     display(result);
     printf("\n%s=",str1);
     displayAnswer(result);
+
+    char str3[]="1999-2";
+    head1=head2=NULL;
+    evaluate(str3,&head1,&head2);
+    printHeads(head1,head2);
+    result=NULL;
+    result = subtract(head1,head2,result);
+    printf("\n");
+    display(result);
+    printf("\n%s=",str3);
+    displayAnswer(result);*/
+
+    char str1[] = "54*67";
+    evaluate(str1,&head1,&head2);
+    printHeads(head1,head2);
+    multiply(head1,head2,result);
+
+    seperator();
 }
+
+/*
+            if(mCarry!=NULL){
+                
+            }
+
+            mCarry = makeList(str, &mCarry);
+            printf("Carry:");
+            display(mCarry);*/
