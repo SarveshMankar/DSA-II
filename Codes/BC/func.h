@@ -15,6 +15,7 @@ void borrow(node **head1);
 void multiply(node *head1, node *head2, node *result);
 node *makeAns(char str[], node **mAns);
 node *makeMulAns(node **head, int data);
+node *addPlaceZeros(node *sAns, node *zeros);
 
 void printHeads(node *head1, node *head2);
 void seperator();

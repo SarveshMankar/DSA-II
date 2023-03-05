@@ -48,7 +48,12 @@ void main(){
     printf("\n%s=",str3);
     displayAnswer(result);*/
 
-    char str1[] = "54*67";
+    //char str1[] = "54*67";
+    //char str1[] = "6793*8542";
+    //char str1[] = "123*11";
+    //char str1[] = "679*854";
+    char str1[] = "6793*8542";
+
     evaluate(str1,&head1,&head2);
     printHeads(head1,head2);
     multiply(head1,head2,result);

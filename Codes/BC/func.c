@@ -154,14 +154,28 @@ node *makeAns(char str[], node **mAns){
     return *mAns;
 }
 
-/*node *makeMulAns(node **head, int data){
-    node *n = (node*)malloc(sizeof(node));
-    n->data=data;
-    n->next=NULL;
-    if(*head==NULL){
-        
+node *addPlaceZeros(node *sAns, node *zeros){
+    node *nn = (node *)malloc(sizeof(node));
+    nn=NULL;
+    node *tempn = (node *)malloc(sizeof(node));
+    tempn=sAns;
+    sAns=nn;
+    while (zeros!=NULL){
+        append(&nn,zeros->data);
+        zeros=zeros->next;
     }
-}*/
+
+    node *zt1 = (node *)malloc(sizeof(node));
+    zt1=nn; 
+    while (zt1->next!=NULL)
+    {
+        zt1=zt1->next;
+        printf("S");
+    }
+    
+    zt1->next=tempn;
+    return nn;
+}
 
 void multiply(node *head1, node *head2, node *result){
     addZeros(head1,head2);
@@ -179,6 +193,12 @@ void multiply(node *head1, node *head2, node *result){
     sAns=NULL;
     node *tempAns = (node *)malloc(sizeof(node));
     tempAns=NULL;
+    node *zAns = (node *)malloc(sizeof(node));
+    zAns=NULL;
+    node *pAns = (node *)malloc(sizeof(node));
+    pAns=NULL;
+    node *nAns = (node *)malloc(sizeof(node));
+    nAns=NULL;
 
     while (temp2!=NULL){
         temp1=head1;
@@ -197,24 +217,20 @@ void multiply(node *head1, node *head2, node *result){
             if(mCarry==NULL){
                 printf("\nAnswer:");
                 display(mAns);
-                printf("\nMultiplication Ans= %d",mAns->data);
+                //printf("\nMultiplication Ans= %d",mAns->data);
+                append(&sAns,mAns->data);
+                mCarry = mAns->next;
             }else{
                 tempAns = add(mAns,mCarry,tempAns);
                 printf("\nAnswer has Carry:");
                 display(tempAns);
-                printf("\nMultiplication Ans has Carry= %d",tempAns->data);
+                //printf("\nMultiplication Ans has Carry= %d",tempAns->data);
+                append(&sAns,tempAns->data);
                 mCarry=NULL;
+                mCarry = tempAns->next;
             }
 
-            /*if(mCarry!=NULL){
-                printf("\nMultiplication Ans has Carry= %d",tempAns->data);
-                //append(&sAns,tempAns->data);
-            }else{
-                printf("\nMultiplication Ans= %d",mAns->data);
-                //append(&sAns,mAns->data);
-            }*/
-
-            mCarry = mAns->next;
+            //mCarry = mAns->next;
             printf("\nCarry:");
             display(mCarry);
 
@@ -223,10 +239,38 @@ void multiply(node *head1, node *head2, node *result){
             tempAns=NULL;
             printf("\n");
         }
+
+        if(zAns==NULL){
+            append(&zAns,0);
+            printf("Zeros: ");
+            display(zAns);
+        }else{
+            sAns = addPlaceZeros(sAns,zAns);
+            printf("Zeros: ");
+            display(zAns);
+            append(&zAns,0);
+        }
+
+        if(pAns==NULL){
+            pAns=sAns;
+        }else{
+            nAns=add(pAns,sAns,nAns);
+            pAns=nAns;
+            printf("\nAdd Ans: ");
+            display(nAns);
+            nAns=NULL;
+        }
+        
+
+        printf("Main Answer: ");
+        display(sAns);
+        sAns=NULL;
         temp2=temp2->next;
         printf("\n");
         seperator();
     }
+    printf("My Main Multiplication Answer: ");
+    display(pAns);
     
 }
 
