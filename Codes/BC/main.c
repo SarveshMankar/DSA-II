@@ -108,4 +108,51 @@ void main(){
     printf("\n%s=",str3);
     displayAnswer(result);*/
 
+
+    char str1[] = "368516/46";
+    evaluate(str1,&head1,&head2);
+    divide(head1,head2);
 }
+
+
+/*
+node *ans = (node *)malloc(sizeof(node));
+    ans=makeList("0");
+    seperator();
+    printf("\nans=");
+    display(ans);
+
+    node *l = (node *)malloc(sizeof(node));
+    l=makeList("1");
+    seperator();
+    printf("\nl=");
+    display(l);
+
+    node *a = (node *)malloc(sizeof(node));
+    a=head1;
+    seperator();
+    printf("\na=");
+    display(a);
+
+    node *b = (node *)malloc(sizeof(node));
+    b=head2;
+    seperator();
+    printf("\nb=");
+    display(b);
+
+    node *c = (node *)malloc(sizeof(node));
+    c=makeList("0");
+
+    node *t = (node *)malloc(sizeof(node));
+    t=NULL;
+
+    while (compare(head1,c)==1){
+        c=add(c,head2,t);
+        printf("\nSum:\n");
+        display(c);
+        t=NULL;
+        ans=add(ans,l,t);
+        printf("\nAnswer:\n");
+        display(ans);
+    }
+*/

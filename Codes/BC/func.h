@@ -24,6 +24,8 @@ void raiseTo(node *head1, node *head2);
 node *removeZeros(node *head);
 node *removeAllZeros(node *head);
 
+node *divide(node *head1, node *head2);
+
 void printHeads(node *head1, node *head2);
 void seperator();
 

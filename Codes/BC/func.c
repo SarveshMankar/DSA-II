@@ -64,19 +64,19 @@ int isOperator(char c){
 }
 
 node *removeZeros(node *head){
-    printf("\nHead:");
+    /*printf("\nHead:");
     display(head);
-    seperator();
+    seperator();*/
 
     node *rhead=(node *)malloc(sizeof(node));
     rhead=reverse(head);
-    printf("\nReversed Head:");
+    /*printf("\nReversed Head:");
     display(rhead);
-    seperator();
+    seperator();*/
 
     node *rtemp = (node *)malloc(sizeof(node));
     rtemp=rhead;
-    if(rtemp->next->next!=NULL && rtemp->data==0 && rtemp->next->data==0){
+    if(rtemp->next!=NULL && rtemp->next->next!=NULL && rtemp->data==0 && rtemp->next->data==0){
         while (rtemp->next->next!=NULL && rtemp->next->next->data==0){
             rtemp=rtemp->next;
         }   
@@ -84,14 +84,14 @@ node *removeZeros(node *head){
     }
 
 
-    printf("\nAns Head:");
+    /*printf("\nAns Head:");
     display(rhead);
-    seperator();
+    seperator();*/
 
     rhead=reverse(rhead);
-    printf("\nReturn Ans Head:");
+    /*printf("\nReturn Ans Head:");
     display(rhead);
-    seperator();
+    seperator();*/  
 
     return rhead;
 }
@@ -481,6 +481,45 @@ void raiseTo(node *head1, node *head2){
     printf("\nFunction Raise to answer: ");
     display(ans);
     
+}
+
+node *divide(node *head1, node *head2){
+    addZeros(head1,head2);
+
+    node *ans = (node *)malloc(sizeof(node));
+    ans=makeList("0");
+
+    node *l = (node *)malloc(sizeof(node));
+    l=makeList("1");
+
+    node *a = (node *)malloc(sizeof(node));
+    a=head1;
+
+    node *b = (node *)malloc(sizeof(node));
+    b=head2;
+
+    node *c = (node *)malloc(sizeof(node));
+    c=makeList("0");
+
+    node *t = (node *)malloc(sizeof(node));
+    t=NULL;
+
+    if(compare(head1,head2)==0 || compare(head1,head2)==1){
+        while (compare(head1,c)==1){
+            c=add(c,head2,t);
+            t=NULL;
+            seperator();
+            display(ans);
+            ans=add(ans,l,t);
+        }
+    }
+
+    if(compare(c,head1)==1){
+        t=NULL;
+        ans=subtract(ans,l,t);
+    }
+    printf("\nAnswer:\n");
+    display(ans);
 }
 
 void displayAnswer(node *result){
