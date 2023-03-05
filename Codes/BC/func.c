@@ -50,7 +50,7 @@ void evaluate(char str[], node **head1, node **head2){
 void display(node *head){
     while (head!=NULL)
     {
-        printf("%d\t",head->data);
+        printf("%d",head->data);
         head=head->next;
     }
 }
@@ -61,6 +61,73 @@ int isOperator(char c){
     }else{
         return 0;
     }
+}
+
+node *removeZeros(node *head){
+    printf("\nHead:");
+    display(head);
+    seperator();
+
+    node *rhead=(node *)malloc(sizeof(node));
+    rhead=reverse(head);
+    printf("\nReversed Head:");
+    display(rhead);
+    seperator();
+
+    node *rtemp = (node *)malloc(sizeof(node));
+    rtemp=rhead;
+    if(rtemp->next->next!=NULL && rtemp->data==0 && rtemp->next->data==0){
+        while (rtemp->next->next!=NULL && rtemp->next->next->data==0){
+            rtemp=rtemp->next;
+        }   
+        rhead=rtemp->next;
+    }
+
+
+    printf("\nAns Head:");
+    display(rhead);
+    seperator();
+
+    rhead=reverse(rhead);
+    printf("\nReturn Ans Head:");
+    display(rhead);
+    seperator();
+
+    return rhead;
+}
+
+node *removeAllZeros(node *head){
+    printf("\nHead:");
+    display(head);
+    seperator();
+
+    node *rhead=(node *)malloc(sizeof(node));
+    rhead=reverse(head);
+    printf("\nReversed Head:");
+    display(rhead);
+    seperator();
+
+    node *rtemp = (node *)malloc(sizeof(node));
+    rtemp=rhead;
+    if(rtemp->next!=NULL){
+        while (rtemp->next!=NULL && rtemp->next->data==0)
+        {
+            rtemp=rtemp->next;
+        }   
+    }
+
+    rhead=rtemp->next;
+
+    printf("\nAns Head:");
+    display(rhead);
+    seperator();
+
+    rhead=reverse(rhead);
+    printf("\nReturn Ans Head:");
+    display(rhead);
+    seperator();
+
+    return rhead;
 }
 
 void addZeros(node *head1, node *head2){
@@ -94,6 +161,14 @@ void addZeros(node *head1, node *head2){
 }
 
 node *add(node *head1, node *head2, node *result){
+    //head1=removeZeros(head1);
+    //head2=removeZeros(head2);
+    /*printf("\nMain Ans Head:");
+    display(head1);
+    seperator();
+    printf("\nMain Ans Head:");
+    display(head2);
+    seperator();*/
     addZeros(head1,head2);
     //printHeads(head1,head2);
 
@@ -114,6 +189,7 @@ node *add(node *head1, node *head2, node *result){
         head1=head1->next;
         head2=head2->next;
     }
+    result=removeZeros(result);
 
     return result;
 }
@@ -141,6 +217,7 @@ node *subtract(node *head1, node *head2, node *result){
         head1=head1->next;
         head2=head2->next;
     }
+    result=removeZeros(result);
     return result;
 }
 
@@ -177,7 +254,7 @@ node *addPlaceZeros(node *sAns, node *zeros){
     return nn;
 }
 
-void multiply(node *head1, node *head2, node *result){
+node *multiply(node *head1, node *head2, node *result){
     addZeros(head1,head2);
     node *temp1 = (node *)malloc(sizeof(node));
     node *temp2 = (node *)malloc(sizeof(node));
@@ -238,6 +315,9 @@ void multiply(node *head1, node *head2, node *result){
             mAns=NULL;
             tempAns=NULL;
             printf("\n");
+            //if(sAns->data==0 && (mCarry->data==0 || mCarry==NULL) && temp1->data*temp2->data==0 && zAns==NULL){
+            //    break;
+            //}
         }
 
         if(zAns==NULL){
@@ -267,10 +347,139 @@ void multiply(node *head1, node *head2, node *result){
         sAns=NULL;
         temp2=temp2->next;
         printf("\n");
+        
         seperator();
     }
     printf("My Main Multiplication Answer: ");
+    removeAllZeros(pAns);
     display(pAns);
+
+    
+    return pAns;
+}
+
+node * reverse(node *head1){
+    node *temp = (node *)malloc(sizeof(node));
+    temp=head1;
+
+    node *prev= NULL;
+    node *curr= temp;
+    node *next= NULL;
+
+    while (curr != NULL) {
+        next = curr->next;
+
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    temp = prev;
+
+    return temp;
+}
+
+node *makeList(char str[]){
+    int len = strlen(str);
+
+    node *mn = (node *)malloc(sizeof(node));
+    mn=NULL;
+
+    for(int i=0;i<len;i++){
+        append(&mn,str[i]-'0');
+    }
+
+    return mn;
+}
+
+int compare(node *head1, node *head2){
+    
+    node *rtemp = (node *)malloc(sizeof(node));
+
+    rtemp=head1;
+    node *rhead1 = (node *)malloc(sizeof(node));
+    rhead1=NULL;
+    while (rtemp!=NULL){
+        append(&rhead1,rtemp->data);
+        rtemp=rtemp->next;
+    }
+    
+    rtemp=head2;
+    node *rhead2 = (node *)malloc(sizeof(node));
+    rhead2=NULL;
+    while (rtemp!=NULL){
+        append(&rhead2,rtemp->data);
+        rtemp=rtemp->next;
+    }
+
+    addZeros(rhead1,rhead2);
+
+    //printf("\nHead 1: Function Reversed: ");
+    //display(rhead1);
+    rhead1=reverse(rhead1);
+
+    //printf("\nHead 2: Function Reversed: ");
+    //display(rhead2);
+    rhead2=reverse(rhead2);
+
+    //printf("\nHead 1: Function Proper: ");
+    //display(rhead1);
+
+    //printf("\nHead 2: Function Proper: ");
+    //display(rhead2);
+
+    int flag = 0;
+    //head1>head2 -> flag=1
+    //head2>head1 -> flag=-1
+    //head1=head2 -> flag=0
+
+    while (rhead1!=NULL){
+        if(rhead1->data>rhead2->data){
+            flag=1;
+            break;
+        }else if (rhead2->data>rhead1->data){
+            flag=-1;
+            break;
+        }
+        rhead1=rhead1->next;
+        rhead2=rhead2->next;
+    }
+    //printf("Flag=%d",flag);
+    return flag;
+}
+
+void raiseTo(node *head1, node *head2){
+    int flag = compare(head1,head2);
+    /*node *forSwap = (node *)malloc(sizeof(node));
+    forSwap=NULL;
+    if (flag==-1){
+        forSwap=head1;
+        head1=head2;
+        head2=forSwap;
+    }*/
+
+    node *c = (node *)malloc(sizeof(node));
+    c=NULL;
+    c=makeList("1");
+    printf("\nc: ");
+    display(c);
+
+    node *o = (node *)malloc(sizeof(node));
+    o=makeList("1");
+    node *t = (node *)malloc(sizeof(node));
+    t=NULL;
+
+    node *tAns = (node *)malloc(sizeof(node));
+    tAns=NULL;
+    node *ans = (node *)malloc(sizeof(node));
+    ans=head1;
+    while (compare(head2,c)){
+        //printf("Hello-");
+        c=add(c,o,t);
+        ans=multiply(ans,head1,tAns);
+    }
+
+    printf("\nFunction Raise to answer: ");
+    display(ans);
     
 }
 
