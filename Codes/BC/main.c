@@ -109,9 +109,22 @@ void main(){
     displayAnswer(result);*/
 
 
-    char str1[] = "368516/46";
+    char str1[] = "5345154/9";
     evaluate(str1,&head1,&head2);
     divide(head1,head2);
+
+    /*node *temp = (node*)malloc(sizeof(node));
+    temp=NULL;
+
+    head1=head2=NULL;
+    char str2[] = "14/3";
+    evaluate(str2,&head1,&head2);
+    result=halfDivide(head1,head2,&temp);
+    seperator();
+    display(result);
+    seperator();
+    printf("\nRemainder Temp: ");
+    display(temp);*/
 }
 
 

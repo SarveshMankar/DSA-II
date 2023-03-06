@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "functional": "c",
-        "random": "c"
+        "random": "c",
+        "array": "c",
+        "string": "c"
     }
 }

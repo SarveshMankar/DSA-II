@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<math.h>
 #include"func.h"
 
 void append(node **head, int data){
@@ -97,15 +98,15 @@ node *removeZeros(node *head){
 }
 
 node *removeAllZeros(node *head){
-    printf("\nHead:");
+    /*printf("\nHead:");
     display(head);
-    seperator();
+    seperator();*/
 
     node *rhead=(node *)malloc(sizeof(node));
     rhead=reverse(head);
-    printf("\nReversed Head:");
+    /*printf("\nReversed Head:");
     display(rhead);
-    seperator();
+    seperator();*/
 
     node *rtemp = (node *)malloc(sizeof(node));
     rtemp=rhead;
@@ -118,14 +119,14 @@ node *removeAllZeros(node *head){
 
     rhead=rtemp->next;
 
-    printf("\nAns Head:");
+    /*printf("\nAns Head:");
     display(rhead);
-    seperator();
+    seperator();*/
 
     rhead=reverse(rhead);
-    printf("\nReturn Ans Head:");
+    /*printf("\nReturn Ans Head:");
     display(rhead);
-    seperator();
+    seperator();*/
 
     return rhead;
 }
@@ -206,7 +207,7 @@ void borrow(node **head1){
 
 node *subtract(node *head1, node *head2, node *result){
     addZeros(head1,head2);
-    printHeads(head1,head2);
+    //printHeads(head1,head2);
 
     while (head1!=NULL){
         if(head1->data-head2->data<0){
@@ -483,43 +484,334 @@ void raiseTo(node *head1, node *head2){
     
 }
 
-node *divide(node *head1, node *head2){
-    addZeros(head1,head2);
+int countNodes(node *head){
+    node *temp = (node *)malloc(sizeof(node));
+    temp=head;
+    int c=0;
+    while (temp!=NULL){
+        c++;
+        temp=temp->next;
+    }
+    return c;
+}
+
+int convertToInt(node *head){
+    //Using atoi() function
+    char str[100];
+    int i=0;
+    node *temp = (node *)malloc(sizeof(node));
+    temp=head;
+    while (temp!=NULL){
+        str[i]=temp->data+'0';
+        temp=temp->next;
+        i++;
+    }
+    str[i]='\0';
+    int num = atoi(str);
+    return num;
+}
+
+node *halfDivide(node *hhead1, node *hhead2, node **c){
+    node *head1 = (node *)malloc(sizeof(node));
+    head1=NULL;
+    node *head2 = (node *)malloc(sizeof(node));
+    head2=NULL;
+
+    //printHeads(hhead1,hhead2);
+
+    while (hhead1!=NULL){
+        append(&head1,hhead1->data);
+        hhead1=hhead1->next;
+    }
+    while (hhead2!=NULL){
+        append(&head2,hhead2->data);
+        hhead2=hhead2->next;
+    }
+    
+    //addZeros(head1,head2);
 
     node *ans = (node *)malloc(sizeof(node));
+    ans=NULL;
     ans=makeList("0");
 
     node *l = (node *)malloc(sizeof(node));
+    l=NULL;
     l=makeList("1");
 
     node *a = (node *)malloc(sizeof(node));
+    a=NULL;
     a=head1;
 
     node *b = (node *)malloc(sizeof(node));
+    b=NULL;
     b=head2;
 
-    node *c = (node *)malloc(sizeof(node));
-    c=makeList("0");
+    *c=NULL;
+    *c=makeList("0");
 
     node *t = (node *)malloc(sizeof(node));
     t=NULL;
 
+    seperator();
+
+    /*printf("\nHead 1: Function Proper: ");
+    display(head1);
+    printf("\nHead 2: Function Proper: ");
+    display(head2);
+
+    seperator();*/
+
     if(compare(head1,head2)==0 || compare(head1,head2)==1){
-        while (compare(head1,c)==1){
-            c=add(c,head2,t);
+        while (compare(head1,*c)==1){
             t=NULL;
-            seperator();
-            display(ans);
+            *c=add(*c,head2,t);
+            t=NULL;
+            //printf("\nFunction Half Divide answer: ");
+            //display(*c);
             ans=add(ans,l,t);
         }
     }
 
-    if(compare(c,head1)==1){
+    if(compare(*c,head1)==1){
         t=NULL;
         ans=subtract(ans,l,t);
+        *c=subtract(*c,head2,t);
     }
-    printf("\nAnswer:\n");
+
+    ans=removeZeros(ans);
+    *c=removeZeros(*c);
+    /*seperator();
+    printf("\nFunction Half Divide answer: ");
     display(ans);
+    printf("\nFunction Half Divide c: ");
+    display(*c);
+    seperator();*/
+    return ans;
+}
+
+int checkIfZero(node *head){
+    node *temp = (node *)malloc(sizeof(node));
+    temp=head;
+    while (temp!=NULL){
+        if(temp->data!=0)
+            return 0;
+        temp=temp->next;
+    }
+    return 1;
+}
+
+int takeDivident(node *head, int c, int *r1){
+    node *nn = (node *)malloc(sizeof(node));
+    nn=NULL;
+    node *ntemp = (node *)malloc(sizeof(node));
+    ntemp=head;
+
+    int n=0;
+    int cnodes= countNodes(head);
+    while (ntemp!=NULL){
+        if(n==cnodes-1){
+            *r1=1;
+            //printf("True");
+        }
+        if(n==c+1){
+            //append(&nn,ntemp->data);
+            return ntemp->data;
+        }
+        ntemp=ntemp->next;
+        n++;
+    }
+
+    //return nn;    
+}
+
+int compareD(node *head1, node *head2){
+    node *rhead1 = (node *)malloc(sizeof(node));
+    rhead1=head1;
+    node *rhead2 = (node *)malloc(sizeof(node));
+    rhead2=head2;
+
+    int flag = 0;
+    //head1>head2 -> flag=1
+    //head2>head1 -> flag=-1
+    //head1=head2 -> flag=0
+
+    while (rhead1!=NULL){
+        if(rhead1->data>rhead2->data){
+            flag=1;
+            break;
+        }else if (rhead2->data>rhead1->data){
+            flag=-1;
+            break;
+        }
+        rhead1=rhead1->next;
+        rhead2=rhead2->next;
+    }
+    //printf("Flag=%d",flag);
+    return flag;
+}
+
+/*void equateDigits(node **head1, node **head2){
+    int c1=0;
+    node *temp = (node*) malloc(sizeof(node));
+    temp=*head1;
+    while (temp!=NULL){
+        c1++;
+        temp=temp->next;
+    }
+
+    int c2=0;
+    temp=*head2;
+    while (temp!=NULL){
+        c2++;
+        temp=temp->next;
+    }
+    
+    node *ztemp = (node*) malloc(sizeof(node));
+    ztemp=NULL;
+
+    for(int i=0;i<abs(c1-c2);i++){
+        append(&ztemp,0);
+    }
+    if(c1>c2){
+        ztemp->next=*head2;
+        *head2=ztemp;
+    }else{
+        ztemp->next=*head1;
+        *head1=ztemp;
+    }
+
+}*/
+
+node *reverseD(node **head1){
+    node *temp = (node *)malloc(sizeof(node));
+    temp=*head1;
+
+    node *prev= NULL;
+    node *curr= temp;
+    node *next= NULL;
+
+    while (curr != NULL) {
+        next = curr->next;
+
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    temp = prev;
+
+    return temp;
+}
+
+node *divide(node *head1, node *head2){
+    head1=reverse(head1);
+    seperator();
+    display(head1);
+
+    head2=reverse(head2);
+    seperator();
+    display(head2);
+    
+    node *temp = (node *)malloc(sizeof(node));
+    temp=head2;
+    int c=-1;
+    int n=countNodes(head1)-1;
+    int md1,md2;
+    printf("\n\n");
+    seperator();
+
+    node *quotient = (node *)malloc(sizeof(node));
+    quotient=makeList("0");
+
+    node *a1 = (node *)malloc(sizeof(node));
+    a1=NULL;
+
+    node *a2 = (node *)malloc(sizeof(node));
+    a2=NULL;
+
+    node *a3 = (node *)malloc(sizeof(node));
+    a3=NULL;
+
+    node *temp1 = (node *)malloc(sizeof(node));
+    temp1=NULL;
+    
+    node *temp2 = (node *)malloc(sizeof(node));
+    temp2=NULL;
+    
+    node *remainder = (node *)malloc(sizeof(node));
+    remainder=NULL;
+
+    int r1;
+
+    while(c!=n){
+        md1=takeDivident(head1,c,&r1);
+        printf("\tmd1: %d",md1);
+        append(&remainder,md1);
+
+        printf("\tRemainder: ");
+        display(remainder);
+        remainder=reverse(remainder);
+
+        /*if(r1==1){
+            printf("\tHead2: ");
+            display(temp);
+            printf("\tRemainder: ");
+            display(remainder);
+            
+            remainder=reverseD(&remainder);
+            temp=reverseD(&temp);
+            //equateDigits(&head2,&remainder);
+            addZeros(head2,remainder);
+            remainder=reverseD(&remainder);
+            temp=reverseD(&temp);
+
+            printf("\tHead2: ");
+            display(temp);
+            printf("\tRemainder: ");
+            display(remainder);
+            printf("\tCompared=%d",compareD(temp,remainder));
+            if(compareD(temp,remainder)==1){
+                break;
+            }
+        }*/
+
+
+        a2=NULL;
+        display(temp);
+        display(remainder);
+        a1=NULL;
+        a1=halfDivide(remainder,temp,&a2);
+        printf("\tFor Subtraction:\t");
+        display(a2);
+
+        temp1=NULL;
+        a3=subtract(remainder,a2,temp1);
+        printf("\tSubtraction:\t");
+        display(a3);
+
+        printf("\tQuotient:\t");
+        //a1=reverse(a1);
+        a1=removeZeros(a1);
+        display(a1);
+        
+        temp2=a1;
+            while (temp2->next!=NULL){
+                append(&quotient,temp2->data);
+                temp2=temp2->next;
+            }
+
+        remainder=a3;
+        remainder=removeAllZeros(remainder);
+        remainder=reverse(remainder);
+
+        seperator();
+        c++;
+
+    }
+    seperator();
+    display(quotient);
+
+    seperator();
+    display(remainder);
 }
 
 void displayAnswer(node *result){

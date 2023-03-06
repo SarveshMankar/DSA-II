@@ -25,6 +25,14 @@ node *removeZeros(node *head);
 node *removeAllZeros(node *head);
 
 node *divide(node *head1, node *head2);
+node *halfDivide(node *head1, node *head2, node **result);
+int takeDivident(node *head, int c, int *r1);
+int countNodes(node *head);
+int convertToInt(node *head);
+int checkIfZero(node *head);
+void equateDigits(node **head1, node **head2);
+int compareD(node *head1, node *head2);
+node *reverseD(node **head1);
 
 void printHeads(node *head1, node *head2);
 void seperator();
