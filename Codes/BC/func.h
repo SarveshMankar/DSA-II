@@ -32,9 +32,10 @@ int convertToInt(node *head);
 int checkIfZero(node *head);
 void equateDigits(node **head1, node **head2);
 int compareD(node *head1, node *head2);
-node *reverseD(node **head1);
+node *reverseList(node **head);
 
 void printHeads(node *head1, node *head2);
 void seperator();
 
 void displayAnswer(node *result);
+node *makeCopy(node *head);

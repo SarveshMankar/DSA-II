@@ -109,7 +109,7 @@ void main(){
     displayAnswer(result);*/
 
 
-    char str1[] = "5345154/9";
+    char str1[] = "101/10";
     evaluate(str1,&head1,&head2);
     divide(head1,head2);
 
@@ -167,5 +167,73 @@ node *ans = (node *)malloc(sizeof(node));
         ans=add(ans,l,t);
         printf("\nAnswer:\n");
         display(ans);
+    }
+*/
+
+/*if(r1==1){
+    printf("\tHead2: ");
+    display(temp);
+    printf("\tRemainder: ");
+    display(remainder);
+    
+    remainder=reverseD(&remainder);
+    temp=reverseD(&temp);
+    //equateDigits(&head2,&remainder);
+    addZeros(head2,remainder);
+    remainder=reverseD(&remainder);
+    temp=reverseD(&temp);
+
+    printf("\tHead2: ");
+    display(temp);
+    printf("\tRemainder: ");
+    display(remainder);
+    printf("\tCompared=%d",compareD(temp,remainder));
+    if(compareD(temp,remainder)==1){
+        break;
+    }
+}*/
+
+
+/*
+while(c!=n){
+        md1=takeDivident(head1,c,&r1);
+        printf("\tmd1: %d",md1);
+        append(&remainder,md1);
+
+        printf("\tRemainder: ");
+        display(remainder);
+        remainder=reverse(remainder);
+
+        a2=NULL;
+        display(temp);
+        display(remainder);
+        a1=NULL;
+        a1=halfDivide(remainder,temp,&a2);
+        printf("\tFor Subtraction:\t");
+        display(a2);
+
+        temp1=NULL;
+        a3=subtract(remainder,a2,temp1);
+        printf("\tSubtraction:\t");
+        display(a3);
+
+        printf("\tQuotient:\t");
+        //a1=reverse(a1);
+        a1=removeZeros(a1);
+        display(a1);
+        
+        temp2=a1;
+            while (temp2->next!=NULL){
+                append(&quotient,temp2->data);
+                temp2=temp2->next;
+            }
+
+        remainder=a3;
+        remainder=removeAllZeros(remainder);
+        remainder=reverse(remainder);
+
+        seperator();
+        c++;
+
     }
 */
