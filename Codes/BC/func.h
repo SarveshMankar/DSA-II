@@ -16,7 +16,6 @@ void borrow(node **head1);
 
 node *multiply(node *head1, node *head2, node *result);
 node *makeAns(char str[], node **mAns);
-node *makeMulAns(node **head, int data);
 node *addPlaceZeros(node *sAns, node *zeros);
 
 node *reverse(node *head1);
@@ -29,11 +28,8 @@ node *removeAllZeros(node *head);
 
 node *divide(node *head1, node *head2);
 node *halfDivide(node *head1, node *head2, node **result);
-int takeDivident(node *head, int c, int *r1);
 int countNodes(node *head);
-int convertToInt(node *head);
 int checkIfZero(node *head);
-void equateDigits(node **head1, node **head2);
 int compareD(node *head1, node *head2);
 node *reverseList(node **head);
 
