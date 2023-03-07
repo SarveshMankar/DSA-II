@@ -66,8 +66,15 @@ int isOperator(char c){
 }
 
 node *removeZeros(node *head){
+    /*printf("\nHead:");
+    display(head);
+    seperator();*/
+
     node *rhead=(node *)malloc(sizeof(node));
     rhead=reverse(head);
+    /*printf("\nReversed Head:");
+    display(rhead);
+    seperator();*/
 
     node *rtemp = (node *)malloc(sizeof(node));
     rtemp=rhead;
@@ -78,14 +85,29 @@ node *removeZeros(node *head){
         rhead=rtemp->next;
     }
 
+
+    /*printf("\nAns Head:");
+    display(rhead);
+    seperator();*/
+
     rhead=reverse(rhead);
+    /*printf("\nReturn Ans Head:");
+    display(rhead);
+    seperator();*/  
 
     return rhead;
 }
 
 node *removeAllZeros(node *head){
+    /*printf("\nHead:");
+    display(head);
+    seperator();*/
+
     node *rhead=(node *)malloc(sizeof(node));
     rhead=reverse(head);
+    /*printf("\nReversed Head:");
+    display(rhead);
+    seperator();*/
 
     node *rtemp = (node *)malloc(sizeof(node));
     rtemp=rhead;
@@ -97,7 +119,15 @@ node *removeAllZeros(node *head){
     }
 
     rhead=rtemp->next;
+
+    /*printf("\nAns Head:");
+    display(rhead);
+    seperator();*/
+
     rhead=reverse(rhead);
+    /*printf("\nReturn Ans Head:");
+    display(rhead);
+    seperator();*/
 
     return rhead;
 }
@@ -140,6 +170,7 @@ node *add(node *hhead1, node *hhead2, node *result){
     head2=makeCopy(hhead2);
 
     addZeros(head1,head2);
+    //printHeads(head1,head2);
 
     int carry=0;
     char c1[2];
@@ -218,8 +249,10 @@ node *addPlaceZeros(node *sAns, node *zeros){
 
     node *zt1 = (node *)malloc(sizeof(node));
     zt1=nn; 
-    while (zt1->next!=NULL){
+    while (zt1->next!=NULL)
+    {
         zt1=zt1->next;
+        //printf("S");
     }
     
     zt1->next=tempn;
@@ -257,18 +290,29 @@ node *multiply(node *head1, node *head2, node *result){
         while (temp1!=NULL){
             ans=temp1->data*temp2->data;
             sprintf(str, "%d", ans);
+            //printf("%s\t",str);
 
             mAns = makeAns(str, &mAns);
 
             if(mCarry==NULL){
+                //printf("\nAnswer:");
+                //display(mAns);
+                //printf("\nMultiplication Ans= %d",mAns->data);
                 append(&sAns,mAns->data);
                 mCarry = mAns->next;
             }else{
                 tempAns = add(mAns,mCarry,tempAns);
+                // printf("\nAnswer has Carry:");
+                // display(tempAns);
+                //printf("\nMultiplication Ans has Carry= %d",tempAns->data);
                 append(&sAns,tempAns->data);
                 mCarry=NULL;
                 mCarry = tempAns->next;
             }
+
+            //mCarry = mAns->next;
+            // printf("\nCarry:");
+            // display(mCarry);
 
             temp1=temp1->next;
             mAns=NULL;
@@ -277,8 +321,12 @@ node *multiply(node *head1, node *head2, node *result){
 
         if(zAns==NULL){
             append(&zAns,0);
+            // printf("Zeros: ");
+            // display(zAns);
         }else{
             sAns = addPlaceZeros(sAns,zAns);
+            // printf("Zeros: ");
+            // display(zAns);
             append(&zAns,0);
         }
 
@@ -287,14 +335,19 @@ node *multiply(node *head1, node *head2, node *result){
         }else{
             nAns=add(pAns,sAns,nAns);
             pAns=nAns;
+            // printf("\nAdd Ans: ");
+            // display(nAns);
             nAns=NULL;
         }
+        
         sAns=NULL;
         temp2=temp2->next;
+        // seperator();
     }
     // printf("My Main Multiplication Answer: ");
     removeAllZeros(pAns);
     // display(pAns);
+
     
     return pAns;
 }
@@ -354,8 +407,19 @@ int compare(node *head1, node *head2){
 
     addZeros(rhead1,rhead2);
 
+    //printf("\nHead 1: Function Reversed: ");
+    //display(rhead1);
     rhead1=reverse(rhead1);
+
+    //printf("\nHead 2: Function Reversed: ");
+    //display(rhead2);
     rhead2=reverse(rhead2);
+
+    //printf("\nHead 1: Function Proper: ");
+    //display(rhead1);
+
+    //printf("\nHead 2: Function Proper: ");
+    //display(rhead2);
 
     int flag = 0;
     //head1>head2 -> flag=1
@@ -416,11 +480,29 @@ int countNodes(node *head){
     return c;
 }
 
+int convertToInt(node *head){
+    //Using atoi() function
+    char str[100];
+    int i=0;
+    node *temp = (node *)malloc(sizeof(node));
+    temp=head;
+    while (temp!=NULL){
+        str[i]=temp->data+'0';
+        temp=temp->next;
+        i++;
+    }
+    str[i]='\0';
+    int num = atoi(str);
+    return num;
+}
+
 node *halfDivide(node *hhead1, node *hhead2, node **s){
     node *head1 = (node *)malloc(sizeof(node));
     head1=NULL;
     node *head2 = (node *)malloc(sizeof(node));
     head2=NULL;
+
+    //printHeads(hhead1,hhead2);
 
     while (hhead1!=NULL){
         append(&head1,hhead1->data);
@@ -458,14 +540,25 @@ node *halfDivide(node *hhead1, node *hhead2, node **s){
 
     *s=makeList("0");
 
+    //seperator();
+
     head1=reverse(head1);
     head2=reverse(head2);
+
+    // printf("\nHead 1: Function Proper: ");
+    // display(head1);
+    // printf("\nHead 2: Function Proper: ");
+    // display(head2);
+
+    // seperator();
 
     if(compare(head1,head2)==0 || compare(head1,head2)==1){
         while (compare(head1,c)==1){
             t=NULL;
             c=add(c,head2,t);
             t=NULL;
+            //printf("\nFunction Half Divide answer: ");
+            //display(*c);
             ans=add(ans,l,t);
         }
     }
@@ -488,6 +581,8 @@ node *halfDivide(node *hhead1, node *hhead2, node **s){
 
     ans=removeZeros(ans);
     c=removeZeros(c);
+
+    //ans=reverse(ans);
     c=reverse(c);
 
     *s=c;
@@ -511,6 +606,87 @@ int checkIfZero(node *head){
     return 1;
 }
 
+int takeDivident(node *head, int c, int *r1){
+    node *nn = (node *)malloc(sizeof(node));
+    nn=NULL;
+    node *ntemp = (node *)malloc(sizeof(node));
+    ntemp=head;
+
+    int n=0;
+    int cnodes= countNodes(head);
+    while (ntemp!=NULL){
+        if(n==cnodes-1){
+            *r1=1;
+            //printf("True");
+        }
+        if(n==c+1){
+            //append(&nn,ntemp->data);
+            return ntemp->data;
+        }
+        ntemp=ntemp->next;
+        n++;
+    }
+
+    //return nn;    
+}
+
+int compareD(node *head1, node *head2){
+    node *rhead1 = (node *)malloc(sizeof(node));
+    rhead1=head1;
+    node *rhead2 = (node *)malloc(sizeof(node));
+    rhead2=head2;
+
+    int flag = 0;
+    //head1>head2 -> flag=1
+    //head2>head1 -> flag=-1
+    //head1=head2 -> flag=0
+
+    while (rhead1!=NULL){
+        if(rhead1->data>rhead2->data){
+            flag=1;
+            break;
+        }else if (rhead2->data>rhead1->data){
+            flag=-1;
+            break;
+        }
+        rhead1=rhead1->next;
+        rhead2=rhead2->next;
+    }
+    //printf("Flag=%d",flag);
+    return flag;
+}
+
+/*void equateDigits(node **head1, node **head2){
+    int c1=0;
+    node *temp = (node*) malloc(sizeof(node));
+    temp=*head1;
+    while (temp!=NULL){
+        c1++;
+        temp=temp->next;
+    }
+
+    int c2=0;
+    temp=*head2;
+    while (temp!=NULL){
+        c2++;
+        temp=temp->next;
+    }
+    
+    node *ztemp = (node*) malloc(sizeof(node));
+    ztemp=NULL;
+
+    for(int i=0;i<abs(c1-c2);i++){
+        append(&ztemp,0);
+    }
+    if(c1>c2){
+        ztemp->next=*head2;
+        *head2=ztemp;
+    }else{
+        ztemp->next=*head1;
+        *head1=ztemp;
+    }
+
+}*/
 
 node *reverseD(node **head1){
     node *temp = (node *)malloc(sizeof(node));
@@ -539,12 +715,22 @@ node *divide(node *hhead1, node *hhead2){
     head2=makeCopy(hhead2);
 
     head1=reverse(head1);
-    head2=reverse(head2);
+    // seperator();
+    // display(head1);
 
+    head2=reverse(head2);
+    // seperator();
+    // display(head2);
+    
     node *h1 = (node *)malloc(sizeof(node));
     h1=makeCopy(head1);
     node *h2 = (node *)malloc(sizeof(node));
     h2=makeCopy(head2);
+
+    // seperator();
+    // display(h1);
+    // seperator();
+    // display(h2);
 
     node *number = (node *)malloc(sizeof(node));
     number=NULL;
@@ -565,10 +751,24 @@ node *divide(node *hhead1, node *hhead2){
     while (temp!=NULL){
         append(&number,temp->data);
         temp=temp->next;
+        // seperator();
+        // printf("Temp: ");
+        // temp1=number;
+        // display(temp1);
+        // printf("\t");
+        // display(number);
+        // printf("\n");
 
         rem=NULL;
         q=halfDivide(number,h2,&rem);
         number=rem;
+
+        // printf("Remainder: ");
+        // display(rem);
+        // printf("\n");
+        // printf("Quotient: ");
+        // display(q);
+        // seperator();
 
         append(&mq,q->data);
     }
