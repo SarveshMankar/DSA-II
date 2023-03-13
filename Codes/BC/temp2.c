@@ -13,21 +13,45 @@ typedef struct LL{
     struct LL *next;
 } LL;
 
-void appendLL(LL **head, nd1 *n1){
+void displayNode(node *n1){
+    node *temp = n1;
+    while(temp != NULL){
+        printf("%c", temp->data);
+        temp = temp->next;
+    }
+}
+
+void displayLL(LL *head){
+    LL *temp = head;
+    while(temp != NULL){
+        if (temp->n1 != NULL){
+            displayNode(temp->n1);
+            printf("\n");
+        }
+        if (temp->op != NULL){
+            printf("%c", temp->op->op);
+            printf("\n");
+        }
+        temp = temp->next;
+    }
+}
+
+void appendLL(LL **head, node *n1, operator *op){
     LL *newNode = (LL *)malloc(sizeof(LL));
     newNode->n1 = n1;
+    newNode->op = op;
     newNode->next = NULL;
 
     if(*head == NULL){
         *head = newNode;
-    }else{
+    }
+    else{
         LL *temp = *head;
         while(temp->next != NULL){
             temp = temp->next;
         }
         temp->next = newNode;
     }
-    
 }
 
 LL *makeIt(char str[], LL *head){
@@ -37,75 +61,36 @@ LL *makeIt(char str[], LL *head){
     n1=NULL;    
 
     for(int i=0; i<len; i++){
+        // printf("%c\n", str[i]);
         if(!(isOperator(str[i]))){
-            append(&n1, str[i]);
-        }else{
-            nd1 *l1 = (nd1 *)malloc(sizeof(nd1));
-
-            l1->type = 1;
-            l1->n1 = n1;
-
-            operator *op1 = (operator *)malloc(sizeof(operator));
-            op1=NULL;
-            l1->op = op1;
-
-            appendLL(&head, l1);
-
-
-            operator *op2 = (operator *)malloc(sizeof(operator));
-            op2->op = str[i];
-
-            nd1 *l2 = (nd1 *)malloc(sizeof(nd1));
-            l2->type = 2;
-            l2->n1 = NULL;
-            l2->op = op2;
-
-            appendLL(&head, l2);
-
-            n1 = NULL;
+            if(str[i]!=' '){
+                append(&n1, str[i]);
+            }
+            if (str[i]==' '){
+                operator *op = (operator *)malloc(sizeof(operator));
+                op=NULL;
+                appendLL(&head, n1, op);
+                n1=NULL;
+            }
         }
-        printf("%c", str[i]);
-        printf("\n");
+        if(isOperator(str[i])){
+            operator *op = (operator *)malloc(sizeof(operator));
+            op->op = str[i];
+            n1=NULL;
+            appendLL(&head, n1, op);
+            op=NULL;
+        }
     }
 
     return head;
 }
 
-void displayn1(node *n1){
-    node *temp = n1;
-    while(temp != NULL){
-        printf("%c", temp->data);
-        temp = temp->next;
-    }
-}
-
-void displayop(operator *op){
-    printf("%c", op->op);
-}
-
-void displayLL(LL *head){
-    LL *temp = head;
-    while(temp != NULL){
-        printf("\n%d", temp->n1->type);
-
-        if(temp->n1->n1!=NULL){
-            printf("\tWe have Number!\t");
-            displayn1(temp->n1->n1);
-        }else if (temp->n1->op!=NULL){
-            printf("\tWe have Operator!\t");
-            displayop(temp->n1->op);
-        }
-        
-        temp = temp->next;
-    }
-}
-
-
 void main(){
-    char str[] = "123+456+*%";
+    char str[] = "100 45 + 6 * 45 12 - +";
     LL *head = NULL;
 
     head = makeIt(str, head);
-    printf("\nDisplay List:\t");
     displayLL(head);
+    // printf("\nDisplay List:\t");
+    // displayLL(head);
 }
