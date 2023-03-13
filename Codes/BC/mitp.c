@@ -1,10 +1,13 @@
 #include<stdio.h>
+#include<string.h>
 #include<limits.h>
 #include<stdlib.h>
 #include<ctype.h>
 
 char stack[100];
 int top = -1;
+
+char ansString[100];
 
 void push(char x)
 {
@@ -63,9 +66,9 @@ int main(){
         e++;
     }
     
-    while(top != -1)
-    {
-        printf("%c ",pop());
+    while(top != -1){
+        x=pop();
+        printf("%c ",x);
     }
     
     return 0;
