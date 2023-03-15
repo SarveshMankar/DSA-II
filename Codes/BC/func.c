@@ -49,6 +49,33 @@ void evaluate(char str[], node **head1, node **head2){
     }
 }
 
+void solve(node **hhead1, node **hhead2, operator *myOperator){
+    node *head1 = (node *)malloc(sizeof(node));
+    head1 = makeCopy(*hhead1);
+
+    node *head2 = (node *)malloc(sizeof(node));
+    head2 = makeCopy(*hhead2);
+
+    head1=reverse(head1);
+    head2=reverse(head2);
+
+    node *temp=(node *)malloc(sizeof(node));
+    temp=NULL;
+
+    node *result=(node *)malloc(sizeof(node));
+    result=NULL;
+
+    char op = myOperator->op;
+
+    addZeros(head1,head2);
+
+    if (op=='+'){
+        result=add(head1,head2,temp);
+        printf("\nResult: ");
+        displayForTesting(head1,head2,result,'+');
+    }
+}
+
 void display(node *head){
     while (head!=NULL)
     {

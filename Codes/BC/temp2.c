@@ -3,20 +3,20 @@
 #include<string.h>
 #include "func.c"
 
-typedef struct operator{
-    char op;
-} operator;
+// typedef struct operator{
+//     char op;
+// } operator;
 
-typedef struct LL{
-    node *n1;
-    operator *op;
-    struct LL *next;
-} LL;
+// typedef struct LL{
+//     node *n1;
+//     operator *op;
+//     struct LL *next;
+// } LL;
 
 void displayNode(node *n1){
     node *temp = n1;
     while(temp != NULL){
-        printf("%c", temp->data);
+        printf("%d", temp->data);
         temp = temp->next;
     }
 }
@@ -64,7 +64,7 @@ LL *makeIt(char str[], LL *head){
         // printf("%c\n", str[i]);
         if(!(isOperator(str[i]))){
             if(str[i]!=' '){
-                append(&n1, str[i]);
+                append(&n1, str[i]-'0');
             }
             if (str[i]==' '){
                 operator *op = (operator *)malloc(sizeof(operator));
@@ -93,4 +93,11 @@ void main(){
     displayLL(head);
     // printf("\nDisplay List:\t");
     // displayLL(head);
+
+    seperator();
+
+    if(head->n1!=NULL && head->next->n1!=NULL && head->next->next->op!=NULL){
+        printf("First Solution");
+        solve(&head->n1, &head->next->n1, head->next->next->op);
+    } 
 }
