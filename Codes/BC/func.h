@@ -4,8 +4,21 @@ typedef struct node
     struct node* next;
 } node;
 
+typedef struct operator{
+    char op;
+} operator;
+
+typedef struct LL{
+    node *n1;
+    operator *op;
+    struct LL *next;
+} LL;
+
+
+
 void append(node **head, int data);
 void evaluate(char str[], node **head1, node **head2);
+void solve(node **hhead1, node **hhead2, operator *myOperator);
 int isOperator(char c);
 void addZeros(node *head1, node *head2);
 
