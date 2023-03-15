@@ -96,3 +96,133 @@
     /*char str1[] = "1687894165489456541/645465476";
     evaluate(str1,&head1,&head2);
     divide(head1,head2);*/
+
+
+
+
+
+temp2.c1
+
+// typedef struct operator{
+//     char op;
+// } operator;
+
+// typedef struct LL{
+//     node *n1;
+//     operator *op;
+//     struct LL *next;
+// } LL;
+
+// void displayNode(node *n1){
+//     node *temp = n1;
+//     while(temp != NULL){
+//         printf("%d", temp->data);
+//         temp = temp->next;
+//     }
+// }
+
+// int countLLNodes(LL *head){
+//     int count = 0;
+//     LL *temp = head;
+//     while(temp != NULL){
+//         count++;
+//         temp = temp->next;
+//     }
+//     return count;
+// }
+
+// void displayLL(LL *head){
+//     LL *temp = head;
+//     int i=0;
+//     while(temp != NULL){
+//         printf("\n%d->", i++);
+//         if (temp->n1 != NULL){
+//             displayNode(temp->n1);
+//             printf("\n");
+//         }
+//         if (temp->op != NULL){
+//             printf("%c", temp->op->op);
+//             printf("\n");
+//         }
+//         temp = temp->next;
+//     }
+// }
+
+// void appendLL(LL **head, node *n1, operator *op){
+//     if (n1 == NULL && op == NULL){
+//         // printf("Error: Both are NULL");
+//         return;
+//     }else{
+//         LL *newNode = (LL *)malloc(sizeof(LL));
+//         newNode->n1 = n1;
+//         newNode->op = op;
+//         newNode->next = NULL;
+
+//         if(*head == NULL){
+//             *head = newNode;
+//         }
+//         else{
+//             LL *temp = *head;
+//             while(temp->next != NULL){
+//                 temp = temp->next;
+//             }
+//             temp->next = newNode;
+//         }
+//     }
+// }
+
+// LL *makeIt(char str[], LL *head){
+//     int len = strlen(str);
+
+//     node *n1 = (node *)malloc(sizeof(node));
+//     n1=NULL;    
+
+//     for(int i=0; i<len; i++){
+//         // printf("%c\n", str[i]);
+//         if(!(isOperator(str[i]))){
+//             if(str[i]!=' '){
+//                 append(&n1, str[i]-'0');
+//             }
+//             if (str[i]==' '){
+//                 operator *op = (operator *)malloc(sizeof(operator));
+//                 op=NULL;
+//                 n1=reverse(n1);
+//                 appendLL(&head, n1, op);
+//                 n1=NULL;
+//             }
+//         }
+//         if(isOperator(str[i])){
+//             operator *op = (operator *)malloc(sizeof(operator));
+//             op->op = str[i];
+//             n1=NULL;
+//             appendLL(&head, n1, op);
+//             op=NULL;
+//         }
+//     }
+
+//     return head;
+// }
+
+// void removeLLNode(LL **head, LL *n1){
+//     LL *temp = (LL *)malloc(sizeof(LL));
+//     temp = *head;
+//     if (temp == n1){
+//         *head = temp->next;
+//         free(temp);
+//         return;
+//     }
+//     while(temp->next != n1){
+//         temp = temp->next;
+//     }
+//     temp->next = n1->next;
+//     free(n1);
+// }
+
+// void insertTheSolution(LL *head, LL *pos, node *result){
+//     LL *newNode = (LL *)malloc(sizeof(LL));
+//     newNode->n1 = result;
+//     newNode->op = NULL;
+//     newNode->next = pos->next;
+//     pos->next = newNode;
+// }
+
