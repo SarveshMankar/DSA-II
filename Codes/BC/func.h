@@ -18,7 +18,23 @@ typedef struct LL{
 
 void append(node **head, int data);
 void evaluate(char str[], node **head1, node **head2);
-void solve(node **hhead1, node **hhead2, operator *myOperator);
+
+//Stack Functions
+void push(char x);
+char pop();
+int priority(char x);
+char * removeBlanks(char * str);
+const char *makePostfixEqation(char *exp, char *ans);
+
+void appendLL(LL **head, node *n1, operator *op);
+LL *makeIt(char str[], LL *head);
+node *solve(node **hhead1, node **hhead2, operator *myOperator);
+void insertTheSolution(LL *head, LL *pos, node *result);
+void removeLLNode(LL **head, LL *n1);
+int countLLNodes(LL *head);
+void displayLL(LL *head);
+void displayNode(node *n1);
+
 int isOperator(char c);
 void addZeros(node *head1, node *head2);
 

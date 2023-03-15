@@ -2,6 +2,8 @@
 #include<stdlib.h>
 #include<string.h>
 #include<math.h>
+#include<limits.h>
+#include<ctype.h>
 #include"func.h"
 
 void append(node **head, int data){
@@ -49,15 +51,236 @@ void evaluate(char str[], node **head1, node **head2){
     }
 }
 
-void solve(node **hhead1, node **hhead2, operator *myOperator){
+
+
+
+//Postfix Evaluation
+
+char stack[100];
+int top = -1;
+
+char *mAnsString;
+
+void push(char x) {
+    stack[++top] = x;
+}
+
+char pop() {
+    if (top == -1)
+        return -1;
+    else
+        return stack[top--];
+}
+
+int priority(char x) {
+    if (x == '(')
+        return 0;
+    if (x == '+' || x == '-')
+        return 1;
+    if (x == '*' || x == '/')
+        return 2;
+    return 0;
+}
+
+char * removeBlanks(char * str){
+    int i, j;
+    char * newString;
+
+    int max_size = strlen(str);
+    
+
+    newString = (char *)malloc(max_size);
+
+    i = 0;
+    j = 0;
+
+    while(str[i] != '\0')
+    {
+        if(str[i] == ' ')
+        {
+            newString[j] = ' ';
+            j++;
+
+            while(str[i] == ' ')
+                i++;
+        }
+
+        newString[j] = str[i];
+
+        i++;
+        j++;
+    }
+
+    newString[j] = '\0';
+
+    return newString;
+}
+
+const char *makePostfixEqation(char *exp, char *ans){
+    char * e, x, t;
+    int k = 0;
+    int i = 0;
+
+    e = exp;
+
+    while ( * e != '\0') {
+
+        if (isalnum( * e)) {
+            x = * e;
+            ans[k++] = x;
+        } else if ( * e == '(') {
+
+            push( * e);
+        } else if ( * e == ')') {
+            while ((x = pop()) != '(') {
+                ans[k++] = ' ';
+                ans[k++] = x;
+                ans[k++] = ' ';
+            }
+        } else {
+            ans[k++] = ' ';
+            while (priority(stack[top]) >= priority( * e)) {
+                t = pop();
+                ans[k++] = t;
+                ans[k++] = ' ';
+            }
+            push( * e);
+        }
+        e++;
+        i++;
+
+    }
+
+    while (top != -1) {
+        x = pop();
+        ans[k++] = x;
+    }
+
+    return ans;
+}
+
+
+
+
+void appendLL(LL **head, node *n1, operator *op){
+    if (n1 == NULL && op == NULL){
+        // printf("Error: Both are NULL");
+        return;
+    }else{
+        LL *newNode = (LL *)malloc(sizeof(LL));
+        newNode->n1 = n1;
+        newNode->op = op;
+        newNode->next = NULL;
+
+        if(*head == NULL){
+            *head = newNode;
+        }
+        else{
+            LL *temp = *head;
+            while(temp->next != NULL){
+                temp = temp->next;
+            }
+            temp->next = newNode;
+        }
+    }
+}
+
+void displayLL(LL *head){
+    LL *temp = head;
+    // int i=0;
+    while(temp != NULL){
+        // printf("\n%d->", i++);
+        if (temp->n1 != NULL){
+            displayNode(temp->n1);
+            // printf("\n");
+        }
+        if (temp->op != NULL){
+            // printf("%c", temp->op->op);
+            // printf("\n");
+        }
+        temp = temp->next;
+    }
+}
+
+void displayNode(node *n1){
+    node *temp = n1;
+    while(temp != NULL){
+        printf("%d", temp->data);
+        temp = temp->next;
+    }
+}
+
+LL *makeIt(char str[], LL *head){
+    int len = strlen(str);
+
+    node *n1 = (node *)malloc(sizeof(node));
+    n1=NULL;    
+
+    for(int i=0; i<len; i++){
+        // printf("%c\n", str[i]);
+        if(!(isOperator(str[i]))){
+            if(str[i]!=' '){
+                append(&n1, str[i]-'0');
+            }
+            if (str[i]==' '){
+                operator *op = (operator *)malloc(sizeof(operator));
+                op=NULL;
+                n1=reverse(n1);
+                appendLL(&head, n1, op);
+                n1=NULL;
+            }
+        }
+        if(isOperator(str[i])){
+            operator *op = (operator *)malloc(sizeof(operator));
+            op->op = str[i];
+            n1=NULL;
+            appendLL(&head, n1, op);
+            op=NULL;
+        }
+    }
+
+    return head;
+}
+
+int countLLNodes(LL *head){
+    int count = 0;
+    LL *temp = head;
+    while(temp != NULL){
+        count++;
+        temp = temp->next;
+    }
+    return count;
+}
+
+void insertTheSolution(LL *head, LL *pos, node *result){
+    LL *newNode = (LL *)malloc(sizeof(LL));
+    newNode->n1 = result;
+    newNode->op = NULL;
+    newNode->next = pos->next;
+    pos->next = newNode;
+}
+
+void removeLLNode(LL **head, LL *n1){
+    LL *temp = (LL *)malloc(sizeof(LL));
+    temp = *head;
+    if (temp == n1){
+        *head = temp->next;
+        free(temp);
+        return;
+    }
+    while(temp->next != n1){
+        temp = temp->next;
+    }
+    temp->next = n1->next;
+    free(n1);
+}
+
+node *solve(node **hhead1, node **hhead2, operator *myOperator){
     node *head1 = (node *)malloc(sizeof(node));
     head1 = makeCopy(*hhead1);
 
     node *head2 = (node *)malloc(sizeof(node));
     head2 = makeCopy(*hhead2);
-
-    head1=reverse(head1);
-    head2=reverse(head2);
 
     node *temp=(node *)malloc(sizeof(node));
     temp=NULL;
@@ -71,9 +294,22 @@ void solve(node **hhead1, node **hhead2, operator *myOperator){
 
     if (op=='+'){
         result=add(head1,head2,temp);
-        printf("\nResult: ");
-        displayForTesting(head1,head2,result,'+');
+        // printf("\nResult: ");
+        // displayForTesting(head1,head2,result,'+');
+    }else if(op=='-'){
+        result=subtract(head1,head2,temp);
+        // printf("\nResult: ");
+        // displayForTesting(head1,head2,result,'-');
+    }else if(op=='*'){
+        result=multiply(head1,head2,temp);
+    }else if(op=='/'){
+        result=divide(head1,head2);
+    }else if(op=='^'){
+        result=raiseTo(head1,head2);
+    }else if(op=='%'){
+        result=modulus(head1,head2);
     }
+    return result;
 }
 
 void display(node *head){
