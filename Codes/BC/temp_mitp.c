@@ -25,8 +25,10 @@ int priority(char x) {
         return 0;
     if (x == '+' || x == '-')
         return 1;
-    if (x == '*' || x == '/')
+    if (x == '*' || x == '/' || x=='%')
         return 2;
+    if (x == '^')
+        return 3;
     return 0;
 }
 
@@ -68,7 +70,6 @@ const char *makePostfixEqation(char *exp, char *ans){
     char * e, x, t;
     int k = 0;
     int i = 0;
-    // printf("\n");
     e = exp;
 
     while ( * e != '\0') {
@@ -89,6 +90,7 @@ const char *makePostfixEqation(char *exp, char *ans){
             ans[k++] = ' ';
             while (priority(stack[top]) >= priority( * e)) {
                 t = pop();
+                ans[k++] = ' ';
                 ans[k++] = t;
                 ans[k++] = ' ';
             }
@@ -101,7 +103,9 @@ const char *makePostfixEqation(char *exp, char *ans){
 
     while (top != -1) {
         x = pop();
+        ans[k++] = ' ';
         ans[k++] = x;
+        ans[k++] = ' ';
     }
 
     return ans;
@@ -110,6 +114,7 @@ const char *makePostfixEqation(char *exp, char *ans){
 int main() {
     // char *exp="(a+b)*c+(d-a)";;
     char * exp = "(100+45)*6+(45-12)";
+    // char * exp = "56+8%7";
     
     char *ans = malloc (sizeof (char) * 100);
     makePostfixEqation(exp,ans);
