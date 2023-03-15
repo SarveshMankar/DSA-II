@@ -1,132 +1,61 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include"func.c"
+#include<math.h>
+#include<limits.h>
+#include<ctype.h>
+#include "func.c"
+
+char *str;
 
 void main(){
-    node *head1 = (node*)malloc(sizeof(node));
-    head1=NULL;
+    char exp[100];
+    printf("Enter the expression:\t");
+    scanf("%[^\n]s", exp);
 
-    node *head2 = (node*)malloc(sizeof(node));
-    head2=NULL;
+    char *ans = malloc (sizeof (char) * 100);
+    makePostfixEqation(exp,ans);
 
-    node *result = (node*) malloc(sizeof(node));
-    result = NULL; 
+    printf("\n%s", ans);
+    str=removeBlanks(ans);
+    printf("\n%s", str);
 
-    node *temp = (node*) malloc(sizeof(node));
-    temp = NULL;
-    
-    seperator();
-    printf("\nAddition: ");
 
-    char str11[]="517872+10";
-    evaluate(str11,&head1,&head2);
-    result = add(head1,head2,temp);
-    displayForTesting(head1,head2,result,'+');
+    LL *head = NULL;
+    LL *n1,*n2,*n3;
 
-    char str12[]="10+9995444";
-    evaluate(str12,&head1,&head2);
-    result = add(head1,head2,temp);
-    displayForTesting(head1,head2,result,'+');
+    head = makeIt(str, head);
 
-    char str13[] ="0012+0000000000000000000000036";
-    evaluate(str13,&head1,&head2);
-    result=add(head1,head2,result);
-    displayForTesting(head1,head2,result,'+');
+    node *result=(node *)malloc(sizeof(node));
+    result=NULL;
 
-    seperator();
-    printf("\nSubtraction: ");
+    LL *traverse = (LL *)malloc(sizeof(LL));
+    traverse = head;
 
-    char str21[]="45801-2";
-    evaluate(str21,&head1,&head2);
-    result = subtract(head1,head2,temp);
-    displayForTesting(head1,head2,result,'-');
+    while(countLLNodes(head)!=1){
+        if(traverse->n1!=NULL && traverse->next->n1!=NULL && traverse->next->next->op!=NULL){
+            result=NULL;
+            result=solve(&traverse->n1, &traverse->next->n1, traverse->next->next->op);
 
-    char str22[]="045801-14523";
-    evaluate(str22,&head1,&head2);
-    result = subtract(head1,head2,temp);
-    displayForTesting(head1,head2,result,'-');
+            n1=traverse;
+            n2=traverse->next;
+            n3=traverse->next->next;
 
-    char str23[]="10000-1";
-    evaluate(str23,&head1,&head2);
-    result = subtract(head1,head2,temp);
-    displayForTesting(head1,head2,result,'-');
+            insertTheSolution(traverse, n3, result);
 
-    char str24[]="1100-1100";
-    evaluate(str24,&head1,&head2);
-    result = subtract(head1,head2,temp);
-    displayForTesting(head1,head2,result,'-');
+            removeLLNode(&head, n1);
+            removeLLNode(&head, n2);
+            removeLLNode(&head, n3);
 
-    seperator();
-    printf("\nMultiplication: ");
+            traverse=head;
+        }else{
+            traverse=traverse->next;
+        }
+    }
 
-    char str31[] = "54*67";
-    evaluate(str31,&head1,&head2);
-    result = multiply(head1,head2,temp);
-    displayForTesting(head1,head2,result,'*');
+    printf("\nAnswer:\t");
 
-    char str32[] = "6793*8542";
-    evaluate(str32,&head1,&head2);
-    result = multiply(head1,head2,temp);
-    displayForTesting(head1,head2,result,'*');
-
-    char str33[] = "123*11";
-    evaluate(str33,&head1,&head2);
-    result = multiply(head1,head2,temp);
-    displayForTesting(head1,head2,result,'*');
-
-    char str34[] = "16871414614687414418451341654168*148618978465413987";
-    evaluate(str34,&head1,&head2);
-    result = multiply(head1,head2,temp);
-    displayForTesting(head1,head2,result,'*');
-
-    seperator();
-    printf("\nPower Of: ");
-
-    char str41[] = "10^10";
-    evaluate(str41,&head1,&head2);
-    result=raiseTo(head1,head2);
-    displayForTesting(head1,head2,result,'^');
-
-    char str42[] = "27^45";
-    evaluate(str42,&head1,&head2);
-    result=raiseTo(head1,head2);
-    displayForTesting(head1,head2,result,'^');
-
-    seperator();
-    printf("\nDivision: ");
-
-    char str51[] = "4876/13";
-    evaluate(str51,&head1,&head2);
-    result=divide(head1,head2);
-    displayForTesting(head1,head2,result,'/');
-
-    char str52[] = "1687894165489456541/645465476";
-    evaluate(str52,&head1,&head2);
-    result=divide(head1,head2);
-    displayForTesting(head1,head2,result,'/');
-
-    char str53[] = "100/10";
-    evaluate(str53,&head1,&head2);
-    result=divide(head1,head2);
-    displayForTesting(head1,head2,result,'/');
-
-    seperator();
-    printf("\nModulus: ");
-    char str61[] = "4876%13";
-    evaluate(str61,&head1,&head2);
-    result=modulus(head1,head2);
-    displayForTesting(head1,head2,result,'%');
-
-    char str62[] = "1687894165489456541%645465476";
-    evaluate(str62,&head1,&head2);
-    result=modulus(head1,head2);
-    displayForTesting(head1,head2,result,'%');
-
-    char str63[] = "100%10";
-    evaluate(str63,&head1,&head2);
-    result=modulus(head1,head2);
-    displayForTesting(head1,head2,result,'%');
-
+    node *mainOutput = (node *) malloc(sizeof(node));
+    mainOutput = reverse(head->n1);
+    display(mainOutput);
 }
-
