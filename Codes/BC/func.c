@@ -56,7 +56,7 @@ void evaluate(char str[], node **head1, node **head2){
 
 //Postfix Evaluation
 
-char stack[100];
+char stack[1000];
 int top = -1;
 
 char *mAnsString;
@@ -159,6 +159,8 @@ const char *makePostfixEqation(char *exp, char *ans){
         ans[k++] = x;
         ans[k++] = ' ';
     }
+
+    top = -1;
 
     return ans;
 }
@@ -846,6 +848,7 @@ node *divide(node *hhead1, node *hhead2){
     // printf("Final Remainder: ");
     // display(rem);
     mq=reverse(mq);
+    mq=removeZeros(mq);
     return mq;
 }
 
