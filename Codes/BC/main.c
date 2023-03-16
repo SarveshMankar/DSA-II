@@ -10,6 +10,7 @@ char *str;
 
 void main(){
     char exp[100];
+    int flag=0;
 
     printf("bc 0.0.1");
     printf("\nDeveloped by: Sarvesh Mankar\n");
@@ -37,9 +38,24 @@ void main(){
         LL *traverse = (LL *)malloc(sizeof(LL));
         traverse = head;
 
+        if(isInValidEquation(head)==1){
+            // flag=1;
+            printf("Invalid Equation! (Hint: Check the Operators!)\n");
+            continue;
+        }
+
         while(countLLNodes(head)!=1){
             if(traverse->n1!=NULL && traverse->next->n1!=NULL && traverse->next->next->op!=NULL){
                 result=NULL;
+
+                if(traverse->next->next->op->op=='/'){
+                    if(checkIfZero(traverse->next->n1)){
+                        printf("Runtime error (func=(main), adr=9): Divide by zero\n");
+                        flag=1;
+                        break ; 
+                    }
+                }
+
                 result=solve(&traverse->n1, &traverse->next->n1, traverse->next->next->op);
 
                 n1=traverse;
@@ -60,14 +76,18 @@ void main(){
 
         // printf("\nAnswer:\t");
 
-        node *mainOutput = (node *) malloc(sizeof(node));
-        mainOutput = reverse(head->n1);
-        display(mainOutput);
-        printf("\n");
+        if(flag==1){
+            flag=0;
+        }else{
+            node *mainOutput = (node *) malloc(sizeof(node));
+            mainOutput = reverse(head->n1);
+            display(mainOutput);
+            printf("\n");
+            // free(mainOutput);
+        }
 
-        free(ans);
-        free(result);
-        free(traverse);
-        free(mainOutput);
+        // free(ans);
+        // free(result);
+        // free(traverse);
     }
 }

@@ -26,6 +26,8 @@ int priority(char x);
 char * removeBlanks(char * str);
 const char *makePostfixEqation(char *exp, char *ans);
 
+int isInValidEquation(LL *head);
+
 void appendLL(LL **head, node *n1, operator *op);
 LL *makeIt(char str[], LL *head);
 node *solve(node **hhead1, node **hhead2, operator *myOperator);
@@ -59,10 +61,13 @@ node *divide(node *head1, node *head2);
 node *halfDivide(node *head1, node *head2, node **result);
 int countNodes(node *head);
 int checkIfZero(node *head);
+int checkIfNotZero(node *head);
 int compareD(node *head1, node *head2);
 node *reverseList(node **head);
 
 node *modulus(node *head1, node *head2);
+
+// node *greaterThan(node *hhead1, node *hhead2);
 
 void printHeads(node *head1, node *head2);
 void seperator();

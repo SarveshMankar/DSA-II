@@ -51,7 +51,32 @@ void evaluate(char str[], node **head1, node **head2){
     }
 }
 
+//Check if Equation is Valid
+int isInValidEquation(LL *head){
+    LL *temp = (LL*)malloc(sizeof(LL));
+    temp=head;
+    int operators=0;
+    int operands=0;
+    while (temp)
+    {
+        if(temp->n1!=NULL){
+            operands++;
+        }else if (temp->op!=NULL){
+            operators++;
+        }
+        
+        temp=temp->next;
+    }
 
+    // printf("%d",operands);
+    // printf("%d",operators);
+    
+    if(operators+1==operands){
+        return 0;
+    }else{
+        return 1;
+    }
+}
 
 
 //Postfix Evaluation
@@ -801,6 +826,18 @@ node *reverseD(node **head1){
     return temp;
 }
 
+int checkIfNotZero(node *head){
+    node *temp = (node *)malloc(sizeof(node));
+    temp=head;
+    while (temp!=NULL){
+        if(temp->data!=0)
+            return 1;
+        temp=temp->next;
+    }
+    return 0;
+}
+
+
 node *divide(node *hhead1, node *hhead2){
     node *head1 = (node *)malloc(sizeof(node));
     head1=makeCopy(hhead1);
@@ -901,6 +938,23 @@ node *modulus(node *hhead1, node *hhead2){
     rem=reverse(rem);
     return rem;
 }
+
+// node *greaterThan(node *hhead1, node *hhead2){
+//     node *head1=(node *)malloc(sizeof(node));
+//     head1=makeCopy(head1);
+
+//     node *head2=(node *)malloc(sizeof(node));
+//     head2=makeCopy(head2);
+
+//     int comparsion=compare(head1,head2);
+
+//     node *r=(node*)malloc(sizeof(node));
+//     if(comparsion==-1){
+//         append(&r,1);
+//     }
+//     r=removeZeros(r);
+//     return r;
+// }
 
 node *makeCopy(node *head){
     node *temp = (node *)malloc(sizeof(node));
