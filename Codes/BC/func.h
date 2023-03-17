@@ -75,3 +75,6 @@ void seperator();
 void displayAnswer(node *result);
 node *makeCopy(node *head);
 void displayForTesting(node *head1, node *head2, node *result, char op);
+
+void display(node *head);
+node *removeInitialZeros(node *head);
