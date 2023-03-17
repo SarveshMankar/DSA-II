@@ -6,6 +6,7 @@
 #include<ctype.h>
 #include"func.h"
 
+// Old Append Function
 void append(node **head, int data){
     node *nn = (node *)malloc(sizeof(node));
     nn->data=data;
@@ -23,6 +24,7 @@ void append(node **head, int data){
     }
 }
 
+// Old Evaluate Function
 void evaluate(char str[], node **head1, node **head2){
     *head1=*head2=NULL;
 
@@ -68,9 +70,6 @@ int isInValidEquation(LL *head){
         temp=temp->next;
     }
 
-    // printf("%d",operands);
-    // printf("%d",operators);
-    
     if(operators+1==operands){
         return 0;
     }else{
@@ -143,6 +142,8 @@ char * removeBlanks(char * str){
     return newString;
 }
 
+
+//Create Postfix Equation
 const char *makePostfixEqation(char *exp, char *ans){
     char * e, x, t;
     int k = 0;
@@ -191,11 +192,11 @@ const char *makePostfixEqation(char *exp, char *ans){
 }
 
 
-
+//Append Function for LL
 
 void appendLL(LL **head, node *n1, operator *op){
     if (n1 == NULL && op == NULL){
-        // printf("Error: Both are NULL");
+        // printf("Both are NULL so nothing to append");
         return;
     }else{
         LL *newNode = (LL *)malloc(sizeof(LL));
@@ -216,11 +217,11 @@ void appendLL(LL **head, node *n1, operator *op){
     }
 }
 
+
+//Display Function for LL
 void displayLL(LL *head){
     LL *temp = head;
-    // int i=0;
     while(temp != NULL){
-        // printf("\n%d->", i++);
         if (temp->n1 != NULL){
             displayNode(temp->n1);
             // printf("\n");
@@ -233,6 +234,7 @@ void displayLL(LL *head){
     }
 }
 
+//Display Function for Node
 void displayNode(node *n1){
     node *temp = n1;
     while(temp != NULL){
@@ -241,6 +243,8 @@ void displayNode(node *n1){
     }
 }
 
+
+//Create Postfix Equation
 LL *makeIt(char str[], LL *head){
     int len = strlen(str);
 
@@ -248,7 +252,6 @@ LL *makeIt(char str[], LL *head){
     n1=NULL;    
 
     for(int i=0; i<len; i++){
-        // printf("%c\n", str[i]);
         if(!(isOperator(str[i]))){
             if(str[i]!=' '){
                 append(&n1, str[i]-'0');
@@ -273,6 +276,8 @@ LL *makeIt(char str[], LL *head){
     return head;
 }
 
+
+//Count the number of nodes in LL
 int countLLNodes(LL *head){
     int count = 0;
     LL *temp = head;
@@ -283,6 +288,8 @@ int countLLNodes(LL *head){
     return count;
 }
 
+
+// Insert the solution node in the LL
 void insertTheSolution(LL *head, LL *pos, node *result){
     LL *newNode = (LL *)malloc(sizeof(LL));
     newNode->n1 = result;
@@ -291,6 +298,8 @@ void insertTheSolution(LL *head, LL *pos, node *result){
     pos->next = newNode;
 }
 
+
+// Remove the node from the LL
 void removeLLNode(LL **head, LL *n1){
     LL *temp = (LL *)malloc(sizeof(LL));
     temp = *head;
@@ -306,6 +315,8 @@ void removeLLNode(LL **head, LL *n1){
     free(n1);
 }
 
+
+//Solve the equation
 node *solve(node **hhead1, node **hhead2, operator *myOperator){
     node *head1 = (node *)malloc(sizeof(node));
     head1 = makeCopy(*hhead1);
@@ -325,12 +336,8 @@ node *solve(node **hhead1, node **hhead2, operator *myOperator){
 
     if (op=='+'){
         result=add(head1,head2,temp);
-        // printf("\nResult: ");
-        // displayForTesting(head1,head2,result,'+');
     }else if(op=='-'){
         result=subtract(head1,head2,temp);
-        // printf("\nResult: ");
-        // displayForTesting(head1,head2,result,'-');
     }else if(op=='*'){
         result=multiply(head1,head2,temp);
     }else if(op=='/'){
@@ -343,6 +350,19 @@ node *solve(node **hhead1, node **hhead2, operator *myOperator){
     return result;
 }
 
+
+//Remove the initial zeros from the node
+node *removeInitialZeros(node *head){
+    node *temp = (node *)malloc(sizeof(node));
+    temp = head;
+    while(temp->data == 0){
+        temp = temp->next;
+    }
+    return temp;
+}
+
+
+// Display the final answer
 void display(node *head){
     while (head!=NULL)
     {
@@ -351,6 +371,8 @@ void display(node *head){
     }
 }
 
+
+// Check if the character is an operator
 int isOperator(char c){
     if(c=='+' || c=='-' || c=='*' || c=='/' || c=='%' || c=='^'){
         return 1;
@@ -359,6 +381,8 @@ int isOperator(char c){
     }
 }
 
+
+// Remove Zeroes
 node *removeZeros(node *head){
     node *rhead=(node *)malloc(sizeof(node));
     rhead=reverse(head);
@@ -377,6 +401,8 @@ node *removeZeros(node *head){
     return rhead;
 }
 
+
+// Remove all the zeroes
 node *removeAllZeros(node *head){
     node *rhead=(node *)malloc(sizeof(node));
     rhead=reverse(head);
@@ -396,6 +422,8 @@ node *removeAllZeros(node *head){
     return rhead;
 }
 
+
+// Add extra zeros to match the number of digits
 void addZeros(node *head1, node *head2){
     int c1=0;
     node *temp = (node*) malloc(sizeof(node));
@@ -426,6 +454,8 @@ void addZeros(node *head1, node *head2){
     append(&(head2),0);
 }
 
+
+// Add the two numbers
 node *add(node *hhead1, node *hhead2, node *result){
     result=NULL;
     node *head1 = (node *)malloc(sizeof(node));
@@ -457,6 +487,8 @@ node *add(node *hhead1, node *hhead2, node *result){
     return result;
 }
 
+
+// Borrow from the next node
 void borrow(node **head1){
     node *temp = (node *)malloc(sizeof(node));
     temp = *head1;
@@ -467,6 +499,8 @@ void borrow(node **head1){
     temp->data=temp->data+10;
 }
 
+
+// Subtract the two numbers
 node *subtract(node *hhead1, node *hhead2, node *result){
     result=NULL;
     node *head1 = (node *)malloc(sizeof(node));
@@ -489,6 +523,8 @@ node *subtract(node *hhead1, node *hhead2, node *result){
     return result;
 }
 
+
+// Make answer
 node *makeAns(char str[], node **mAns){
     int len = strlen(str);
     int i=len-1;
@@ -499,6 +535,8 @@ node *makeAns(char str[], node **mAns){
     return *mAns;
 }
 
+
+//Add place value zeros for multiplication
 node *addPlaceZeros(node *sAns, node *zeros){
     node *nn = (node *)malloc(sizeof(node));
     nn=NULL;
@@ -520,6 +558,8 @@ node *addPlaceZeros(node *sAns, node *zeros){
     return nn;
 }
 
+
+// Multiply the two numbers
 node *multiply(node *head1, node *head2, node *result){
     addZeros(head1,head2);
     node *temp1 = (node *)malloc(sizeof(node));
@@ -586,13 +626,13 @@ node *multiply(node *head1, node *head2, node *result){
         sAns=NULL;
         temp2=temp2->next;
     }
-    // printf("My Main Multiplication Answer: ");
     removeAllZeros(pAns);
-    // display(pAns);
     
     return pAns;
 }
 
+
+//Reverse the node
 node * reverse(node *head1){
     node *temp = (node *)malloc(sizeof(node));
     temp=head1;
@@ -613,6 +653,8 @@ node * reverse(node *head1){
     return temp;
 }
 
+
+// Make a Node
 node *makeList(char str[]){
     int len = strlen(str);
 
@@ -626,6 +668,8 @@ node *makeList(char str[]){
     return mn;
 }
 
+
+// Compare the two numbers
 int compare(node *head1, node *head2){
     
     node *rtemp = (node *)malloc(sizeof(node));
@@ -667,10 +711,11 @@ int compare(node *head1, node *head2){
         rhead1=rhead1->next;
         rhead2=rhead2->next;
     }
-    //printf("Flag=%d",flag);
     return flag;
 }
 
+
+// Raise the number to the power
 node *raiseTo(node *hhead1, node *hhead2){
     node *head1 = (node *)malloc(sizeof(node));
     head1=makeCopy(hhead1);
@@ -699,6 +744,8 @@ node *raiseTo(node *hhead1, node *hhead2){
     return ans;
 }
 
+
+// Count Nodes
 int countNodes(node *head){
     node *temp = (node *)malloc(sizeof(node));
     temp=head;
@@ -710,6 +757,8 @@ int countNodes(node *head){
     return c;
 }
 
+
+// Divide digit by digit
 node *halfDivide(node *hhead1, node *hhead2, node **s){
     node *head1 = (node *)malloc(sizeof(node));
     head1=NULL;
@@ -725,8 +774,6 @@ node *halfDivide(node *hhead1, node *hhead2, node **s){
         hhead2=hhead2->next;
     }
     
-    //addZeros(head1,head2);
-
     node *ans = (node *)malloc(sizeof(node));
     ans=NULL;
     ans=makeList("0");
@@ -785,15 +832,12 @@ node *halfDivide(node *hhead1, node *hhead2, node **s){
     c=reverse(c);
 
     *s=c;
-    // seperator();
-    // printf("\nMain Function Half Divide answer: ");
-    // display(ans);
-    // printf("\nMain Function Half Divide c: ");
-    // display(c);
-    // seperator();
+
     return ans;
 }
 
+
+// Check if the number is zero
 int checkIfZero(node *head){
     node *temp = (node *)malloc(sizeof(node));
     temp=head;
@@ -826,6 +870,8 @@ node *reverseD(node **head1){
     return temp;
 }
 
+
+// Check if the number is not zero
 int checkIfNotZero(node *head){
     node *temp = (node *)malloc(sizeof(node));
     temp=head;
@@ -838,6 +884,7 @@ int checkIfNotZero(node *head){
 }
 
 
+// Divide the number
 node *divide(node *hhead1, node *hhead2){
     node *head1 = (node *)malloc(sizeof(node));
     head1=makeCopy(hhead1);
@@ -879,16 +926,13 @@ node *divide(node *hhead1, node *hhead2){
         append(&mq,q->data);
     }
     
-    // printf("Final Quotient: ");
-    // display(mq);
-    // printf("\n");
-    // printf("Final Remainder: ");
-    // display(rem);
     mq=reverse(mq);
     mq=removeZeros(mq);
     return mq;
 }
 
+
+// Modulo the number
 node *modulus(node *hhead1, node *hhead2){
     node *head1 = (node *)malloc(sizeof(node));
     head1=makeCopy(hhead1);
@@ -930,32 +974,12 @@ node *modulus(node *hhead1, node *hhead2){
         append(&mq,q->data);
     }
     
-    // printf("Final Quotient: ");
-    // display(mq);
-    // printf("\n");
-    // printf("Final Remainder: ");
-    // display(rem);
     rem=reverse(rem);
     return rem;
 }
 
-// node *greaterThan(node *hhead1, node *hhead2){
-//     node *head1=(node *)malloc(sizeof(node));
-//     head1=makeCopy(head1);
 
-//     node *head2=(node *)malloc(sizeof(node));
-//     head2=makeCopy(head2);
-
-//     int comparsion=compare(head1,head2);
-
-//     node *r=(node*)malloc(sizeof(node));
-//     if(comparsion==-1){
-//         append(&r,1);
-//     }
-//     r=removeZeros(r);
-//     return r;
-// }
-
+// Make a copy of the number
 node *makeCopy(node *head){
     node *temp = (node *)malloc(sizeof(node));
     temp=head;
@@ -968,6 +992,8 @@ node *makeCopy(node *head){
     return ret;
 }
 
+
+// Display the Answer (Used for testing only)
 void displayAnswer(node *result){
     node *temp = (node *)malloc(sizeof(node));
     temp=result;
@@ -992,6 +1018,8 @@ void displayAnswer(node *result){
     
 }
 
+
+// Display the Numbers (Used for testing only)
 void printHeads(node *head1, node *head2){
     printf("\n");
     display(head1);
@@ -1000,10 +1028,14 @@ void printHeads(node *head1, node *head2){
     printf("\n");
 }
 
+
+// Seperator (Used for testing only)
 void seperator(){
     printf("\n-----------------------------\n");
 }
 
+
+// Display the Whole Equation (Used for testing only)
 void displayForTesting(node *head1, node *head2, node *result, char op){
     seperator();
     head1 = reverse(head1);
