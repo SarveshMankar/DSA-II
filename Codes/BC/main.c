@@ -10,6 +10,8 @@ char *str;
 
 void main(){
     char exp[100];
+
+    // To check if the equation is valid or not and for Divide by Zero error
     int flag=0;
 
     printf("bc 0.0.1");
@@ -19,14 +21,14 @@ void main(){
         // printf("Enter the expression:\t");
         scanf(" %[^\n]s", exp);
 
+        // Create a new string to store the postfix equation
         char *ans = malloc (sizeof (char) * 100);
         makePostfixEqation(exp,ans);
 
-        // printf("\n%s", ans);
+        // Remove Extra Spaces
         str=removeBlanks(ans);
-        // printf("\n%s", str);
 
-
+        // Make the Linked List
         LL *head = NULL;
         LL *n1,*n2,*n3;
 
@@ -44,6 +46,7 @@ void main(){
             continue;
         }
 
+        //Solve the Euqation
         while(countLLNodes(head)!=1){
             if(traverse->n1!=NULL && traverse->next->n1!=NULL && traverse->next->next->op!=NULL){
                 result=NULL;
@@ -58,36 +61,41 @@ void main(){
 
                 result=solve(&traverse->n1, &traverse->next->n1, traverse->next->next->op);
 
+                //Nodes which have been solved
                 n1=traverse;
                 n2=traverse->next;
                 n3=traverse->next->next;
 
+                //Insert the solution
                 insertTheSolution(traverse, n3, result);
 
+                //Remove the solved nodes
                 removeLLNode(&head, n1);
                 removeLLNode(&head, n2);
                 removeLLNode(&head, n3);
 
                 traverse=head;
             }else{
+                // Get the next small equation
                 traverse=traverse->next;
             }
         }
 
-        // printf("\nAnswer:\t");
 
+        // Display the result
         if(flag==1){
             flag=0;
         }else{
             node *mainOutput = (node *) malloc(sizeof(node));
             mainOutput = reverse(head->n1);
+            mainOutput = removeInitialZeros(mainOutput);
             display(mainOutput);
             printf("\n");
-            // free(mainOutput);
+            free(mainOutput);
         }
 
-        // free(ans);
-        // free(result);
-        // free(traverse);
+        free(ans);
+        free(result);
+        free(traverse);
     }
 }
