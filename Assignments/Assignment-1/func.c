@@ -58,14 +58,15 @@ void insertBT(BT *t, int key){
 }
 
 int searchBT(BT t, int key, int count){
-    if(t!=NULL){
-        inorder(t->left);
-        if(t->data==key){
-            return ++count;
-        }
-        inorder(t->right);
-        ++count;
+    if(t==NULL){
+        return count;
     }
+    
+    searchBST(t->left,key,++count);
+    if(t->data==key){
+        return ++count;
+    }
+    searchBST(t->right,key,++count);
 }
 
 void inorder(BT t){
