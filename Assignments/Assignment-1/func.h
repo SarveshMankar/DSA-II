@@ -11,6 +11,6 @@ void insertBST(BT *t, int key);
 int searchBST(BT t, int key, int count);
 
 void insertBT(BT *t, int key);
-
+int searchBT(BT t, int key, int count);
 
 void inorder(BT t);
