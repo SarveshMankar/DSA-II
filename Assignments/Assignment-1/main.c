@@ -25,19 +25,23 @@ int main(){
     FILE *fptr2;
     fptr2 = fopen("data.txt", "r");
     
-    initBT(&t1);
+    initBT(&t2);
     int num2;
     for(int i=0;i<10;i++){
         fscanf(fptr2, "%d", &num2);
-        insertBT(&t1, num2);
+        insertBT(&t2, num2);
     }
-
-    inorder(t1);
+    
+    printf("\n-----------------\n");
+    inorder(t2);
 
     fclose(fptr2);
 
     int count=0;
-    count=searchBST(t1, 47794, count);
-    printf("Comparison=%d",count);
+    count=searchBST(t1, 61493, count);
+    printf("\nComparison in BST=%d",count);
 
+    count=0;
+    count=searchBT(t1, 30887, count);
+    printf("\nComparison in BT=%d",count);
 }
