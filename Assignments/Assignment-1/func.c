@@ -41,32 +41,63 @@ int searchBST(BT t, int key, int count){
 
 
 void insertBT(BT *t, int key){
-    if(*t==NULL){
-        *t=(node *)malloc(sizeof(node));
-        (*t)->data=key;
-        (*t)->left=NULL;
-        (*t)->right=NULL;
-    }
-    else{
-        if(rand()%2!=0){
-            insertBT(&(*t)->left, key);
-        }
-        else{
-            insertBT(&(*t)->right, key);
-        }
-    }
+	if ( (*t) == NULL){
+		BT n = (BT) malloc(sizeof(node));
+		n->data = key;
+		n->left = n->right = NULL;
+		*t = n;
+	}
+
+	if(rand() % 2 == 0){
+		if(!(*t)->left){
+			BT n = (BT) malloc(sizeof(node));
+			n->data = key;
+			n->left = n->right = NULL;
+			(*t)->left = n;
+			return;
+		}
+
+		insertBT(&(*t)->left, key);
+	}
+	else {
+		if(!(*t)->right){
+			BT n = (BT) malloc(sizeof(node));
+			n->data = key;
+			n->left = n->right = NULL;
+			(*t)->right = n;
+			return;
+		}
+		insertBT(&(*t)->right, key);
+	}
+	return;
 }
 
-int searchBT(BT t, int key, int count){
-    if(t==NULL){
-        return count;
-    }
-    
-    searchBST(t->left,key,++count);
-    if(t->data==key){
-        return ++count;
-    }
-    searchBST(t->right,key,++count);
+
+int count(BT t)
+{
+
+    if (t == NULL)
+        return 0;
+    else
+        return(count(t->left) + 1 + count(t->right));
+}
+
+void searchBT(BT t, int key, int *flag, int *count){
+
+	if(!t)
+		return;
+
+	*count = *count + 1;
+
+	if(t->data == key){
+		*flag = 1;
+		return;
+	}
+	if (*flag == 0)
+		searchBT(t->left, key, flag, count);
+	if (*flag == 0)
+		searchBT(t->right, key, flag, count);
+	return;
 }
 
 void inorder(BT t){
