@@ -30,15 +30,19 @@ void inOrderWithRecursion(BST t);
 void inOrderWithoutRecursion(BST t);
 
 void preOrderWithRecursion(BST t);
+void preOrderWithoutRecursion(BST t);
 
 void postOrderWithRecursion(BST t);
+void postOrderWithoutRecursion(BST t);
 
 int countNodesWithRecursion(BST t);
 int countNodesWithoutRecursion(BST t);
 
 int countLeafNodesWithRecursion(BST t);
+int countLeafNodesWithoutRecursion(BST t);
 
 int countInternalNodesWithRecursion(BST t);
+int countInternalNodesWithoutRecursion(BST t);
 
 int isFullTree(BST t);
 
@@ -127,6 +131,32 @@ void preOrderWithRecursion(BST t){
 	}
 }
 
+void preOrderWithoutRecursion(BST t){    
+    node *p=t;
+
+    if(p==NULL){
+        return;
+    }
+    while (1)
+    {
+        if(p){
+            push(p);
+            printf("%d\t",p->data);
+            p=p->left;
+        }else{
+            if(top){
+                p=pop();
+                p=p->right;
+                // break;
+            }else{
+                break;
+            }
+        }
+    }  
+
+    return;
+}
+
 void inOrderWithRecursion(BST t){
     if(t!=NULL){
 		inOrderWithRecursion(t->left);
@@ -137,7 +167,6 @@ void inOrderWithRecursion(BST t){
 
 void inOrderWithoutRecursion(BST t){
     node *p=t;
-    printf("\n");
 
     if(p==NULL){
         return;
@@ -152,7 +181,6 @@ void inOrderWithoutRecursion(BST t){
                 p=pop();
                 printf("%d\t",p->data);
                 p=p->right;
-                // break;
             }else{
                 break;
             }
@@ -160,7 +188,6 @@ void inOrderWithoutRecursion(BST t){
     }  
 
     return;
-    
 }
 
 void postOrderWithRecursion(BST t){
@@ -171,6 +198,46 @@ void postOrderWithRecursion(BST t){
 	}
 }
 
+void postOrderWithoutRecursion(BST t){
+    node *p=t;
+
+    if(p==NULL){
+        return;
+    }
+    while (1)
+    {
+        if(p){
+            if(p->right){
+                push(p->right);
+            }
+            push(p);
+            p=p->left;
+        }else{
+            if(top){
+                // printf("%d\t",p->data);
+                p=pop();
+                if(!p->right){
+                    printf("%d\t",p->data);
+                    p=NULL;
+                }
+                if(!p){
+                    p=pop();
+                    if(p->data==top->data->data){
+                        printf("%d\t",top->data->data);
+                        push(p);
+                    }
+                }
+                // p=p->right;
+                // break;
+            }else{
+                break;
+            }
+        }
+    }  
+
+    return;
+}
+
 int countNodesWithRecursion(BST t){
     if(t==NULL){
         return 0;
@@ -179,7 +246,30 @@ int countNodesWithRecursion(BST t){
 }
 
 int countNodesWithoutRecursion(BST t){
+    node *p=t;
+    int count=0;
 
+    if(p==NULL){
+        return count;
+    }
+    while (1)
+    {
+        if(p){
+            push(p);
+            p=p->left;
+        }else{
+            if(top){
+                p=pop();
+                count++;
+                // printf("%d\t",p->data);
+                p=p->right;
+            }else{
+                break;
+            }
+        }
+    }  
+
+    return count;
 }
 
 int countLeafNodesWithRecursion(BST t){
@@ -192,11 +282,72 @@ int countLeafNodesWithRecursion(BST t){
     return countLeafNodesWithRecursion(t->left)+countLeafNodesWithRecursion(t->right);
 }
 
+int countLeafNodesWithoutRecursion(BST t){
+    node *p=t;
+    int count=0;
+
+    if(p==NULL){
+        return count;
+    }
+    while (1)
+    {
+        if(p){
+            push(p);
+            p=p->left;
+        }else{
+            if(top){
+                p=pop();
+                if(p->left==NULL && p->right==NULL){
+                    count++;
+                }
+                p=p->right;
+            }else{
+                break;
+            }
+        }
+    }  
+
+    return count;
+}
+
+
 int countInternalNodesWithRecursion(BST t){
     if (t==NULL || (t->left==NULL && t->right==NULL)){
         return 0;
     }
     return 1+countInternalNodesWithRecursion(t->left)+countInternalNodesWithRecursion(t->right);
+}
+
+int countInternalNodesWithoutRecursion(BST t){
+    node *p=t;
+    int count=0;
+
+    if(p==NULL){
+        return count;
+    }
+    while (1)
+    {
+        if(p){
+            push(p);
+            p=p->left;
+        }else{
+            if(top){
+                p=pop();
+                if(p->left==NULL){
+                    if(p->right){
+                        count++;
+                    }
+                }else{
+                    count++;
+                }
+                p=p->right;
+            }else{
+                break;
+            }
+        }
+    }  
+
+    return count;
 }
 
 int isFullTree(BST t){
@@ -268,14 +419,23 @@ int main(){
     postOrderWithRecursion(t);
     printf("\n");
 
-    int cn = countNodesWithRecursion(t);
-    printf("\nCounting Number of Nodes with Recursion:%d\n",cn);
+    int cnr = countNodesWithRecursion(t);
+    printf("\nCounting Number of Nodes with Recursion:%d\n",cnr);
 
-    int cl = countLeafNodesWithRecursion(t);
-    printf("\nCounting Leaf Nodes with Recursion:%d\n",cl);
+    int cni = countNodesWithoutRecursion(t);
+    printf("Counting Number of Nodes without Recursion:%d\n",cni);
+
+    int clr = countLeafNodesWithRecursion(t);
+    printf("\nCounting Leaf Nodes with Recursion:%d\n",clr);
+
+    int cli = countLeafNodesWithoutRecursion(t);
+    printf("Counting Leaf Nodes without Recursion:%d\n",cli);
 
     int ci = countInternalNodesWithRecursion(t);
     printf("\nCounting Internal Nodes with Recursion:%d\n",ci);
+
+    int cr = countInternalNodesWithoutRecursion(t);
+    printf("Counting Internal Nodes without Recursion:%d\n",cr);
 
     int isFull = isFullTree(t);
     printf("\nIs Tree Full: %d",isFull);
@@ -284,9 +444,17 @@ int main(){
     printf("\nHeight of Tree: %d",h);
     printf("\n");
 
+    printf("\nPreOrder Traversal without Recursion:\n");
+    preOrderWithoutRecursion(t);
+    printf("\n");
+
     printf("\nInOrder Traversal without Recursion:\n");
     inOrderWithoutRecursion(t);
     printf("\n");
+
+    // printf("\nPostOrder Traversal without Recursion:\n");
+    // postOrderWithoutRecursion(t);
+    // printf("\n");
 
     printf("\nWorking Well!\n");
 
