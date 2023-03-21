@@ -44,7 +44,8 @@ int countLeafNodesWithoutRecursion(BST t);
 int countInternalNodesWithRecursion(BST t);
 int countInternalNodesWithoutRecursion(BST t);
 
-int isFullTree(BST t);
+int isFullTreeWithRecursion(BST t);
+int isFullTreeWithoutRecursion(BST t);
 
 int height(BST t);
 
@@ -350,7 +351,7 @@ int countInternalNodesWithoutRecursion(BST t){
     return count;
 }
 
-int isFullTree(BST t){
+int isFullTreeWithRecursion(BST t){
     if(!t){
         return 1;
     }
@@ -358,9 +359,34 @@ int isFullTree(BST t){
         return 1;
     }
     if(t->left != NULL && t->right!=NULL){
-        return isFullTree(t->left) && isFullTree(t->right);
+        return isFullTreeWithRecursion(t->left) && isFullTreeWithRecursion(t->right);
     }
     return 0;
+}
+
+int isFullTreeWithoutRecursion(BST t){
+    node *p=t;
+    if(!p){
+        return 1;
+    }
+    top=NULL;
+    while (1){
+        if(p){
+            push(p);
+            p=p->left;
+        }else{
+            if (top){
+                p=pop();
+                if ((p->left && !p->right) || (!p->left && p->right)){
+                    return 0;
+                }
+                p=p->right;
+            }else{
+                break;
+            }
+        }
+    }
+    return 1;
 }
 
 int height(BST t){
@@ -437,8 +463,11 @@ int main(){
     int cr = countInternalNodesWithoutRecursion(t);
     printf("Counting Internal Nodes without Recursion:%d\n",cr);
 
-    int isFull = isFullTree(t);
-    printf("\nIs Tree Full: %d",isFull);
+    int isFullr = isFullTreeWithRecursion(t);
+    printf("\nIs Tree Full with Recursion: %d",isFullr);
+
+    int isFulli = isFullTreeWithoutRecursion(t);
+    printf("\nIs Tree Full without Recursion: %d",isFulli);
 
     int h = height(t);
     printf("\nHeight of Tree: %d",h);
