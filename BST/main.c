@@ -25,6 +25,7 @@ node *pop();
 void initBST(BST *t);
 void insertWithRecursion(BST *t, int key);
 void insertWithoutRecursion(BST *t, int key);
+void insertBT(BST *t, int key);
 
 void inOrderWithRecursion(BST t);
 void inOrderWithoutRecursion(BST t);
@@ -46,6 +47,10 @@ int countInternalNodesWithoutRecursion(BST t);
 
 int isFullTreeWithRecursion(BST t);
 int isFullTreeWithoutRecursion(BST t);
+
+int isCompleteTreeWithoutRecursion(BST t);
+
+int isBST(BST t);
 
 int height(BST t);
 
@@ -389,6 +394,106 @@ int isFullTreeWithoutRecursion(BST t){
     return 1;
 }
 
+int isCompleteTreeWithoutRecursion(BST t){
+    node *p=t;
+    int flag=0;
+    if(!p){
+        return 1;
+    }
+    top=NULL;
+    while (1){
+        if(p){
+            push(p);
+            p=p->left;
+        }else{
+            if(top){
+                p=pop();
+                if(!p->left && p->right){
+                    if (flag==1){
+                        return 0;
+                    }
+                    flag=1;
+                    // return 0;
+                }
+                p=p->right;
+            }else{
+                break;
+            }
+        }
+    }
+    
+}
+
+void insertBT(BST *t, int key){
+	if ( (*t) == NULL){
+		BST n = (BST) malloc(sizeof(node));
+		n->data = key;
+		n->left = n->right = NULL;
+		*t = n;
+	}
+
+	if(rand() % 2 == 0){
+		if(!(*t)->left){
+			BST n = (BST) malloc(sizeof(node));
+			n->data = key;
+			n->left = n->right = NULL;
+			(*t)->left = n;
+			return;
+		}
+
+		insertBT(&(*t)->left, key);
+	}
+	else {
+		if(!(*t)->right){
+			BST n = (BST) malloc(sizeof(node));
+			n->data = key;
+			n->left = n->right = NULL;
+			(*t)->right = n;
+			return;
+		}
+		insertBT(&(*t)->right, key);
+	}
+	return;
+}
+
+int isBST(BST t){
+    node *p=t;
+    node *q;
+
+    if(p==NULL){
+        return 1;
+    }
+    while (1)
+    {
+        if(p){
+            push(p);
+            p=p->left;
+            if(top && p){
+                if(p->data>top->data->data){
+                    return 0;
+                }
+            }
+        }else{
+            if(top){
+                p=pop();
+                // printf("%d\t",p->data);
+                q=p;
+
+                p=p->right;
+                if(q && p){
+                    if(p->data<q->data){
+                        return 0;
+                    }
+                }
+            }else{
+                break;
+            }
+        }
+    }  
+
+    return 1;
+}
+
 int height(BST t){
     if(!t){
         return 0;
@@ -408,21 +513,24 @@ int main(){
     BST t = NULL;
     initBST(&t);
 
-    insertWithRecursion(&t, 10);
-    insertWithRecursion(&t, 5);
-    insertWithRecursion(&t, 15);
-    insertWithRecursion(&t, 3);
-    insertWithRecursion(&t, 7);
-    insertWithRecursion(&t, 12);
-    insertWithRecursion(&t, 17);
-    insertWithRecursion(&t, 15);
+    // insertWithRecursion(&t, 10);
+    // insertWithRecursion(&t, 5);
+    // insertWithRecursion(&t, 15);
+    // insertWithRecursion(&t, 3);
+    // insertWithRecursion(&t, 7);
+    // insertWithRecursion(&t, 12);
 
-    insertWithoutRecursion(&t, 32);
-    insertWithoutRecursion(&t, 1);
-    // insertWithoutRecursion(&t, 8);
-    insertWithoutRecursion(&t, 65);
-    insertWithoutRecursion(&t, 23);
-    insertWithoutRecursion(&t, 4);
+    // insertWithRecursion(&t, 17);
+    // insertWithRecursion(&t, 15);
+
+    // insertWithoutRecursion(&t, 32);
+    // insertWithoutRecursion(&t, 1);
+    // // insertWithoutRecursion(&t, 8);
+    // insertWithoutRecursion(&t, 65);
+    // insertWithoutRecursion(&t, 23);
+    // insertWithoutRecursion(&t, 4);
+
+
 
     // insertWithRecursion(&t, 25);
     // insertWithRecursion(&t, 20);
@@ -431,6 +539,13 @@ int main(){
     // insertWithRecursion(&t, 22);
     // insertWithRecursion(&t, 30);
     // insertWithRecursion(&t, 40);
+
+    // insertBT(&t, 10);
+    // insertBT(&t, 5);
+    // insertBT(&t, 15);
+    // insertBT(&t, 3);
+    // insertBT(&t, 7);
+    // insertBT(&t, 12);
 
 
     printf("PreOrder Traversal with Recursion:\n");
@@ -468,6 +583,12 @@ int main(){
 
     int isFulli = isFullTreeWithoutRecursion(t);
     printf("\nIs Tree Full without Recursion: %d",isFulli);
+
+    int isCompletei = isCompleteTreeWithoutRecursion(t);
+    printf("\n\nIs Tree Complete without Recursion: %d\n",isCompletei);
+
+    int isBSTi = isBST(t);
+    printf("\nIs Tree BST without Recursion: %d\n",isBSTi);
 
     int h = height(t);
     printf("\nHeight of Tree: %d",h);
