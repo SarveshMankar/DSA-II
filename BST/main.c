@@ -54,6 +54,12 @@ int isBST(BST t);
 
 int height(BST t);
 
+void destroyWithRecursion(BST *t);
+node *destroyWithoutRecursion(BST t);
+
+int countLevelNodes(node *t, int curr, int tl);
+int breadthRecusrion(BST t);
+
 void push(node *data){
     stack *s = (stack *)malloc(sizeof(stack));
     s->data=data;
@@ -509,26 +515,90 @@ int height(BST t){
     }
 }
 
+void destroyWithRecursion(BST *t){
+    if(*t){
+        destroyWithRecursion(&(*t)->left);
+        destroyWithRecursion(&(*t)->right);
+        free(*t);
+        *t=NULL;
+    }
+}
+
+node *destroyWithoutRecursion(BST t){
+    if(!t){return NULL;}
+    node *p=t;
+    node *q;
+    top=NULL;
+    while (1){
+        if(p){
+            push(p);
+            p=p->left;
+        }else{
+            if(top){
+                p=pop();
+                q=p->right;
+                // printf("%d\t",p->data);
+                free(p);
+                p=q;
+            }else{
+                break;
+            }
+        }
+    }
+
+    free(q);
+    return NULL;
+    
+}
+
+int dc=0;
+int countLevelNodes(node *t, int curr, int tl){
+	if(t == NULL){
+        // printf("\nAns:%d\n",dc);
+        return dc;
+    }
+    if(curr == tl){
+        dc++;
+        // printf("%d=%d\t",t->data,dc);
+    }
+    countLevelNodes(t->left, curr+1, tl);
+    countLevelNodes(t->right, curr+1, tl);
+}
+
+int breadthRecusrion(BST t){
+    int breadth=0;
+    int temp;
+    for(int i=0;i<height(t);i++){
+        dc=0;
+        temp=countLevelNodes(t,0,i);
+        if(temp>breadth){
+            breadth=temp;
+        }
+    }
+    return breadth;
+}
+
+
 int main(){
     BST t = NULL;
     initBST(&t);
 
-    // insertWithRecursion(&t, 10);
-    // insertWithRecursion(&t, 5);
-    // insertWithRecursion(&t, 15);
-    // insertWithRecursion(&t, 3);
-    // insertWithRecursion(&t, 7);
-    // insertWithRecursion(&t, 12);
+    insertWithRecursion(&t, 10);
+    insertWithRecursion(&t, 5);
+    insertWithRecursion(&t, 15);
+    insertWithRecursion(&t, 3);
+    insertWithRecursion(&t, 7);
+    insertWithRecursion(&t, 12);
 
-    // insertWithRecursion(&t, 17);
-    // insertWithRecursion(&t, 15);
+    insertWithRecursion(&t, 17);
+    insertWithRecursion(&t, 15);
 
-    // insertWithoutRecursion(&t, 32);
-    // insertWithoutRecursion(&t, 1);
-    // // insertWithoutRecursion(&t, 8);
-    // insertWithoutRecursion(&t, 65);
-    // insertWithoutRecursion(&t, 23);
-    // insertWithoutRecursion(&t, 4);
+    insertWithoutRecursion(&t, 32);
+    insertWithoutRecursion(&t, 1);
+    // insertWithoutRecursion(&t, 8);
+    insertWithoutRecursion(&t, 65);
+    insertWithoutRecursion(&t, 23);
+    insertWithoutRecursion(&t, 4);
 
 
 
@@ -605,6 +675,16 @@ int main(){
     // printf("\nPostOrder Traversal without Recursion:\n");
     // postOrderWithoutRecursion(t);
     // printf("\n");
+
+    // printf("\nDestroying Tree:\n");
+    // destroyWithRecursion(&t);
+
+    // printf("\nDestroying Tree:\n");
+    // t=destroyWithoutRecursion(t);
+
+    
+    int breadth=breadthRecusrion(t);
+    printf("\nBreadth of Tree:%d\n",breadth);
 
     printf("\nWorking Well!\n");
 
