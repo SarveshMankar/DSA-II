@@ -109,9 +109,10 @@ void main(){
     displayAnswer(result);*/
 
 
-    char str1[] = "1687894165489456541/645465476";
+    char str1[] = "10-10";
     evaluate(str1,&head1,&head2);
-    divide(head1,head2);
+    result=subtract(head1,head2,result);
+    display(result);
 
     /*node *temp = (node*)malloc(sizeof(node));
     temp=NULL;
