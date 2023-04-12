@@ -109,9 +109,9 @@ void main(){
     displayAnswer(result);*/
 
 
-    char str1[] = "10-10";
+    char str1[] = "10000/1";
     evaluate(str1,&head1,&head2);
-    result=subtract(head1,head2,result);
+    divide(head1,head2);
     display(result);
 
     /*node *temp = (node*)malloc(sizeof(node));
