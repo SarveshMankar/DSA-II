@@ -355,8 +355,10 @@ node *solve(node **hhead1, node **hhead2, operator *myOperator){
 node *removeInitialZeros(node *head){
     node *temp = (node *)malloc(sizeof(node));
     temp = head;
-    while(temp->data == 0){
-        temp = temp->next;
+    if(checkIfNotZero(temp)){
+        while(temp->data == 0){
+            temp = temp->next;
+        }
     }
     return temp;
 }

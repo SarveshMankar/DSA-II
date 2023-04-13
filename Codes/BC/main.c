@@ -91,7 +91,7 @@ void main(){
             mainOutput = removeInitialZeros(mainOutput);
             display(mainOutput);
             printf("\n");
-            free(mainOutput);
+            // free(mainOutput);
         }
 
         free(ans);
