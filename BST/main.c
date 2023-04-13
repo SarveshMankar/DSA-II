@@ -515,6 +515,45 @@ int height(BST t){
     }
 }
 
+// void farLeafNode(BST t){
+//     int t1=0;
+//     int t2=0;
+//     int c=0;
+//     treenode *p=t;
+
+//     stack st;
+//     initStack(&st);
+
+//     while(1){
+//         if(p){
+//             push(&st, p);
+//             p=p->left;
+//             t1++;
+//             printf("\nt1=%d\tt2=%d",t1,t2);
+
+//         }
+//         else{
+//             if(!isStackEmpty(st)){
+//                 p=pop(&st);
+//                 if(!p->left && !p->right){
+//                     if(t1>t2){
+//                         // printf("\nt1=%d\tt2=%d",t1,t2);
+//                         t2=t1;
+//                         c=p->data;
+//                     }
+//                     printf("\t%d",p->data);
+//                     t1--;
+//                 }
+//                 p=p->right;
+//                 printf("\nt1=%d\tt2=%d",t1,t2);
+//             }else{
+//                 break;
+//             }
+//         }
+//     }
+//     printf("\n%d",c); 
+// }
+
 void destroyWithRecursion(BST *t){
     if(*t){
         destroyWithRecursion(&(*t)->left);
