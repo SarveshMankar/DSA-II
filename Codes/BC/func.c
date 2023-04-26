@@ -80,7 +80,7 @@ int isInValidEquation(LL *head){
 
 //Postfix Evaluation
 
-char stack[1000];
+char stack[10000];
 int top = -1;
 
 char *mAnsString;
@@ -569,7 +569,7 @@ node *multiply(node *head1, node *head2, node *result){
     temp2=head2;
 
     int ans;
-    char str[100];
+    char str[10000];
     node *mCarry = (node *)malloc(sizeof(node));
     mCarry=NULL;
     node *mAns = (node *)malloc(sizeof(node));

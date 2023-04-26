@@ -9,7 +9,7 @@
 char *str;
 
 void main(){
-    char exp[100];
+    char exp[10000];
 
     // To check if the equation is valid or not and for Divide by Zero error
     int flag=0;
