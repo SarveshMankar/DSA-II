@@ -12,8 +12,13 @@ void main(){
     insert(h, 40);
     insert(h, 50);
     insert(h, 60);
+    // insert(h, 70);
 
-    // printf("\nSize: %d",h->c);
+    // // printf("\nSize: %d",h->c);
 
+    delete(h,60);
+    printf("\nFinal: ");
     display(h);
+
+    // display(h);
 }
