@@ -30,16 +30,17 @@ void insert(heap *h, int data){
 
     heapify(h);
     // display(h);
-    printf("\n");
+    printf("\nAFter Insert:");
     display(h);
     
     return;
 }
 
-void delete(heap *h, int data){
+void delete(heap *h){
+    int data = h->A[0];
     int flag=0;
     int i=0;
-    for(i; i<h->c;i++){
+    for(i; i<h->c+1;i++){
         if(h->A[i]==data){
             flag=1;
             // printf("OP!");
@@ -53,7 +54,7 @@ void delete(heap *h, int data){
         // printf("\n%d %d",h->A[i], h->A[h->c]);
         h->c--;
     
-        // printf("\n");
+        // printf("\nDeleting:");
         // display(h);
 
         heapifydel(h);
@@ -76,9 +77,9 @@ void heapifydel(heap *h){
     while (i<h->c)
     {
         c++;
-        if(2*i+1>h->c-1){
-            break;
-        }
+        // if(2*i+1>h->c-1){
+        //     break;
+        // }
         if(h->A[i]<h->A[2*i+1] && h->A[i]<h->A[2*i+2]){
             if(h->A[2*i+1]>h->A[2*i+2]){
                 swap(&h->A[i],&h->A[2*i+1]);
@@ -98,6 +99,9 @@ void heapifydel(heap *h){
             i=2*i+2;
         }
         else{
+            break;
+        }
+        if(2*i+1>h->c-1){
             break;
         }
     }

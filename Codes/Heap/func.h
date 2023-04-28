@@ -7,7 +7,7 @@ typedef struct heap
 void init(heap *h);
 void insert(heap *h, int data);
 
-void delete(heap *h, int data);
+void delete(heap *h);
 
 void swap(int *a, int *b);
 

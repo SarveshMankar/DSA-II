@@ -16,7 +16,15 @@ void main(){
 
     // // printf("\nSize: %d",h->c);
 
-    delete(h,60);
+    delete(h);
+    printf("\nFinal: ");
+    display(h);
+
+    delete(h);
+    printf("\nFinal: ");
+    display(h);
+
+    delete(h);
     printf("\nFinal: ");
     display(h);
 
