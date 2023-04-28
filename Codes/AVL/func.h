@@ -12,6 +12,11 @@ void adjustBF(AVL t);
 node *imbalanceNode(AVL t);
 
 void leftRotate(AVL *t, node *imb);
+void rightRotate(AVL *t, node *imb);
+
+void leftRightRotate(AVL *t, node *imb);
+void rightLeftRotate(AVL *t, node *imb);
+
 
 void inorder(AVL t);
 void preorder(AVL t);

@@ -2,6 +2,104 @@
 #include<stdlib.h>
 #include "func.h"
 
+
+void leftRotate(AVL *t, node *imb){
+    node *A = imb;
+    node *B = imb->l;
+    node *P = A->p;
+
+    node *BR=B->r;
+
+    B->r=A;
+    A->l=BR;
+    A->p=B;
+    B->p=P;
+
+    if(BR){
+        BR->p=A;
+    }
+
+    A->bf=0;
+    B->bf=0;
+
+    if((*t)==A){
+        (*t)=B;
+        return;
+    }
+
+    // printf("\n%d\n",(*t)->data);
+    // printf("\n%d\n",(*t)->l->data);
+    // printf("\n%d\n",(*t)->r->data);
+
+    // A->l=NULL;
+    printf("Here\n");
+
+    if(B->p && B->p->l==A){
+        B->p->l=B;
+    }else{
+        B->p->r=B;
+    }
+
+    adjustBF(*t);
+    return;
+}
+
+void rightRotate(AVL *t, node *imb){
+    node *A = imb;
+    node *B = imb->r;
+    node *P = A->p;
+
+    node *BL=B->l;
+
+    B->l=A;
+    A->r=BL;
+    A->p=B;
+    B->p=P;
+
+    if(BL){
+        BL->p=A;
+    }
+
+    A->bf=0;
+    B->bf=0;
+
+    if((*t)==A){
+        (*t)=B;
+        return;
+    }
+
+    // printf("\n%d\n",(*t)->data);
+    // printf("\n%d\n",(*t)->l->data);
+    // printf("\n%d\n",(*t)->r->data);
+
+    // A->l=NULL;
+
+    if(B->p && B->p->l==A){
+        B->p->l=B;
+    }else{
+        B->p->r=B;
+    }
+
+}
+
+void leftRightRotate(AVL *t, node *imb){
+    rightRotate(t,imb->l);
+    printf("Left Right Rotate\n");
+    printf("-----------------\n");
+    preorder(*t);
+    printf("-----------------\n");
+    adjustBF(*t);
+    leftRotate(t,imb);
+    adjustBF(*t);
+
+}
+
+void rightLeftRotate(AVL *t, node *imb){
+    leftRotate(t,imb->r);
+    rightRotate(t,imb);
+    adjustBF(*t);
+}
+
 void insert(AVL *t, int d){
     node *data = (node *)malloc(sizeof(node));
     data->data = d;
@@ -38,39 +136,30 @@ void insert(AVL *t, int d){
         printf("Imbalance node: %d\n" ,imb->data);
     }
 
-    if(imb && imb->bf==2 && imb->l && imb->l->bf==1){
+    do{
+        if(!imb)
+            break;
+        node *parent = imb->p;
+
+        if(imb && imb->bf==2 && imb->l && imb->l->bf==1){
         leftRotate(t,imb);
-    }
-}
+        }else if (imb && imb->bf==-2 && imb->r && imb->r->bf==-1){
+            rightRotate(t,imb);
+        }
+        else if (imb && imb->bf==2 && imb->l && imb->l->bf==-1){
+            leftRightRotate(t,imb);
+        }else if (imb && imb->bf==-2 && imb->r && imb->r->bf==1){
+            rightLeftRotate(t,imb);
+        }
 
-void leftRotate(AVL *t, node *imb){
-    node *A = imb;
-    node *B = imb->l;
-    node *P = A->p;
-
-    node *BR=B->r;
-
-    B->r=A;
-    A->l=BR;
-    A->p=B;
-    B->p=P;
-
-    if(BR){
-        BR->p=A;
-    }
-
-
-    if((*t)==A){
-        (*t)=B;
-    }
-
-    // printf("\n%d\n",(*t)->data);
-    // printf("\n%d\n",(*t)->l->data);
-    // printf("\n%d\n",(*t)->r->data);
-
-    // A->l=NULL;
-
-    adjustBF(A);
+        adjustBF(parent);
+        imb = imbalanceNode(parent);
+    }while (imb);
+    
+    adjustBF(*t);
+    printf("--------------\nMain Preoder traversal:\n");
+    preorder(*t);
+    printf("--------------\n");
 }
 
 void adjustBF(AVL t){
