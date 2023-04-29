@@ -1061,10 +1061,13 @@ void  performCalculations(char exp[]){
 
     int flag=0;
     char *str;
+
+    // Create a new string to store the postfix equation
     char *ans = malloc (sizeof (char) * 10000);
     makePostfixEqation(exp,ans);  
 
-     str=removeBlanks(ans);
+    // Remove Extra Spaces
+    str=removeBlanks(ans);
 
     // Make the Linked List
     LL *head = NULL;
@@ -1078,6 +1081,13 @@ void  performCalculations(char exp[]){
     LL *traverse = (LL *)malloc(sizeof(LL));
     traverse = head; 
 
+    // if(isInValidEquation(head)==1){
+    //     // flag=1;
+    //     printf("Invalid Equation! (Hint: Check the Operators!)\n");
+    //     continue;
+    // }
+
+    //Solve the Euqation
     while(countLLNodes(head)!=1){
         if(traverse->n1!=NULL && traverse->next->n1!=NULL && traverse->next->next->op!=NULL){
             result=NULL;
@@ -1112,6 +1122,7 @@ void  performCalculations(char exp[]){
         }
     }
 
+    // Display the result
     if(flag==1){
         flag=0;
     }else{
