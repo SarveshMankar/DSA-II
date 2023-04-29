@@ -728,6 +728,10 @@ node *raiseTo(node *hhead1, node *hhead2){
     c=NULL;
     c=makeList("1");
 
+    if(checkIfZero(hhead2)){
+        return c;
+    }
+
     node *o = (node *)malloc(sizeof(node));
     o=makeList("1");
     node *t = (node *)malloc(sizeof(node));

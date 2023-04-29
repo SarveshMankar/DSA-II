@@ -10,6 +10,7 @@ char *str;
 
 void main(){
     char exp[10000];
+    //32423542387527357982375328975823758+98327582375872358723573278758347658734867348*83975823758327857382758327523/7382-385634986^2%2
 
     // To check if the equation is valid or not and for Divide by Zero error
     int flag=0;
@@ -18,11 +19,13 @@ void main(){
     printf("\nDeveloped by: Sarvesh Mankar\n");
 
     while(1){
+        char exp[10000];
+        
         // printf("Enter the expression:\t");
         scanf(" %[^\n]s", exp);
 
         // Create a new string to store the postfix equation
-        char *ans = malloc (sizeof (char) * 100);
+        char *ans = malloc (sizeof (char) * 10000);
         makePostfixEqation(exp,ans);
 
         // Remove Extra Spaces
@@ -40,11 +43,11 @@ void main(){
         LL *traverse = (LL *)malloc(sizeof(LL));
         traverse = head;
 
-        if(isInValidEquation(head)==1){
-            // flag=1;
-            printf("Invalid Equation! (Hint: Check the Operators!)\n");
-            continue;
-        }
+        // if(isInValidEquation(head)==1){
+        //     // flag=1;
+        //     printf("Invalid Equation! (Hint: Check the Operators!)\n");
+        //     continue;
+        // }
 
         //Solve the Euqation
         while(countLLNodes(head)!=1){
