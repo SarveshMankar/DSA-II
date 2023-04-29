@@ -12,12 +12,13 @@ void leftRotate(AVL *t, node *imb){
 
     B->r=A;
     A->l=BR;
-    A->p=B;
     B->p=P;
 
     if(BR){
         BR->p=A;
     }
+
+    A->p=B;
 
     A->bf=0;
     B->bf=0;
@@ -40,7 +41,7 @@ void leftRotate(AVL *t, node *imb){
         B->p->r=B;
     }
 
-    adjustBF(*t);
+    // adjustBF(*t);
     return;
 }
 
@@ -53,12 +54,13 @@ void rightRotate(AVL *t, node *imb){
 
     B->l=A;
     A->r=BL;
-    A->p=B;
     B->p=P;
 
     if(BL){
         BL->p=A;
     }
+
+    A->p=B;
 
     A->bf=0;
     B->bf=0;
@@ -88,16 +90,16 @@ void leftRightRotate(AVL *t, node *imb){
     printf("-----------------\n");
     preorder(*t);
     printf("-----------------\n");
-    adjustBF(*t);
+    // adjustBF(*t);
     leftRotate(t,imb);
-    adjustBF(*t);
+    // adjustBF(*t);
 
 }
 
 void rightLeftRotate(AVL *t, node *imb){
     leftRotate(t,imb->r);
     rightRotate(t,imb);
-    adjustBF(*t);
+    // adjustBF(*t);
 }
 
 void insert(AVL *t, int d){
@@ -142,7 +144,7 @@ void insert(AVL *t, int d){
         node *parent = imb->p;
 
         if(imb && imb->bf==2 && imb->l && imb->l->bf==1){
-        leftRotate(t,imb);
+            leftRotate(t,imb);
         }else if (imb && imb->bf==-2 && imb->r && imb->r->bf==-1){
             rightRotate(t,imb);
         }
