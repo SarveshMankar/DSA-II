@@ -78,3 +78,5 @@ void displayForTesting(node *head1, node *head2, node *result, char op);
 
 void display(node *head);
 node *removeInitialZeros(node *head);
+
+void performCalculations(char exp[]);

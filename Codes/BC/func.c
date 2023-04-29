@@ -1056,3 +1056,74 @@ void displayForTesting(node *head1, node *head2, node *result, char op){
     display(result);
     seperator();
 }
+
+void  performCalculations(char exp[]){
+
+    int flag=0;
+    char *str;
+    char *ans = malloc (sizeof (char) * 10000);
+    makePostfixEqation(exp,ans);  
+
+     str=removeBlanks(ans);
+
+    // Make the Linked List
+    LL *head = NULL;
+    LL *n1,*n2,*n3;
+
+    head = makeIt(str, head);
+
+    node *result=(node *)malloc(sizeof(node));
+    result=NULL;
+
+    LL *traverse = (LL *)malloc(sizeof(LL));
+    traverse = head; 
+
+    while(countLLNodes(head)!=1){
+        if(traverse->n1!=NULL && traverse->next->n1!=NULL && traverse->next->next->op!=NULL){
+            result=NULL;
+
+            if(traverse->next->next->op->op=='/'){
+                if(checkIfZero(traverse->next->n1)){
+                    printf("Runtime error (func=(main), adr=9): Divide by zero\n");
+                    flag=1;
+                    break ; 
+                }
+            }
+
+            result=solve(&traverse->n1, &traverse->next->n1, traverse->next->next->op);
+
+            //Nodes which have been solved
+            n1=traverse;
+            n2=traverse->next;
+            n3=traverse->next->next;
+
+            //Insert the solution
+            insertTheSolution(traverse, n3, result);
+
+            //Remove the solved nodes
+            removeLLNode(&head, n1);
+            removeLLNode(&head, n2);
+            removeLLNode(&head, n3);
+
+            traverse=head;
+        }else{
+            // Get the next small equation
+            traverse=traverse->next;
+        }
+    }
+
+    if(flag==1){
+        flag=0;
+    }else{
+        node *mainOutput = (node *) malloc(sizeof(node));
+        mainOutput = reverse(head->n1);
+        mainOutput = removeInitialZeros(mainOutput);
+        display(mainOutput);
+        printf("\n");
+        // free(mainOutput);
+    }
+
+    free(ans);
+    free(result);
+    free(traverse);
+}
