@@ -9,7 +9,7 @@ typedef node* AVL;
 
 void initAVL(AVL *t);
 void insertNode(AVL *t, char name[]);
-node *removeNode(AVL t, char name[]);
+node *removeNode(AVL *t, char name[]);
 
 int height(AVL t);
 node *imbalanceNode(AVL t);

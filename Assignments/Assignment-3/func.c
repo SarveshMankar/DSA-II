@@ -79,35 +79,14 @@ void insertNode(AVL *t, char name[]){
     // printf("--------------\n");
 }
 
-node *removeNode(AVL t, char name[]){
-    if (t == NULL)
-        return t;
+node *removeNode(AVL *t, char name[]){
+    if (*t == NULL)
+        return *t;
 
-    node *temp = t;
-
-    // if (strcmp(name, temp->name) < 0)
-    //     temp->left = removeNode(temp->left, name);
-    // else if (strcmp(name, temp->name) > 0)
-    //     temp->right = removeNode(temp->right, name);
-    // else {
-    //     if (temp->left == NULL) {
-    //         node* temp1 = temp->right;
-    //         free(temp);
-    //         return temp1;
-    //     }
-    //     else if (temp->right == NULL) {
-    //         node* temp1 = temp->left;
-    //         free(temp);
-    //         return temp1;
-    //     }
-    //     node* temp2 = inOrderSuccessor(temp->right);
-    //     strcpy(temp->name, name);
-        
-    //     temp->right = removeNode(temp->right, temp->name);
-    // }
+    node *temp = *t;
 
     node *p,*q;
-    p=t;
+    p=*t;
     q=NULL;
     while(p!=NULL){
         if(strcmp(name,p->name)==0){
@@ -124,6 +103,7 @@ node *removeNode(AVL t, char name[]){
         return NULL;
     }
     if(!p->left && !p->right){
+        // printf("Parent: %s\n",q->name);
         if(q){
             if(q->left==p){
                 q->left=NULL;
@@ -131,9 +111,9 @@ node *removeNode(AVL t, char name[]){
                 q->right=NULL;
             }
         }else{
-            t=NULL;
+            *t=NULL;
         }
-        free(p);
+        // free(p);
     }else if(p->left && !p->right){
         if(q){
             if(q->left==p){
@@ -143,9 +123,9 @@ node *removeNode(AVL t, char name[]){
             }
             p->left->parent=q;
         }else{
-            t=p->left;
+            *t=p->left;
         }
-        free(p);
+        // free(p);
     }else if(!p->left && p->right){
         if(q){
             if(q->left==p){
@@ -155,51 +135,68 @@ node *removeNode(AVL t, char name[]){
             }
             p->right->parent=q;
         }else{
-            t=p->right;
+            *t=p->right;
         }
-        free(p);
+        // free(p);
     }else{
         node *r;
         r=p->left;
-        if(!r->right){
-            p->left=r->left;
-            r->parent=p;
-            strcpy(p->left->name,r->left->name);
-        }
-        node *pr=NULL;
-        while(r->right){
-            pr=r;
+        while (r->right){
             r=r->right;
         }
-        p->right=r->left;
+
         strcpy(p->name,r->name);
-    }
 
-    adjustBF(temp);
+        removeNode(&(p->left),r->name);
+
+        // printf("\nDeleting==========\n");
+        // traverse(*t);
+
+        }
+
+        // node *successor = inOrderSuccessor(p);
+        // printf("%s\n",q->name);
+        // printf("%s\n",successor->name);
+        // if(q->left==p){
+        //     q->left=successor;
+        //     successor->parent=q;
+        // }else if (q->right==p){
+        //     q->right=successor;
+        //     successor->parent=q;
+        // }
+        // successor->parent->left=NULL;
+    // }
+
+    printf("\n==========\n");
+    // traverse(t);
+
+    adjustBF(*t);
+
     node * imb = (node *)malloc(sizeof(node));
-    imb = imbalanceNode(temp->parent);
+    imb = imbalanceNode(*t);
 
+    // printf("\nImbalaced Data:- %s",imb->name);
     do{
         if(!imb)
             break;
         node *parent = imb->parent;
 
         if(imb && imb->balance==2 && imb->left && imb->left->balance==1){
-            leftRotate(&t,imb);
+            leftRotate(t,imb);
         }else if (imb && imb->balance==-2 && imb->right && imb->right->balance==-1){
-            rightRotate(&t,imb);
+            rightRotate(t,imb);
         }
         else if (imb && imb->balance==2 && imb->left && imb->left->balance==-1){
-            leftRightRotate(&t,imb);
+            leftRightRotate(t,imb);
         }else if (imb && imb->balance==-2 && imb->right && imb->right->balance==1){
-            rightLeftRotate(&t,imb);
+            rightLeftRotate(t,imb);
         }
 
-        adjustBF(parent);
+        adjustBF(*t);
         imb = imbalanceNode(parent);
     }while (imb);
     
-    adjustBF(temp);
+    adjustBF(*t);
 
     return temp;
 }
@@ -235,8 +232,14 @@ node *imbalanceNode(AVL t){
 int height(AVL t){
     if(!t)
         return 0;
-    int lh = height(t->left);
-    int rh = height(t->right);
+    int lh = 0;
+    int rh = 0;
+    if (t->left){
+        lh = height(t->left);
+    }
+    if (t->right){
+        rh = height(t->right);
+    }
     return (lh > rh ? lh : rh) + 1;
 }
 
@@ -335,8 +338,7 @@ void traverse(AVL t){
     if(t == NULL){
         return;
     }
-
-    traverse(t->left);
     printf("%s\t%d\n", t->name, t->balance);
+    traverse(t->left);
     traverse(t->right);
 }

@@ -21,13 +21,12 @@ int main(){
 
     traverse(head);
 
-    removeNode(head, "Zoey");    
+    printf("\n==========\n");
+
+    removeNode(&head, "Liam");    
     traverse(head);
 
-    removeNode(head, "William");    
-    traverse(head);
-
-    destroyAVL(head);
+    // destroyAVL(head);
 
     return 0;
 }
