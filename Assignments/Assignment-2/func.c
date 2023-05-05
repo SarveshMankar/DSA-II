@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<limits.h>
+#include<math.h>
 #include "func.h"
 
 void initBST(aBST *t){
@@ -68,27 +69,13 @@ void printABST(aBST *t){
 }
 
 int height(aBST *t){
-    int hn=0;
-    for(int i=t->s-1;i>=0;i--){
-        if(t->A[i]!=INT_MIN){
-            hn=t->A[i];
-            break;
-        }
-    }
-    
+    int i=t->s;
     int h=0;
-    int p=0;
-    while (p<t->s && t->A[p]!=INT_MIN){
-        if(t->A[p]<hn){
-            p=p*2+1;
-        }else{
-            p=p*2+2;
-        }
+    while (i>0){
+        i=(i-1)/2;
         h++;
     }
-
-    return h;
-
+    return h+1;
 }
 
 int countLeafNodes(aBST *t){
@@ -118,17 +105,19 @@ int isComplete(aBST *t){
 void levelOrder(aBST *t){
     int l=1;
     int p=0;
+    int te=0;
     int p1=0;
     int i=0;
     while(t->s>p1){
         if(t->A[p]!=INT_MIN){
             printf("%d ",t->A[p]);
-            i++;
-            if(i==l){
-                printf("\n");
-                l=l*2;
-                i=0;
-            }
+        }
+        i++;
+        if(i==l){
+            printf("\n");
+            l=pow(2,te)+1;
+            te++;
+            i=0;
         }
         p++;
         p1++;
