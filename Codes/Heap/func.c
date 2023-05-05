@@ -3,35 +3,20 @@
 #include "func.h"
 
 void init(heap *h){
-    h->A=(int*)malloc(100*sizeof(int));
+    h->A=NULL;
     h->s=100;
     h->c=-1;
 }
 
-void insert(heap *h, int data){
-    if(h->c==-1){
-        h->A=(int*)malloc(sizeof(int));
-        if(!h){
-            return;
-        }
-        h->c++;
-        h->A[h->c]=data;
+void insert(heap *h, int data){    
+    h->A=realloc(h->A,(h->c+2)*sizeof(int));
+    if(!h->A){
         return;
     }
-    if(h->c<=h->s){
-        h->A=realloc(h->A,(h->c+1)*sizeof(int));
-        if(!h->A){
-            return;
-        }
-        h->c++;
-        h->A[h->c]=data;
-
-    }
+    h->c++;
+    h->A[h->c]=data;
 
     heapify(h);
-    // display(h);
-    printf("\nAFter Insert:");
-    display(h);
     
     return;
 }
@@ -43,20 +28,13 @@ void delete(heap *h){
     for(i; i<h->c+1;i++){
         if(h->A[i]==data){
             flag=1;
-            // printf("OP!");
             break;
         }
     }
 
     if(flag){
-        // printf("\n%d %d",h->A[i], h->A[h->c]);
         swap(&h->A[i],&h->A[h->c]);
-        // printf("\n%d %d",h->A[i], h->A[h->c]);
         h->c--;
-    
-        // printf("\nDeleting:");
-        // display(h);
-
         heapifydel(h);
     }
     return;
@@ -65,7 +43,6 @@ void delete(heap *h){
 void heapify(heap *h){
     int i=h->c;
     while(i>0 && h->A[i]>h->A[(i-1)/2]){
-        // printf("\nHeapify: %d %d",h->A[i],h->A[(i-1)/2]);
         swap(&h->A[i],&h->A[(i-1)/2]);
         i=(i-1)/2;
     }
@@ -74,34 +51,24 @@ void heapify(heap *h){
 void heapifydel(heap *h){
     int i=0;
     int c=0;
+    int max=0;
+    int imax=0;
     while (i<h->c)
     {
         c++;
-        // if(2*i+1>h->c-1){
-        //     break;
-        // }
-        if(h->A[i]<h->A[2*i+1] && h->A[i]<h->A[2*i+2]){
-            if(h->A[2*i+1]>h->A[2*i+2]){
-                swap(&h->A[i],&h->A[2*i+1]);
-                i=2*i+1;
-            }
-            else{
-                swap(&h->A[i],&h->A[2*i+2]);
-                i=2*i+2;
-            }
-        }
-        else if(h->A[i]<h->A[2*i+1]){
-            swap(&h->A[i],&h->A[2*i+1]);
-            i=2*i+1;
-        }
-        else if(h->A[i]<h->A[2*i+2]){
-            swap(&h->A[i],&h->A[2*i+2]);
-            i=2*i+2;
-        }
-        else{
+        if(2*i+1>h->c-1){
             break;
         }
-        if(2*i+1>h->c-1){
+        if(h->A[2*i+1]>h->A[2*i+2]){
+            imax=2*i+1;
+        }else{
+            imax=2*i+2;
+        }
+
+        if(h->A[i]<h->A[imax]){
+            swap(&h->A[i],&h->A[imax]);
+            i=imax;
+        }else{
             break;
         }
     }
