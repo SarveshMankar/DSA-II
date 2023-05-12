@@ -19,11 +19,13 @@ int main(){
         insertNode(&head, name);
     }
 
-    traverse(head);
+    // traverse(head);
+    removeNode(&head, "Guzman");    
 
-    printf("\n==========\n");
 
-    removeNode(&head, "Liam");    
+    printf("\n========== Main Answer\n");
+
+    // removeNode(&head, "Liam");    
     traverse(head);
 
     // destroyAVL(head);

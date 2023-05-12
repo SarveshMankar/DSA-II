@@ -73,7 +73,7 @@ void insertNode(AVL *t, char name[]){
         imb = imbalanceNode(parent);
     }while (imb);
     
-    adjustBF(*t);
+    adjustBF(parent->parent); //Just for precaution :)
     // printf("--------------\nMain traversal:\n");
     // traverse(*t);
     // printf("--------------\n");
@@ -170,7 +170,7 @@ node *removeNode(AVL *t, char name[]){
     printf("\n==========\n");
     // traverse(t);
 
-    adjustBF(*t);
+    adjustBF(p);
 
     node * imb = (node *)malloc(sizeof(node));
     imb = imbalanceNode(*t);
@@ -192,11 +192,11 @@ node *removeNode(AVL *t, char name[]){
             rightLeftRotate(t,imb);
         }
 
-        adjustBF(*t);
+        adjustBF(imb->parent);
         imb = imbalanceNode(parent);
     }while (imb);
     
-    adjustBF(*t);
+    // adjustBF(imb->parent);
 
     return temp;
 }
@@ -274,7 +274,7 @@ void leftRotate(AVL *t, node *imb){
         B->parent->right=B;
     }
 
-    adjustBF(*t);
+    adjustBF(imb->parent);
     return;
 }
 
@@ -313,15 +313,16 @@ void rightRotate(AVL *t, node *imb){
 
 void leftRightRotate(AVL *t, node *imb){
     rightRotate(t,imb->left);
-    adjustBF(*t);
+    adjustBF(imb->parent);
     leftRotate(t,imb);
-    adjustBF(*t);
+    adjustBF(imb->parent);
 }
 
 void rightLeftRotate(AVL *t, node *imb){
     leftRotate(t,imb->right);
+    adjustBF(imb->parent);
     rightRotate(t,imb);
-    adjustBF(*t);
+    adjustBF(imb->parent);
 }
 
 void destroyAVL(AVL t){
@@ -339,6 +340,9 @@ void traverse(AVL t){
         return;
     }
     printf("%s\t%d\n", t->name, t->balance);
+    // if(t->parent){
+    //     printf("%s\t%d\n", t->parent->name, t->parent->balance);
+    // }
     traverse(t->left);
     traverse(t->right);
 }
