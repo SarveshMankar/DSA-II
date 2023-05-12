@@ -41,7 +41,7 @@ void leftRotate(AVL *t, node *imb){
         B->p->r=B;
     }
 
-    // adjustBF(*t);
+    adjustBF(*t);
     return;
 }
 
@@ -67,6 +67,7 @@ void rightRotate(AVL *t, node *imb){
 
     if((*t)==A){
         (*t)=B;
+        adjustBF(*t);
         return;
     }
 
@@ -81,25 +82,26 @@ void rightRotate(AVL *t, node *imb){
     }else{
         B->p->r=B;
     }
+    adjustBF(*t);
 
 }
 
 void leftRightRotate(AVL *t, node *imb){
     rightRotate(t,imb->l);
-    printf("Left Right Rotate\n");
-    printf("-----------------\n");
-    preorder(*t);
-    printf("-----------------\n");
-    // adjustBF(*t);
+    // printf("Left Right Rotate\n");
+    // printf("-----------------\n");
+    // preorder(*t);
+    // printf("-----------------\n");
+    adjustBF(*t);
     leftRotate(t,imb);
-    // adjustBF(*t);
+    adjustBF(*t);
 
 }
 
 void rightLeftRotate(AVL *t, node *imb){
     leftRotate(t,imb->r);
     rightRotate(t,imb);
-    // adjustBF(*t);
+    adjustBF(*t);
 }
 
 void insert(AVL *t, int d){
