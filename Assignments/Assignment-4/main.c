@@ -48,9 +48,39 @@ void main(){
     // printf("\nFinal: ");
     // display(h);
 
-    sortUsingHeap(h);
-    printf("\nFinal: ");
-    display(h);
+    
 
+    // sortUsingHeap(h);
+    // delete(h);
+    // printf("\nFinal: ");
     // display(h);
+    // delete(h);
+    // printf("\nFinal: ");
+    // display(h);
+    // delete(h);
+    // printf("\nFinal: ");
+    // display(h);
+    // delete(h);
+    // printf("\nFinal: ");
+    // display(h);
+    // delete(h);
+    // printf("\nFinal: ");
+    // display(h);
+    // delete(h);
+    // printf("\nFinal: ");
+    // display(h);
+    // delete(h);
+    // printf("\nFinal: ");
+    // display(h);
+    // delete(h);
+    // printf("\nFinal: ");
+    // display(h);
+
+    // insert(h, 10);
+    // printf("\nAfter Insert:");
+    // display(h);
+
+    printf("\nFinal: ");
+    sortUsingHeap(h);
+    display(h);
 }

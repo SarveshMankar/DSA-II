@@ -27,21 +27,17 @@ void insert(heap *h, int data){
 }
 
 void delete(heap *h){
-    int data = h->A[0];
-    int flag=0;
-    int i=0;
-    for(i; i<h->c+1;i++){
-        if(h->A[i]==data){
-            flag=1;
-            break;
-        }
+    if(h->c<=0){
+        h->c=-1;
+        return;
     }
 
-    if(flag){
-        swap(&h->A[i],&h->A[h->c]);
-        h->c--;
-        heapifydel(h);
-    }
+    int data = h->A[0];
+
+    swap(&h->A[0],&h->A[h->c]);
+    h->c--;
+    heapifydel(h);
+
     return;
 }
 
@@ -55,12 +51,9 @@ void heapify(heap *h){
 
 void heapifydel(heap *h){
     int i=0;
-    int c=0;
-    int max=0;
     int imax=0;
     while (i<h->c)
     {
-        c++;
         if(2*i+1>h->c-1){
             break;
         }
@@ -77,7 +70,6 @@ void heapifydel(heap *h){
             break;
         }
     }
-    
 }
 
 void sortUsingHeap(heap *h){
@@ -86,33 +78,20 @@ void sortUsingHeap(heap *h){
 
     for(int j=0; j<nodes; j++){
         int data = h->A[0];
-        int flag=0;
         int i=0;
-        for(i; i<h->c+1;i++){
-            if(h->A[i]==data){
-                flag=1;
-                break;
-            }
-        }
-
-        if(flag){
-            swap(&h->A[i],&h->A[index]);
-            index--;
-            // h->c--;
-            heapifysort(h, index);
-        }
+        
+        swap(&h->A[i],&h->A[index]);
+        index--;
+        // h->c--;
+        heapifysort(h, index);
     }
     return;
 }
 
 void heapifysort(heap *h, int index){
     int i=0;
-    int c=0;
-    int max=0;
     int imax=0;
-    while (i<index)
-    {
-        c++;
+    while (i<index){
         if(2*i+1>index-1){
             break;
         }
