@@ -6,31 +6,71 @@ void main(){
     heap *h = (heap*) malloc(sizeof(heap));
     init(h);
 
-    insert(h, 10);
+    // insert(h, 10);
+    // printf("\nAfter Insert:");
+    // display(h);
+    
+    // insert(h, 20);
+    // printf("\nAfter Insert:");
+    // display(h);
+
+    // insert(h, 30);
+    // printf("\nAfter Insert:");
+    // display(h);
+
+    // insert(h, 40);
+    // printf("\nAfter Insert:");
+    // display(h);
+
+    // insert(h, 50);
+    // printf("\nAfter Insert:");
+    // display(h);
+
+    // insert(h, 60);
+    // printf("\nAfter Insert:");
+    // display(h);
+
+    // insert(h, 70);
+    // printf("\nAfter Insert:");
+    // display(h);
+
+    insert(h, 12);
     printf("\nAfter Insert:");
     display(h);
     
-    insert(h, 20);
+    insert(h, 1);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 30);
+    insert(h, 13);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 40);
+    insert(h, 121);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 50);
+    insert(h, 98);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 60);
+    insert(h, 17);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 70);
+    insert(h, 15);
+    printf("\nAfter Insert:");
+    display(h);
+
+    insert(h, 45);
+    printf("\nAfter Insert:");
+    display(h);
+
+    insert(h, 3);
+    printf("\nAfter Insert:");
+    display(h);
+
+    insert(h, 23);
     printf("\nAfter Insert:");
     display(h);
 
@@ -80,7 +120,10 @@ void main(){
     // printf("\nAfter Insert:");
     // display(h);
 
-    printf("\nFinal: ");
+    delete(h);
+
     sortUsingHeap(h);
+
+    printf("\nFinal: ");
     display(h);
 }

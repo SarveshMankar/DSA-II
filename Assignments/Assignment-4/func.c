@@ -12,7 +12,7 @@ void insert(heap *h, int data){
     if(h->c==-1){
         h->A=realloc(h->A,(h->c+2)*sizeof(int));
     }else{
-        h->A=realloc(h->A,(h->c+1)*sizeof(int));
+        h->A=realloc(h->A,(h->c+2)*sizeof(int));
     }
 
     if(!h->A){
@@ -76,14 +76,25 @@ void sortUsingHeap(heap *h){
     int nodes=h->c+1;
     int index=h->c;
 
+    int maxlimit=0;
+    if((index+1)%2==0){
+        maxlimit=0;
+    }else{
+        maxlimit=1;
+    }
+
     for(int j=0; j<nodes; j++){
         int data = h->A[0];
         int i=0;
         
         swap(&h->A[i],&h->A[index]);
         index--;
-        // h->c--;
+
         heapifysort(h, index);
+        if(index==maxlimit){
+            break;
+        }
+
     }
     return;
 }
@@ -91,7 +102,7 @@ void sortUsingHeap(heap *h){
 void heapifysort(heap *h, int index){
     int i=0;
     int imax=0;
-    while (i<index){
+    while (i<index+1){
         if(2*i+1>index-1){
             break;
         }
