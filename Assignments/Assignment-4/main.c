@@ -122,6 +122,9 @@ void main(){
 
     delete(h);
 
+    printf("\nAfter Delete: ");
+    display(h);
+
     sortUsingHeap(h);
 
     printf("\nFinal: ");

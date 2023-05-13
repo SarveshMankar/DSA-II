@@ -94,8 +94,10 @@ void sortUsingHeap(heap *h){
         if(index==maxlimit){
             break;
         }
-
     }
+
+    // if(h->A[0] > h->A[1])
+    //     swap(&h->A[0], &h->A[1]);
     return;
 }
 
