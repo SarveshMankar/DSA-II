@@ -2,131 +2,151 @@
 #include<stdlib.h>
 #include "func.h"
 
-void main(){
+int main(){
     heap *h = (heap*) malloc(sizeof(heap));
     init(h);
 
-    // insert(h, 10);
-    // printf("\nAfter Insert:");
-    // display(h);
-    
-    // insert(h, 20);
-    // printf("\nAfter Insert:");
-    // display(h);
+    // int type;
+    // printf("\n1. Max Heap\n2. Min Heap\n");
+    // scanf("%d",&type);
 
-    // insert(h, 30);
-    // printf("\nAfter Insert:");
-    // display(h);
+    // if (type==1){
+    //     int t=1;
+    //     while(t){
+    //         printf("\n1. Insert\n2. Delete\n3. Display\n4. Sort in Ascending Order\n5. Sort in Descending Order \n6. Exit\n");
+    //         int ch;
+    //         scanf("%d",&ch);
 
-    // insert(h, 40);
-    // printf("\nAfter Insert:");
-    // display(h);
+    //         switch (ch){
+    //         case 1:
+    //             printf("\nEnter data: ");
+    //             int data;
+    //             scanf("%d",&data);
+    //             maxheap_insert(h, data);
+    //             printf("\nAfter Insert:");
+    //             display(h);
+    //             break;
+    //         case 2:
+    //             maxheap_delete(h);
+    //             printf("\nAfter Delete: ");
+    //             display(h);
+    //             break;
+    //         case 3:
+    //             printf("\nDisplay: ");
+    //             display(h);
+    //             break;
+    //         case 4:
+    //             maxheap_sortUsingHeap(h);
+    //             printf("\nAfter Sorting in Ascending Order: ");
+    //             display(h);
+    //             break;
+    //         case 5:
+    //             maxheap_sortUsingHeap(h);
+    //             printf("\nAfter Sorting in Descending Order: ");
+    //             break;
+    //         case 6:
+    //             t=0;
+    //             break;
+    //         default:
+    //             break;
+    //         }
+    //     }
+    // }else if (type==2){
+    //     int t=1;
+    //     while(t){
+    //         printf("\n1. Insert\n2. Delete\n3. Display\n4. Sort in Ascending Order\n5. Sort in Descending Order \n6. Exit\n");
+    //         int ch;
+    //         scanf("%d",&ch);
 
-    // insert(h, 50);
-    // printf("\nAfter Insert:");
-    // display(h);
+    //         switch (ch){
+    //         case 1:
+    //             printf("\nEnter data: ");
+    //             int data;
+    //             scanf("%d",&data);
+    //             maxheap_insert(h, data);
+    //             printf("\nAfter Insert:");
+    //             display(h);
+    //             break;
+    //         case 2:
+    //             maxheap_delete(h);
+    //             printf("\nAfter Delete: ");
+    //             display(h);
+    //             break;
+    //         case 3:
+    //             printf("\nDisplay: ");
+    //             display(h);
+    //             break;
+    //         case 4:
+    //             maxheap_sortUsingHeap(h);
+    //             printf("\nAfter Sorting in Ascending Order: ");
+    //             display(h);
+    //             printf("Ok");
+    //             break;
+    //         case 5:
+    //             maxheap_sortUsingHeap(h);
+    //             printf("\nAfter Sorting in Descending Order: ");
+    //             display(h);
+    //             break;
+    //         case 6:
+    //             t=0;
+    //             break;
+    //         default:
+    //             break;
+    //         }
+    //     }
+    // }else{
+    //     printf("\nInvalid Choice\n");
+    // } 
 
-    // insert(h, 60);
-    // printf("\nAfter Insert:");
-    // display(h);
-
-    // insert(h, 70);
-    // printf("\nAfter Insert:");
-    // display(h);
-
-    insert(h, 12);
+    minheap_insert(h, 12);
     printf("\nAfter Insert:");
     display(h);
     
-    insert(h, 1);
+    minheap_insert(h, 1);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 13);
+    minheap_insert(h, 13);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 121);
+    minheap_insert(h, 121);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 98);
+    minheap_insert(h, 98);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 17);
+    minheap_insert(h, 17);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 15);
+    minheap_insert(h, 15);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 45);
+    minheap_insert(h, 45);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 3);
+    minheap_insert(h, 3);
     printf("\nAfter Insert:");
     display(h);
 
-    insert(h, 23);
+    minheap_insert(h, 23);
     printf("\nAfter Insert:");
     display(h);
 
-    // // printf("\nSize: %d",h->c);
-
-    // delete(h);
-    // printf("\nFinal: ");
-    // display(h);
-
-    // delete(h);
-    // printf("\nFinal: ");
-    // display(h);
-
-    // delete(h);
-    // printf("\nFinal: ");
-    // display(h);
-
-    
-
-    // sortUsingHeap(h);
-    // delete(h);
-    // printf("\nFinal: ");
-    // display(h);
-    // delete(h);
-    // printf("\nFinal: ");
-    // display(h);
-    // delete(h);
-    // printf("\nFinal: ");
-    // display(h);
-    // delete(h);
-    // printf("\nFinal: ");
-    // display(h);
-    // delete(h);
-    // printf("\nFinal: ");
-    // display(h);
-    // delete(h);
-    // printf("\nFinal: ");
-    // display(h);
-    // delete(h);
-    // printf("\nFinal: ");
-    // display(h);
-    // delete(h);
-    // printf("\nFinal: ");
-    // display(h);
-
-    // insert(h, 10);
-    // printf("\nAfter Insert:");
-    // display(h);
-
-    delete(h);
-
+    minheap_delete(h);
     printf("\nAfter Delete: ");
     display(h);
 
-    sortUsingHeap(h);
+    minheap_descendingSortUsingHeap(h);
 
     printf("\nFinal: ");
     display(h);
+
+    return 0;
+    
 }

@@ -4,17 +4,30 @@ typedef struct heap
     int s, c;
 } heap;
 
+
+
 void init(heap *h);
-void insert(heap *h, int data);
-
-void delete(heap *h);
-
 void swap(int *a, int *b);
-
-void heapify(heap *h);
-void heapifydel(heap *h);
-
 void display(heap *h);
 
-void sortUsingHeap(heap *h);
-void heapifysort(heap *h, int index);
+
+
+void maxheap_insert(heap *h, int data);
+void maxheap_heapify(heap *h);
+
+void maxheap_delete(heap *h);
+void maxheap_heapifydel(heap *h);
+
+void maxheap_ascendingSortUsingHeap(heap *h);
+void maxheap_heapifysort(heap *h, int index);
+
+
+
+void minheap_insert(heap *h, int data);
+void minheap_heapify(heap *h);
+
+void minheap_delete(heap *h);
+void minheap_heapifydel(heap *h);
+
+void minheap_descendingSortUsingHeap(heap *h);
+void minheap_heapifysort(heap *h, int index);
