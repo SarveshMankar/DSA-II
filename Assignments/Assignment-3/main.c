@@ -23,7 +23,7 @@ int main(){
     removeNode(&head, "Guzman");    
 
 
-    printf("\n========== Main Answer\n");
+    printf("\n========== \nMain Answer\n");
 
     // removeNode(&head, "Liam");    
     traverse(head);

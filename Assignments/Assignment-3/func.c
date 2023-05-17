@@ -167,7 +167,7 @@ node *removeNode(AVL *t, char name[]){
         // successor->parent->left=NULL;
     // }
 
-    printf("\n==========\n");
+    // printf("\n==========\n");
     // traverse(t);
 
     adjustBF(p);
