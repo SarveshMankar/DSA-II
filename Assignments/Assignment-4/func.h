@@ -8,8 +8,7 @@ typedef struct heap
 
 void init(heap *h);
 void swap(int *a, int *b);
-void display(heap *h);
-
+void display(heap h);
 
 
 void maxheap_insert(heap *h, int data);
@@ -19,7 +18,8 @@ void maxheap_delete(heap *h);
 void maxheap_heapifydel(heap *h);
 
 void maxheap_ascendingSortUsingHeap(heap *h);
-void maxheap_heapifysort(heap *h, int index);
+void maxheap_descendingSortUsingHeap(heap *h);
+void maxheap_heapifySort(heap *h, int index);
 
 
 
@@ -30,4 +30,5 @@ void minheap_delete(heap *h);
 void minheap_heapifydel(heap *h);
 
 void minheap_descendingSortUsingHeap(heap *h);
-void minheap_heapifysort(heap *h, int index);
+void minheap_ascendingSortUsingHeap(heap *h);
+void minheap_heapifySort(heap *h, int index);

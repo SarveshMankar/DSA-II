@@ -8,9 +8,9 @@ void init(heap *h){
     h->c=-1;
 }
 
-void display(heap *h){
-    for(int i=0;i<=h->c;i++){
-        printf("%d ",h->A[i]);
+void display(heap h){
+    for(int i=0;i<=h.c;i++){
+        printf("%d ",h.A[i]);
     }
 }
 
@@ -97,7 +97,7 @@ void maxheap_ascendingSortUsingHeap(heap *h){
         swap(&h->A[i],&h->A[index]);
         index--;
 
-        maxheap_heapifysort(h, index);
+        maxheap_heapifySort(h, index);
     }
 
     if(h->A[0] > h->A[1])
@@ -105,7 +105,24 @@ void maxheap_ascendingSortUsingHeap(heap *h){
     return;
 }
 
-void maxheap_heapifysort(heap *h, int index){
+void maxheap_descendingSortUsingHeap(heap *h){
+    int *temp=(int*)malloc(sizeof(int*)*h->c);
+    if(!temp){
+        return;
+    }
+
+    maxheap_ascendingSortUsingHeap(h);
+
+    int n=h->c;
+    for(int j=0; j<h->c+1;j++){
+        temp[j]=h->A[n-j];
+    }
+
+    h->A=temp;
+    return;
+}
+
+void maxheap_heapifySort(heap *h, int index){
     int i=0;
     int imax=0;
     while (i<index+1){
@@ -126,6 +143,7 @@ void maxheap_heapifysort(heap *h, int index){
         }
     }
 }
+
 
 
 void minheap_insert(heap *h, int data){
@@ -204,7 +222,7 @@ void minheap_descendingSortUsingHeap(heap *h){
         swap(&h->A[i],&h->A[index]);
         index--;
 
-        minheap_heapifysort(h, index);
+        minheap_heapifySort(h, index);
     }
 
     if(h->A[0] < h->A[1])
@@ -212,7 +230,42 @@ void minheap_descendingSortUsingHeap(heap *h){
     return;
 }
 
-void minheap_heapifysort(heap *h, int index){
+void minheap_ascendingSortUsingHeap(heap *h){
+    int nodes=h->c+1;
+    // int index=h->c;
+
+    // int j=0;
+
+    // for(j=0; j<nodes; j++){
+    //     int data = h->A[0];
+    //     int i=0;
+
+    //     swap(&h->A[i],&h->A[index]);
+    //     index--;
+
+    //     minheap_heapifySort(h, index);
+    // }
+
+    // if(h->A[0] < h->A[1])
+    //     swap(&h->A[0], &h->A[1]);
+
+    int *temp=(int*)malloc(sizeof(int*)*h->c);
+    if(!temp){
+        return;
+    }    
+
+    minheap_descendingSortUsingHeap(h);
+
+    int n=h->c;
+    for(int j=0; j<h->c+1;j++){
+        temp[j]=h->A[n-j];
+    }
+
+    h->A=temp;
+    return;
+}
+
+void minheap_heapifySort(heap *h, int index){
     int i=0;
     int imin=0;
     while (i<index+1){
