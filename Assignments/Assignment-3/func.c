@@ -170,10 +170,15 @@ node *removeNode(AVL *t, char name[]){
     // printf("\n==========\n");
     // traverse(t);
 
-    adjustBF(p);
-
+    if (p->left){
+        adjustBF(p->left);
+    }
+    if (p->right){
+        adjustBF(p->right);
+    }
+    
     node * imb = (node *)malloc(sizeof(node));
-    imb = imbalanceNode(*t);
+    imb = imbalanceNode(p);
 
     // printf("\nImbalaced Data:- %s",imb->name);
     do{

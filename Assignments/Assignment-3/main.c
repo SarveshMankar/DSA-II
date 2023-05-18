@@ -6,7 +6,7 @@ int main(){
     node *head;
     initAVL(&head);
 
-    FILE *fp = fopen("names.txt", "r");
+    FILE *fp = fopen("test_names.txt", "r");
     if(fp == NULL){
         printf("Error opening file!\n");
         exit(1);
@@ -19,9 +19,15 @@ int main(){
         insertNode(&head, name);
     }
 
-    // traverse(head);
-    removeNode(&head, "Guzman");    
+    traverse(head);
 
+    // traverse(head);
+    removeNode(&head, "o");    
+    // removeNode(&head, "Guzman");    
+    // removeNode(&head, "Gonzales");
+    // removeNode(&head, "Villarreal");
+    // removeNode(&head, "Young");
+    // removeNode(&head, "Ward");
 
     printf("\n========== \nMain Answer\n");
 
