@@ -61,6 +61,12 @@ void BFS(graph G, int s){
                 visited[i] = 1;
             }
         }
-    }    
+    }
+
+    printf("\nVISITED: ");
+    for(int i = 0; i < G.n; i++){
+        printf("%d ", visited[i]);
+    }
+    printf("\n"); 
 }
 

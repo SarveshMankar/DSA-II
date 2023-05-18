@@ -11,7 +11,7 @@ int main(){
     // Queue Q;
     // initQueue(&Q);
     printf("\n");
-    BFS(G, 0);
+    BFS(G, 1);
 
     printf("\n\nWorking Well!\n");
     return 0;

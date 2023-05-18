@@ -19,6 +19,7 @@ int enqueue(Queue *Q, int data) {
     }
 
     Node * temp = Q->r;
+    
     Node * qnode = (Node * ) malloc(sizeof(Node));
     qnode -> data = data;
 
