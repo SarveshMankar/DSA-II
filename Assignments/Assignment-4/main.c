@@ -28,7 +28,7 @@ int main(){
 
         int t=1;
         while(t){
-            printf("\n1. Insert\n2. Delete\n3. Display\n4. Sort in Ascending Order\n5. Sort in Descending Order \n6. Reset \n7. Exit\n");
+            printf("\n1. Insert\n2. Delete\n3. Display\n4. Sort in Ascending Order\n5. Sort in Descending Order \n6. Reset \n7. Exit\n\n");
             int ch;
             scanf("%d",&ch);
 
@@ -86,7 +86,7 @@ int main(){
 
         int t=1;
         while(t){
-            printf("\n1. Insert\n2. Delete\n3. Display\n4. Sort in Ascending Order\n5. Sort in Descending Order \n6. Reset \n7. Exit\n");
+            printf("\n1. Insert\n2. Delete\n3. Display\n4. Sort in Ascending Order\n5. Sort in Descending Order \n6. Reset \n7. Exit\n\n");
             int ch;
             scanf("%d",&ch);
 

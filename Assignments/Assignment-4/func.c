@@ -89,6 +89,19 @@ void maxheap_heapifydel(heap *h){
 void maxheap_ascendingSortUsingHeap(heap *h){
     int nodes=h->c+1;
     int index=h->c;
+    
+    int flag=0;
+
+    for(int i=0;i<nodes-1;i++){
+        if(h->A[i]>h->A[i+1]){
+            flag=1;
+            break;
+        }
+    }
+
+    if(flag==0){
+        return;
+    }
 
     for(int j=0; j<nodes; j++){
         int data = h->A[0];
@@ -106,6 +119,19 @@ void maxheap_ascendingSortUsingHeap(heap *h){
 }
 
 void maxheap_descendingSortUsingHeap(heap *h){
+    int flag=0;
+    int nodes=h->c-1;
+    for(int i=0;i<nodes;i++){
+        if(h->A[i]<h->A[i+1]){
+            flag=1;
+            break;
+        }
+    }
+
+    if(flag==0){
+        return;
+    }
+
     int *temp=(int*)malloc(sizeof(int*)*h->c);
     if(!temp){
         return;
@@ -215,6 +241,19 @@ void minheap_descendingSortUsingHeap(heap *h){
     int nodes=h->c+1;
     int index=h->c;
 
+    int flag=0;
+    int n=h->c-1;
+    for(int i=0;i<n;i++){
+        if(h->A[i]<h->A[i+1]){
+            flag=1;
+            break;
+        }
+    }
+
+    if(flag==0){
+        return;
+    }
+
     for(int j=0; j<nodes; j++){
         int data = h->A[0];
         int i=0;
@@ -232,22 +271,19 @@ void minheap_descendingSortUsingHeap(heap *h){
 
 void minheap_ascendingSortUsingHeap(heap *h){
     int nodes=h->c+1;
-    // int index=h->c;
 
-    // int j=0;
+    int flag=0;
+    int n1=h->c-1;
+    for(int i=0;i<n1;i++){
+        if(h->A[i]>h->A[i+1]){
+            flag=1;
+            break;
+        }
+    }
 
-    // for(j=0; j<nodes; j++){
-    //     int data = h->A[0];
-    //     int i=0;
-
-    //     swap(&h->A[i],&h->A[index]);
-    //     index--;
-
-    //     minheap_heapifySort(h, index);
-    // }
-
-    // if(h->A[0] < h->A[1])
-    //     swap(&h->A[0], &h->A[1]);
+    if(flag==0){
+        return;
+    }
 
     int *temp=(int*)malloc(sizeof(int*)*h->c);
     if(!temp){
