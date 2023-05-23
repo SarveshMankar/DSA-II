@@ -13,6 +13,10 @@ int main(){
     printf("\n");
     BFS(G, 1);
 
+    printf("\n");
+    DFS(G, 1);
+
+
     printf("\n\nWorking Well!\n");
     return 0;
 }

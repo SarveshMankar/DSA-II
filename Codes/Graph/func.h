@@ -7,3 +7,4 @@ void initGraph(graph *G, char *filename);
 void display(graph G);
 
 void BFS(graph G, int s);
+void DFS(graph G, int s);

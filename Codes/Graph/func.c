@@ -3,6 +3,7 @@
 #include<limits.h>
 #include"func.h"
 #include"queue.h"
+#include"stack.h"
 
 
 void initGraph(graph *G, char *filename){
@@ -37,10 +38,10 @@ void display(graph G){
 
 void BFS(graph G, int s){
     int *visited = (int*)calloc(G.n,sizeof(int));
-    printf("\nVISITED: ");
-    for(int i = 0; i < G.n; i++){
-        printf("%d ", visited[i]);
-    }
+    // // printf("\nVISITED: ");
+    // for(int i = 0; i < G.n; i++){
+    //     printf("%d ", visited[i]);
+    // }
     printf("\n");
 
     Queue Q;
@@ -52,7 +53,7 @@ void BFS(graph G, int s){
 
     while (!isEmpty(&Q)){
         v = dequeue(&Q);
-        printf("\nDequeued: %d\n", v);
+        // printf("\nDequeued: %d\n", v);
         printf("%d ", v);
 
         for(int i = 0; i < G.n; i++){
@@ -63,10 +64,41 @@ void BFS(graph G, int s){
         }
     }
 
-    printf("\nVISITED: ");
-    for(int i = 0; i < G.n; i++){
-        printf("%d ", visited[i]);
-    }
+    // printf("\nVISITED: ");
+    // for(int i = 0; i < G.n; i++){
+    //     printf("%d ", visited[i]);
+    // }
     printf("\n"); 
 }
 
+void DFS(graph G, int s){
+    int *visited = (int*)calloc(G.n,sizeof(int));
+    int n=G.n;
+
+    stack *ms;
+    initStack(&ms,100);
+    push(ms,s);
+
+    visited[s]=1;
+    int v;
+    while (!isEmptyS(ms)){
+        v=pop(ms);
+        printf("%d\n",v);
+        for (int i = 0; i < n; i++){
+            if (G.A[v][i]!=0 && visited[i] == 0){
+                push(ms,i);
+                printf("Ok");
+            }
+            visited[i]=1;            
+        }
+        
+    }
+
+    while (!isEmptyS(ms)){
+        v=pop(ms);
+        printf("%d\n",v);
+    }
+    
+    
+
+}
