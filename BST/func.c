@@ -642,3 +642,40 @@ int breadthRecusrion(BST t){
     }
     return breadth;
 }
+
+int diameterOfBinaryTree(node* root){
+    if (!root){
+        return 0;
+    }
+    int dl=diameterOfBinaryTree(root->left);
+    int dr=diameterOfBinaryTree(root->right);
+    int cur=height(root->left)+height(root->right);
+
+    int max1;
+    if(dl>dr){
+        max1=dl;
+    }else{
+        max1=dr;
+    }
+
+    if(max1>cur){
+        return max1;
+    }else{
+        return cur;
+    }
+
+}
+
+int D_height(node* t){
+    if(t==NULL) return 0;
+    int lh=height(t->left);
+    int rh=height(t->right);
+    int max;
+    if(lh>rh){
+        max=lh;
+    }else{
+        max=rh;
+    }
+
+    return max+1;
+}

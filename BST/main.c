@@ -106,6 +106,9 @@ int main(){
     // printf("\nDestroying Tree:\n");
     // destroyWithRecursion(&t);
 
+    int diameter = diameterOfBinaryTree(t);
+    printf("\nDiameter of Tree:%d\n",diameter);
+
     printf("\nDestroying Tree!\n");
     t=destroyWithoutRecursion(t);
 

@@ -56,3 +56,9 @@ node *destroyWithoutRecursion(BST t);
 
 int countLevelNodes(node *t, int curr, int tl);
 int breadthRecusrion(BST t);
+
+
+
+
+int D_height(node* t);
+int diameterOfBinaryTree(node* root);
