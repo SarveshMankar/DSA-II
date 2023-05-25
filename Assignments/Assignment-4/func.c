@@ -12,6 +12,7 @@ void display(heap h){
     for(int i=0;i<=h.c;i++){
         printf("%d ",h.A[i]);
     }
+    printf("\n");
 }
 
 void swap(int *a, int *b){
@@ -57,6 +58,8 @@ void maxheap_delete(heap *h){
     int data = h->A[0];
 
     swap(&h->A[0],&h->A[h->c]);
+    // printf("After Swapping!\t");
+    // display(*h);
     h->c--;
     maxheap_heapifydel(h);
 
@@ -83,6 +86,9 @@ void maxheap_heapifydel(heap *h){
         }else{
             break;
         }
+    }
+    if(h->A[0]<h->A[1]){
+        swap(&h->A[0],&h->A[1]);
     }
 }
 
@@ -234,6 +240,9 @@ void minheap_heapifydel(heap *h){
         }else{
             break;
         }
+    }
+    if(h->A[0]>h->A[1]){
+        swap(&h->A[0],&h->A[1]);
     }
 }
 

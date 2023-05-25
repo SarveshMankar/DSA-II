@@ -24,7 +24,12 @@ int main(){
             int data;
             fscanf(fp,"%d",&data);
             maxheap_insert(h, data);
+            printf("\nInserted: ");
+            display(*h);
         }     
+
+        printf("\nData: ");
+        display(*h);
 
         int t=1;
         while(t){
@@ -82,7 +87,12 @@ int main(){
             int data;
             fscanf(fp,"%d",&data);
             minheap_insert(h, data);
-        }   
+            printf("Inserted: ");
+            display(*h);
+        }
+
+        printf("\nData: ");
+        display(*h);
 
         int t=1;
         while(t){
