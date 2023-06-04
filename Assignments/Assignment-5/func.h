@@ -18,3 +18,4 @@ void displayCycles(graph G);
 int getVertices(graph G);
 
 int *Dijkstra(graph G, int s);
+void PRIMS(graph G, int s);

@@ -243,3 +243,59 @@ int *Dijkstra(graph G, int s){
 
     return cost;
 }
+
+void PRIMS(graph G, int s){
+    int n = getVertices(G);
+    int *visited = (int*)calloc(n, sizeof(int));
+    if(!visited){
+        return;
+    }
+
+    int *cost = (int*)malloc(sizeof(int*)*n);
+    if(!cost) return;
+
+    int *parent = (int*)malloc(sizeof(int*)*n);
+    if(!parent) return;
+
+    for(int i=0;i<n;i++){
+        cost[i]=INT_MAX;
+    }
+    cost[s]=0;
+    parent[s]=-1;
+
+
+    for(int j=0;j<n;j++){
+        int min=INT_MAX;
+        int min_i;
+
+        for (int i=0;i<n;i++){
+            if(!visited[i] && cost[i]<min){
+                min=cost[i];
+                min_i=i;
+            }
+        }
+
+        // printf("Main: %d -> %d,%d\n",j, min_i, min);
+
+        visited[min_i]=1;
+
+        for (int i=0;i<n;i++){
+            if (!visited[i] && cost[i]>G.A[min_i][i]){
+                cost[i] = G.A[min_i][i];
+                parent[i] = min_i;
+                // printf("Sub: %d -> %d,%d\n",j, i, cost[i]);
+            }
+        }
+        //Print Cost Array
+        // for(int i=0;i<n;i++){
+        //     printf("%d ", cost[i]);
+        // }
+        // printf("\n");
+        // printf("\n");
+
+    }
+
+    for(int i=0;i<n;i++){
+        printf("%d %d %d\n", i, parent[i], cost[i]);
+    }
+}

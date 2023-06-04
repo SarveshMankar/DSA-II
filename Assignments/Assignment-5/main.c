@@ -39,6 +39,9 @@ int main(){
         printf("%d ",cost[i]);
     }
 
+    printf("\n\nPrim Algorithm:\n");
+    PRIMS(G, 0);
+
     printf("\n\nWorking Well!\n");
     return 0;
 }
