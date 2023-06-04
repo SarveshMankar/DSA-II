@@ -14,3 +14,7 @@ void checkIfVertexsAreAdjacent(graph G, int u, int v);
 int verifyIfGraphIsConnected(graph G);
 void numberOfComponents(graph G);
 void displayCycles(graph G);
+
+int getVertices(graph G);
+
+int *Dijkstra(graph G, int s);
