@@ -35,6 +35,14 @@ node *pop(stack *s){
     }
 }
 
+int isEmptyStack(stack *s){
+    if(s->top==NULL){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
 stack *destroyStack(stack *s){
     stack *temp=s;
     stack *t;
@@ -192,42 +200,29 @@ void postOrderWithoutRecursion(BST t){
         return;
     }
 
-    stack *postOrderStack = (stack *)malloc(sizeof(stack));
-    initStack(postOrderStack); 
+    stack *s1=(stack *)malloc(sizeof(stack));
+    stack *s2=(stack *)malloc(sizeof(stack));
 
-    while (1)
-    {
-        if(p){
-            if(p->right){
-                push(postOrderStack,p->right);
-            }
-            push(postOrderStack,p);
-            p=p->left;
-        }else{
-            if(postOrderStack->top){
-                // printf("%d\t",p->data);
-                p=pop(postOrderStack);
-                if(!p->right){
-                    printf("%d\t",p->data);
-                    p=NULL;
-                }
-                if(!p){
-                    p=pop(postOrderStack);
-                    if(p->data==postOrderStack->top->data->data){
-                        printf("%d\t",postOrderStack->top->data->data);
-                        push(postOrderStack,p);
-                    }
-                }
-                // p=p->right;
-                // break;
-            }else{
-                break;
-            }
+    initStack(s1);
+    initStack(s2);
+
+    push(s1,p);
+    while (!isEmptyStack(s1)){
+        p=pop(s1);
+        push(s2,p);
+
+        if(p->left){
+            push(s1,p->left);
+        }
+        if(p->right){
+            push(s1,p->right);
         }
     }
 
-    postOrderStack=destroyStack(postOrderStack);
-    free(postOrderStack);
+    while (!isEmptyStack(s2)){
+        p=pop(s2);
+        printf("%d\t",p->data);
+    }    
 
     return;
 }

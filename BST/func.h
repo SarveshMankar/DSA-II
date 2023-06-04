@@ -18,6 +18,7 @@ void initStack(stack *s);
 void push(stack *s,node *data);
 node *pop(stack *s);
 stack *destroyStack(stack *s);
+int isEmptyStack(stack *s);
 
 void initBST(BST *t);
 void insertWithRecursion(BST *t, int key);

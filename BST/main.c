@@ -96,9 +96,9 @@ int main(){
     inOrderWithoutRecursion(t);
     printf("\n");
 
-    // printf("\nPostOrder Traversal without Recursion:\n");
-    // postOrderWithoutRecursion(t);
-    // printf("\n");
+    printf("\nPostOrder Traversal without Recursion:\n");
+    postOrderWithoutRecursion(t);
+    printf("\n");
     
     int breadth=breadthRecusrion(t);
     printf("\nBreadth of Tree:%d\n",breadth);
