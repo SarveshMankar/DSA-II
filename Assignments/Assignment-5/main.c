@@ -27,15 +27,17 @@ int main(){
         printf("\nGraph is not Connected!\n");
     }
 
-    // printf("\n\nNumber of Components:");    
-    // printf("\n%d\n", numberOfComponents(G));
-
     printf("\nComponents:\n");    
     numberOfComponents(G);
 
     // printf("\n\nDisplaying Cycles:");
     // displayCycles(G);
 
+    printf("\nDijkstra Algorithm:\n");
+    int *cost = Dijkstra(G,0);
+    for(int i=0; i<G.n; i++){
+        printf("%d ",cost[i]);
+    }
 
     printf("\n\nWorking Well!\n");
     return 0;

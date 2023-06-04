@@ -48,7 +48,7 @@ void BFS(graph G, int s){
 
     while (!isEmpty(&Q)){
         v = dequeue(&Q);
-        printf("%d ", v);
+        printf("%d ", v+1);
 
         for(int i = 0; i < G.n; i++){
             if(G.A[v][i] != 0 && visited[i] == 0){
@@ -61,7 +61,7 @@ void BFS(graph G, int s){
 }
 
 
-void DFS(graph G, int v){
+void DFS(graph G, int s){
 	int *visited = (int*)calloc(G.n, sizeof(int));
 	if(!visited){
 		return;
@@ -71,14 +71,16 @@ void DFS(graph G, int v){
 	ms = (stack*)malloc(sizeof(stack));
 	initStack(ms);
 
-	push(ms, v);
-	visited[v] = 1;
-	int n, s = G.n;
+	push(ms, s);
+	visited[s] = 1;
+	int n = G.n;
+    
+    int v;
 	while(!isEmptyS(ms)){
-		n = pop(ms);
-		printf("%d ", n);
-		for(int i = 0; i < s; i++){
-			if(G.A[n][i] != 0 && !visited[i]){
+		v = pop(ms);
+		printf("%d ", v);
+		for(int i = 0; i < n; i++){
+			if(G.A[v][i] != 0 && !visited[i]){
 				push(ms, i);
 				visited[i] = 1;
 			}
@@ -166,12 +168,7 @@ void numberOfComponents(graph G){
     if(!visited){
         return;
     }
-
-    stack *ms;
-    ms = (stack*)malloc(sizeof(stack));
-    initStack(ms);
-
-    push(ms, 0);
+    
     visited[0] = 1;
     printf("%d ", 0);
 
@@ -199,4 +196,50 @@ void numberOfComponents(graph G){
         }
     }
     
+}
+
+int getVertices(graph G){
+    return G.n;
+}
+
+int *Dijkstra(graph G, int s){
+    int n = getVertices(G);
+    
+    int *cost = (int*)malloc(sizeof(int*)*n);
+    if(!cost) return NULL;
+
+    int *visited = (int*)calloc(n, sizeof(int));
+    if(!visited){
+        free(cost);
+        return NULL;
+    }
+
+    for(int i=0;i<n;i++){
+        cost[i]=G.A[s][i];
+    }
+    cost[s]=0;
+
+
+    for(int j=0;j<n;j++){
+        int min=INT_MAX;
+        int min_i;
+
+        for (int i=0;i<n;i++){
+            if(!visited[i] && cost[i]<min){
+                min=cost[i];
+                min_i=i;
+            }
+        }
+
+        visited[min_i]=1;
+
+        for (int i=0;i<n;i++){
+            if (!visited[i] && cost[i]>min+G.A[min_i][i]){
+                cost[i] = min + G.A[min_i][i];
+            }
+        }
+
+    }
+
+    return cost;
 }
