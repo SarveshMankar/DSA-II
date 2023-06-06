@@ -10,10 +10,13 @@ typedef struct graph
     int n;
 } graph;
 
+typedef node **SP_Tree;
+
 void init(graph *G, char *filename);
 void print(graph *G);
+void displaySPtree(SP_Tree S, int n);
 void BFS(graph *G, int s);
 void DFS(graph *G, int s);
 
-void PRIMS(graph *G, int s);
-void KRUSKALS(graph *G, int s);
+SP_Tree PRIMS(graph *G, int s);
+void old_PRIMS(graph *G, int s);

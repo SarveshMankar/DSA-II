@@ -20,10 +20,11 @@ int main(){
     DFS(G,0);
 
     printf("\n\nPRIMS Algorithm!\n");
-    PRIMS(G,0);
+    old_PRIMS(G,0);
 
-    printf("\n\nKRUSKALS Algorithm!\n");
-    KRUSKALS(G,0);
+    printf("\n\nDisplaying SP Tree!\n");
+    SP_Tree t = PRIMS(G,0);
+    displaySPtree(t,G->n);
 
     return 0;
 }
