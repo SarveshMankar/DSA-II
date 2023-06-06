@@ -1,209 +1,429 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<limits.h>
 #include "func.h"
 
-
-void leftRotate(AVL *t, node *imb){
-    node *A = imb;
-    node *B = imb->l;
-    node *P = A->p;
-
-    node *BR=B->r;
-
-    B->r=A;
-    A->l=BR;
-    B->p=P;
-
-    if(BR){
-        BR->p=A;
-    }
-
-    A->p=B;
-
-    A->bf=0;
-    B->bf=0;
-
-    if((*t)==A){
-        (*t)=B;
-        return;
-    }
-
-    // printf("\n%d\n",(*t)->data);
-    // printf("\n%d\n",(*t)->l->data);
-    // printf("\n%d\n",(*t)->r->data);
-
-    // A->l=NULL;
-    printf("Here\n");
-
-    if(B->p && B->p->l==A){
-        B->p->l=B;
-    }else{
-        B->p->r=B;
-    }
-
-    adjustBF(*t);
-    return;
+void initAVL(AVL *t){
+    *t = NULL;
 }
 
-void rightRotate(AVL *t, node *imb){
-    node *A = imb;
-    node *B = imb->r;
-    node *P = A->p;
-
-    node *BL=B->l;
-
-    B->l=A;
-    A->r=BL;
-    B->p=P;
-
-    if(BL){
-        BL->p=A;
+void insertNode(AVL *t, int data){
+    node *nn = (node*)malloc(sizeof(node));
+    nn->data=data;
+    nn->left=nn->right=NULL;
+    nn->parent=NULL;
+    nn->balance=0;
+    
+    if(!(*t)){
+        (*t)=nn;   
     }
 
-    A->p=B;
+    node *temp=(*t);
+    node *p=NULL;
 
-    A->bf=0;
-    B->bf=0;
+    while (temp){
+        p=temp;
+        if(temp->data>data){
+            temp=temp->left;
+        }else if (temp->data<data){
+            temp=temp->right;
+        }else{
+            return;
+        }
+    }
 
-    if((*t)==A){
-        (*t)=B;
+    if(p->data>data){
+        p->left=nn;
+    }else{
+        p->right=nn;
+    }
+    nn->parent=p;
+
+    node *q = nn->parent;
+
+    while (q){
+        adjustBF(q);
+        q=q->parent;
+    }
+
+    node *imb=(node *)malloc(sizeof(node));
+    imb=imbalanceNode(nn->parent);
+
+    do{
+        if(!imb) break;
+        node *parent=imb->parent;
+        if(imb->balance==2 && imb->left && imb->left->balance==1){
+            leftRotate(t,imb);
+        }else if (imb->balance==2 && imb->left->balance==-1){
+            leftRightRotate(t,imb);
+        }else if(imb->balance==-2 && imb->right->balance==1){
+            rightLeftRotate(t,imb);
+        }else if(imb->balance==-2 && imb->right->balance==-1){
+            rightRotate(t,imb);
+        }
+        
+        adjustBF(parent);
+
+        imb=imbalanceNode(parent);
+
+    }while (imb);
+
+    return;    
+}
+
+node *removeNode(AVL *t, int data){
+    if (*t == NULL)
+        return *t;
+
+    node *temp=*t;
+    node *p=NULL;
+
+    while (t){
+        if(temp->data==data) break;
+
+        p=temp;
+        if(temp->data>data){
+            temp=temp->left;
+        }else if (temp->data<data){
+            temp=temp->right;
+        }
+    }
+
+    printf("\np->data= %d\n",p->data);
+    printf("\ntemp->data= %d\n",temp->data);
+    
+    if(!temp) return NULL;
+
+    if(!temp->left && !temp->right){
+        if(p->left && p->left->data==data){
+            p->left=NULL;
+        }else{
+            p->right=NULL;
+        }
+
+    }else if (temp->left && !temp->right){
+        if(p->left->data==data){
+            p->left=temp->left;
+        }else{
+            p->right=temp->left;
+        }
+    }else if (temp->right && !temp->left){
+        if(p->left->data==data){
+            p->left=temp->right;
+        }else{
+            p->right=temp->right;
+        }
+    }else{
+        node *r;
+        r=p->left;
+        while (r->right){
+            r=r->right;
+        }
+
+        temp->data=r->data;
+        removeNode(&temp->left,r->data);
+        
+    }
+    
+    adjustBF(p);
+    // printf("\nTemp Remove Code: \n");
+    // traverse(*t);
+
+    node *imb=(node *)malloc(sizeof(node));
+    imb=imbalanceNode(p);
+
+    do{
+        if(!imb) break;
+        node *parent=imb->parent;
+        if(imb->balance==2 && imb->left && imb->left->balance==1){
+            leftRotate(t,imb);
+        }else if (imb->balance==2 && imb->left->balance==-1){
+            leftRightRotate(t,imb);
+        }else if(imb->balance==-2 && imb->right->balance==1){
+            rightLeftRotate(t,imb);
+        }else if(imb->balance==-2 && imb->right->balance==-1){
+            rightRotate(t,imb);
+        }
+        
+        adjustBF(parent);
+
+        imb=imbalanceNode(parent);
+
+    }while (imb);
+
+    // printf("\n------------\n");
+    // traverse(*t);
+    return temp;
+}
+
+node *tempRemoveNode(AVL *t, int data){
+    printf("\nTemp Remove Code: \n");
+    traverse(*t);
+    if (*t == NULL)
+        return *t;
+
+    node *temp = *t;
+
+    node *p,*q;
+    p=*t;
+    q=NULL;
+    while(p!=NULL){
+        if(data==p->data){
+            break;
+        }
+        q=p;
+        if(data<p->data){
+            p=p->left;
+        }else{
+            p=p->right;
+        }
+    }
+
+    if(!p){
+        return NULL;
+    }
+    if(!p->left && !p->right){
+        // printf("Parent: %s\n",q->name);
+        if(q){
+            if(q->left==p){
+                q->left=NULL;
+            }else{
+                q->right=NULL;
+            }
+        }else{
+            *t=NULL;
+        }
+    }else if(p->left && !p->right){
+        if(q){
+            if(q->left==p){
+                q->left=p->left;
+            }else{
+                q->right=p->left;
+            }
+            p->left->parent=q;
+        }else{
+            *t=p->left;
+        }
+    }else if(!p->left && p->right){
+        if(q){
+            if(q->left==p){
+                q->left=p->right;
+            }else{
+                q->right=p->right;
+            }
+            p->right->parent=q;
+        }else{
+            *t=p->right;
+        }
+        // free(p);
+    }else{
+        node *r;
+        r=p->left;
+        while (r->right){
+            r=r->right;
+        }
+
+        p->data=r->data;
+
+        removeNode(&(p->left),r->data);
+    }
+
+    if (p->left){
         adjustBF(*t);
-        return;
+    }
+    if (p->right){
+        adjustBF(*t);
     }
 
-    // printf("\n%d\n",(*t)->data);
-    // printf("\n%d\n",(*t)->l->data);
-    // printf("\n%d\n",(*t)->r->data);
-
-    // A->l=NULL;
-
-    if(B->p && B->p->l==A){
-        B->p->l=B;
-    }else{
-        B->p->r=B;
-    }
-    adjustBF(*t);
-
-}
-
-void leftRightRotate(AVL *t, node *imb){
-    rightRotate(t,imb->l);
-    // printf("Left Right Rotate\n");
-    // printf("-----------------\n");
-    // preorder(*t);
-    // printf("-----------------\n");
-    adjustBF(*t);
-    leftRotate(t,imb);
-    adjustBF(*t);
-
-}
-
-void rightLeftRotate(AVL *t, node *imb){
-    leftRotate(t,imb->r);
-    rightRotate(t,imb);
-    adjustBF(*t);
-}
-
-void insert(AVL *t, int d){
-    node *data = (node *)malloc(sizeof(node));
-    data->data = d;
-    data->l = data->r = data->p = NULL;
-    data->bf = 0;
-
-    node *p = *t;
-    node *q = NULL;
-    while(p){
-        q = p;
-        if(p->data > d)
-            p = p->l;
-        else
-            p = p->r;
-    }
-
-    if(!q)
-        (*t) = data;
-    else if(q->data > d){
-        q->l = data;
-        data->p = q;
-    }
-    else{
-        q->r = data;
-        data->p = q;
-    }
-
-    adjustBF(data->p);
+    printf("\nTemp Remove Code: \n");
+    traverse(*t);
+    
     node * imb = (node *)malloc(sizeof(node));
-    imb = imbalanceNode(data->p);
-
-    printf("Inserted %d\n", d);
-    if(imb){
-        printf("Imbalance node: %d\n" ,imb->data);
-    }
+    imb = imbalanceNode(p);
 
     do{
         if(!imb)
             break;
-        node *parent = imb->p;
+        node *parent = imb->parent;
 
-        if(imb && imb->bf==2 && imb->l && imb->l->bf==1){
+        if(imb && imb->balance==2 && imb->left && imb->left->balance==1){
             leftRotate(t,imb);
-        }else if (imb && imb->bf==-2 && imb->r && imb->r->bf==-1){
+        }else if (imb && imb->balance==-2 && imb->right && imb->right->balance==-1){
             rightRotate(t,imb);
         }
-        else if (imb && imb->bf==2 && imb->l && imb->l->bf==-1){
+        else if (imb && imb->balance==2 && imb->left && imb->left->balance==-1){
             leftRightRotate(t,imb);
-        }else if (imb && imb->bf==-2 && imb->r && imb->r->bf==1){
+        }else if (imb && imb->balance==-2 && imb->right && imb->right->balance==1){
             rightLeftRotate(t,imb);
         }
 
-        adjustBF(parent);
+        adjustBF(imb->parent);
         imb = imbalanceNode(parent);
     }while (imb);
     
-    adjustBF(*t);
-    printf("--------------\nMain Preoder traversal:\n");
-    preorder(*t);
-    printf("--------------\n");
+    return temp;
+}
+
+node *inOrderSuccessor(AVL t){
+    if(!t)
+        return NULL;
+    node *temp = t->right;
+    while(temp->left){
+        temp = temp->left;
+    }
+    return temp;
 }
 
 void adjustBF(AVL t){
     if(!t)
         return;
-    int lh = height(t->l);
-    int rh = height(t->r);
-    t->bf = lh - rh;
+    int lh = height(t->left);
+    int rh = height(t->right);
+    t->balance = lh - rh;
 
-    adjustBF(t->p);
+    adjustBF(t->parent);
 }
 
 node *imbalanceNode(AVL t){
     if(!t)
         return NULL;
-    if(t->bf > 1 || t->bf < -1)
+    if(t->balance > 1 || t->balance < -1)
         return t;
-    return imbalanceNode(t->p);
+    return imbalanceNode(t->parent);
 }
 
 int height(AVL t){
     if(!t)
         return 0;
-    int lh = height(t->l);
-    int rh = height(t->r);
+    int lh = 0;
+    int rh = 0;
+    if (t->left){
+        lh = height(t->left);
+    }
+    if (t->right){
+        rh = height(t->right);
+    }
     return (lh > rh ? lh : rh) + 1;
 }
 
-void inorder(AVL t){
-    if(t){
-        inorder(t->l);
-        printf("%d -> %d\n", t->data, t->bf);
-        inorder(t->r);
+void leftRotate(AVL *t, node *imb){
+    node *A = imb;
+    node *B = imb->left;
+    node *P = A->parent;
+
+    node *BR=B->right;
+
+    B->right=A;
+    A->left=BR;
+    B->parent=P;
+
+    if(BR){
+        BR->parent=A;
     }
+
+    A->parent=B;
+
+    A->balance=0;
+    B->balance=0;
+
+    if((*t)==A){
+        (*t)=B;
+        return;
+    }
+
+    if(B->parent && B->parent->left==A){
+        B->parent->left=B;
+    }else{
+        B->parent->right=B;
+    }
+
+    adjustBF(imb->parent);
+    return;
 }
 
-void preorder(AVL t){
-    if(t){
-        printf("%d -> %d\n", t->data, t->bf);
-        preorder(t->l);
-        preorder(t->r);
+void rightRotate(AVL *t, node *imb){
+    node *A = imb;
+    node *B = imb->right;
+    node *P = A->parent;
+
+    node *BL=B->left;
+
+    B->left=A;
+    A->right=BL;
+    B->parent=P;
+
+    if(BL){
+        BL->parent=A;
     }
+
+    A->parent=B;
+
+    A->balance=0;
+    B->balance=0;
+
+    if((*t)==A){
+        (*t)=B;
+        return;
+    }
+
+    if(B->parent && B->parent->left==A){
+        B->parent->left=B;
+    }else{
+        B->parent->right=B;
+    }
+
+}
+
+void leftRightRotate(AVL *t, node *imb){
+    rightRotate(t,imb->left);
+    adjustBF(imb->parent);
+    leftRotate(t,imb);
+    adjustBF(imb->parent);
+}
+
+void rightLeftRotate(AVL *t, node *imb){
+    leftRotate(t,imb->right);
+    adjustBF(imb->parent);
+    rightRotate(t,imb);
+    adjustBF(imb->parent);
+}
+
+void destroyAVL(AVL t){
+    if(t == NULL){
+        return;
+    }
+
+    destroyAVL(t->left);
+    destroyAVL(t->right);
+    free(t);
+}
+
+void traverse(AVL t){
+    if(t == NULL){
+        return;
+    }
+    printf("%d\t%d\n", t->data, t->balance);
+    // if(t->parent){
+    //     printf("%s\t%d\n", t->parent->name, t->parent->balance);
+    // }
+    traverse(t->left);
+    traverse(t->right);
+}
+
+void inorder(node *t){
+    if(!t){
+        return;
+    }
+    inorder(t->left);
+    printf("\n%d",t->data);
+    inorder(t->right);
+}
+
+void preorder(node *t){
+    if(!t){
+        return;
+    }
+    printf("\n%d",t->data);
+    preorder(t->left);
+    preorder(t->right);
 }

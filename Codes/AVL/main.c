@@ -1,59 +1,62 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include "func.c"
+#include "func.h"
 
-void main(){
-    AVL t = NULL;
-    // insert(&t, 20);
-    // insert(&t, 10);
-    // insert(&t, 5);
-    // insert(&t, 2);
+int main(){
 
-    // insert(&t, 10);
-    // insert(&t, 5);
-    // insert(&t, 12);
-    // insert(&t, 9);
-    // insert(&t, 2);
-    // insert(&t, 1);
+    AVL *t = (AVL *)malloc(sizeof(AVL));
+    initAVL(t);
 
-    // insert(&t, 10);
-    // insert(&t, 20);
-    // insert(&t, 30);
-    // insert(&t, 15);
+    insertNode(t, 15);
+    traverse(*t);
+    printf("\n1-----------\n");
+
+    insertNode(t, 20);
+    traverse(*t);
+    printf("\n2-----------\n");
+
+    insertNode(t, 5);
+    traverse(*t);
+    printf("\n3-----------\n");
+
+    insertNode(t, 8);
+    traverse(*t);
+    printf("\n4-----------\n");
+
+    insertNode(t, 31);
+    traverse(*t);
+    printf("\n5-----------\n");
+    
+    insertNode(t, 100);
+    traverse(*t);
+    printf("\n6-----------\n");
+
+    insertNode(t, 2);
+    traverse(*t);
+    printf("\n7-----------\n");
+
+    insertNode(t, 1);
+    traverse(*t);
+    printf("\n8-----------\n");
+
+    insertNode(t, 0);
+    traverse(*t);
+    printf("\n9-----------\n");
+
+    printf("\n------------\n");
+    inorder(*t);
+
+    printf("\n------------\n");
+    removeNode(t,20);
+    traverse(*t);
+
+    printf("\n------------\n");
+    removeNode(t,100);
+    traverse(*t);
+
+    // printf("\n------------\n");
+    // preorder(*t);
 
 
-    // insert(&t, 10);
-    // insert(&t, 5);
-    // insert(&t, 20);
-
-    // insert(&t, 10);
-    // insert(&t, 15);
-    // insert(&t, 5);
-
-    insert(&t, 178);
-    insert(&t, 32);
-    insert(&t, 59);
-    insert(&t, 205);
-    insert(&t, 210);
-    insert(&t, 80);
-    insert(&t, 75);
-    insert(&t, 66);
-    insert(&t, 100);
-    insert(&t, 125);
-    insert(&t, 10);
-    insert(&t, 15);
-    insert(&t, 108);
-    insert(&t, 84);
-
-    // insert(&t, 10);
-    // insert(&t, 20);
-    // insert(&t, 30);
-    // insert(&t, 40);
-    // insert(&t, 50);
-    // insert(&t, 25);
-
-
-    preorder(t);
-    printf("-----------------\n");
-    // inorder(t);
+    return 0;
 }
