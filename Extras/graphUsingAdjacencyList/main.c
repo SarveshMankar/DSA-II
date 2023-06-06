@@ -10,8 +10,8 @@ int main(int arg,char* argv[]){
     // displayGraph(g);
     // SpanningTree t = primsAlgorithm(g,0);
     // printSpanningTree(t,g);
-    // SpanningTree t1 = kruskalsAlgorithm(g);
-    // printSpanningTree(t1,g);
+    SpanningTree t1 = kruskalsAlgorithm(g);
+    printSpanningTree(t1,g);
     // dijestra(g,5);
     
 }

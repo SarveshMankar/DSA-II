@@ -214,6 +214,7 @@ SpanningTree primsAlgorithm(Graph g,int v){
         
     }
  }
+
  
 SpanningTree kruskalsAlgorithm(Graph g){  
     int n = g.size;
@@ -248,10 +249,11 @@ SpanningTree kruskalsAlgorithm(Graph g){
             visited[i] = 1;
             if(visited[temp -> index] == 0) 
             // printf("\nStart : %d  , end : %d , weight : %d\n",i,temp -> index,temp ->weight);
-            insert(&heap,i,temp -> index,temp -> weight);
+            insert(&heap, i, temp -> index, temp -> weight);
             temp = temp -> next;
         }
     }
+
     int count = 0;
     int j = 0 ;
     do{        
@@ -281,6 +283,8 @@ SpanningTree kruskalsAlgorithm(Graph g){
         printf("\n%d Weight ", count);
         return tree;
 }
+
+
 int findminIndex(int* cost,int* visited,int n){
     int minIndex,minVal=INT_MAX;
 
