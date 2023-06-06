@@ -42,21 +42,44 @@ void BFS(graph G, int s){
     Queue Q;
     initQueue(&Q);
 
+    int count=0;
+    int ns=INT_MAX;
+
     enqueue(&Q, s);
     visited[s] = 1;
+    count++;
+
     int v;
 
-    while (!isEmpty(&Q)){
-        v = dequeue(&Q);
-        printf("%d ", v+1);
+    do
+    {
+        while (!isEmpty(&Q)){
+            v = dequeue(&Q);
+            printf("%d ", v+1);
 
-        for(int i = 0; i < G.n; i++){
-            if(G.A[v][i] != 0 && visited[i] == 0){
-                enqueue(&Q  , i);
-                visited[i] = 1;
+            for(int i = 0; i < G.n; i++){
+                if(G.A[v][i] != 0 && visited[i] == 0){
+                    enqueue(&Q  , i);
+                    visited[i] = 1;
+                    count++;
+                }
             }
         }
-    }
+
+        // printf("\nCount: %d\n",count);
+
+        for (int k=0; k<G.n; k++){
+            if(visited[k]==0){
+                ns=k;
+                enqueue(&Q, ns);
+                visited[k]==1;
+                count++;
+                break;
+            }
+        }
+    } while (count<G.n);
+    
+
     printf("\n"); 
 }
 
