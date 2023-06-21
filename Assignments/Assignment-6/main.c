@@ -10,7 +10,7 @@ int main(){
     G = (graph*)malloc(sizeof(graph));
     init(G,"data.txt");
 
-    printf("\n\nDisplaying Graph!");
+    printf("\n\nDisplaying Graph!\n");
     print(G);
 
     printf("\n\nBFS Traversal!\n");

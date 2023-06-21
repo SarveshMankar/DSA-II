@@ -43,6 +43,7 @@ void init(graph *G, char *filename){
 void print(graph *G){
     for (int i = 0; i < G->n; i++){
         node *p = G->A[i]->next;
+        printf("%d: ",i);
         while (p != NULL){
             printf("%d ",p->j);
             p = p->next;

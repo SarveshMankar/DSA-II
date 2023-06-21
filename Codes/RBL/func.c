@@ -3,6 +3,9 @@
 #include<limits.h>
 #include "func.h"
 
+//Black = 0
+//Red = 1
+
 void initRBL(RBL *t){
     *t = NULL;
 }
@@ -13,9 +16,12 @@ void insertNode(RBL *t, int data){
     nn->left=nn->right=NULL;
     nn->parent=NULL;
     nn->balance=0;
+    nn->color=1;
     
     if(!(*t)){
-        (*t)=nn;   
+        (*t)=nn;
+        nn->color=0;
+        return;
     }
 
     node *temp=(*t);
@@ -39,8 +45,49 @@ void insertNode(RBL *t, int data){
     }
     nn->parent=p;
 
-    node *q = nn->parent;
+    if(p->color==1){
+        //check for uncle
+        node *uncle=(node *)malloc(sizeof(node));
 
+        if(p->left && p->left->data==data){
+            uncle=p->parent->right;
+        }else{
+            uncle=p->parent->right;
+            printf("\nUncle: %d\n",uncle->data);
+            printf("Uncle Color: %d\n",uncle->color);
+        }
+
+        if(!uncle || uncle->color==0){
+
+        }else if (uncle->color==1){
+            node *tp=nn;
+            while(tp){
+                if(tp->color==0){
+                    tp->color=1;
+                    printf("\nChanged to Red");
+                }else{
+                    tp->color=0;
+                    printf("\nChanged to Black");
+                }
+                tp=tp->parent;
+                printf("\nOk1");
+            }
+            node *tu=nn;
+            while(tu){
+                if(tu->color==0){
+                    tu->color=1;
+                }else{
+                    tu->color=0;
+                }
+                tu=tu->parent;
+            }
+            // p->color=0;
+            // uncle->color=0;
+            // p->parent->color=1;
+        }
+    }
+
+    node *q = nn->parent;
     while (q){
         adjustBF(q);
         q=q->parent;
@@ -402,10 +449,15 @@ void traverse(RBL t){
     if(t == NULL){
         return;
     }
-    printf("%d\t%d\n", t->data, t->balance);
-    // if(t->parent){
-    //     printf("%s\t%d\n", t->parent->name, t->parent->balance);
-    // }
+    printf("%d\t%d\t", t->data, t->balance);
+    if(t->color==0){
+        printf("Black");
+    }else{
+        printf("Red");
+    }
+
+    printf("\n");
+    
     traverse(t->left);
     traverse(t->right);
 }
