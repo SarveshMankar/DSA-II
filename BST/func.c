@@ -346,6 +346,26 @@ void levelOrderWithQueue(BST t){
     return;
 }
 
+void diagonalOrderWithQueue(BST t){
+    if(!t) return;
+
+    Queue *q = (Queue *)malloc(sizeof(Queue));
+    initQueue(q);
+
+    node *temp = t;
+    enqueue(q,temp);
+    while (!isEmpty(q)){
+        temp=dequeue(q);
+        while (temp){
+            printf("%d\t",temp->data);
+            if(temp->left){
+                enqueue(q,temp->left);
+            }
+            temp=temp->right;
+        }
+    }    
+}
+
 int countNodesWithRecursion(BST t){
     if(t==NULL){
         return 0;
@@ -796,29 +816,40 @@ int D_height(node* t){
 node *deleteWithRecursion(BST *t, int key){
     if((*t)==NULL) return *(t);
 
-    if((*t)->data>key){
-        (*t)->left=deleteWithRecursion(&(*t)->left,key);
-    }else if((*t)->data<key){
-        (*t)->right=deleteWithRecursion(&(*t)->right,key);
+    node *p=*t;
+
+    if(p->data>key){
+        p->left=deleteWithRecursion(&p->left,key);
+    }else if(p->data<key){
+        p->right=deleteWithRecursion(&p->right,key);
     }else{
-        if((*t)->left==NULL){
-            node *temp=(*t)->right;
-            free(*t);
+        if(!p->left && !p->right){
+            free(p);
+            return NULL;
+        }else if(p->left==NULL){
+            node *temp=p->right;
+            free(p);
             return temp;
-        }else if((*t)->right==NULL){
-            node *temp=(*t)->left;
-            free(*t);
+        }else if(p->right==NULL){
+            node *temp=p->left;
+            free(p);
             return temp;
         }else{
-            node *temp=(*t)->right;
-            while (temp->left){
-                temp=temp->left;
+            // node *temp=p->right;
+            // while (temp->left){
+            //     temp=temp->left;
+            // }
+            // p->data=temp->data;
+            // p->right=deleteWithRecursion(&p->right,temp->data);
+            node *temp=p->left;
+            while (temp->right){
+                temp=temp->right;
             }
-            (*t)->data=temp->data;
-            (*t)->right=deleteWithRecursion(&(*t)->right,temp->data);
+            p->data=temp->data;
+            p->left=deleteWithRecursion(&p->left,temp->data);
         }
     }
-    return (*t);
+    return p;
 }
 
 node *deleteWithoutRecursion(BST *t, int key){

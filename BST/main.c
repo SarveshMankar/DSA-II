@@ -7,23 +7,37 @@ int main(){
     BST t = NULL;
     initBST(&t);
 
-    insertWithoutRecursion(&t, 10);
-    insertWithRecursion(&t, 5);
-    insertWithRecursion(&t, 15);
-    insertWithRecursion(&t, 3);
-    insertWithRecursion(&t, 7);
-    insertWithRecursion(&t, 9);
-    insertWithRecursion(&t, 12);
+    // insertWithoutRecursion(&t, 10);
+    // insertWithRecursion(&t, 5);
+    // insertWithRecursion(&t, 15);
+    // insertWithRecursion(&t, 3);
+    // insertWithRecursion(&t, 7);
+    // insertWithRecursion(&t, 9);
+    // insertWithRecursion(&t, 12);
 
-    insertWithRecursion(&t, 17);
-    insertWithRecursion(&t, 15);
+    // insertWithRecursion(&t, 17);
+    // insertWithRecursion(&t, 15);
 
-    insertWithoutRecursion(&t, 32);
-    insertWithoutRecursion(&t, 1);
-    insertWithoutRecursion(&t, 65);
-    insertWithoutRecursion(&t, 23);
-    insertWithoutRecursion(&t, 4);
-    insertWithoutRecursion(&t, 11);
+    // insertWithoutRecursion(&t, 32);
+    // insertWithoutRecursion(&t, 1);
+    // insertWithoutRecursion(&t, 65);
+    // insertWithoutRecursion(&t, 23);
+    // insertWithoutRecursion(&t, 4);
+    // insertWithoutRecursion(&t, 11);
+
+    insertWithoutRecursion(&t, 100);
+    insertWithRecursion(&t, 50);
+    insertWithRecursion(&t, 150);
+    insertWithRecursion(&t, 25);
+    insertWithRecursion(&t, 75);
+    insertWithRecursion(&t, 125);
+    insertWithRecursion(&t, 175);
+
+    insertWithRecursion(&t, 10);
+    insertWithRecursion(&t, 30);
+
+    insertWithoutRecursion(&t, 120);
+    insertWithoutRecursion(&t, 130);
 
     // node *td = (node *)malloc(sizeof(node));
     // td=deleteWithRecursion(&t, 23);
@@ -43,6 +57,10 @@ int main(){
 
     printf("PostOrder Traversal with Recursion:\n");
     postOrderWithRecursion(t);
+    printf("\n");
+
+    printf("Diagonal Traversal with Recursion:\n");
+    diagonalOrderWithQueue(t);
     printf("\n");
 
     int cnr = countNodesWithRecursion(t);

@@ -73,6 +73,8 @@ void levelOrderWithRecursion(BST t);
 void displayLevel(BST t, int curr, int level);
 void levelOrderWithQueue(BST t);
 
+void diagonalOrderWithQueue(BST t);
+
 int countNodesWithRecursion(BST t);
 int countNodesWithoutRecursion(BST t);
 
