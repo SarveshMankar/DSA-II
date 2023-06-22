@@ -40,11 +40,12 @@ void insertNode(AVL *t, int data){
     nn->parent=p;
 
     node *q = nn->parent;
+    adjustBF(q);
 
-    while (q){
-        adjustBF(q);
-        q=q->parent;
-    }
+    // while (q){
+        // adjustBF(q);
+        // q=q->parent;
+    // }
 
     node *imb=(node *)malloc(sizeof(node));
     imb=imbalanceNode(nn->parent);
@@ -295,14 +296,9 @@ node *imbalanceNode(AVL t){
 int height(AVL t){
     if(!t)
         return 0;
-    int lh = 0;
-    int rh = 0;
-    if (t->left){
-        lh = height(t->left);
-    }
-    if (t->right){
-        rh = height(t->right);
-    }
+    int lh = height(t->left);
+    int rh = height(t->right);
+
     return (lh > rh ? lh : rh) + 1;
 }
 
@@ -314,14 +310,15 @@ void leftRotate(AVL *t, node *imb){
     node *BR=B->right;
 
     B->right=A;
-    A->left=BR;
+    A->parent=B;
+
     B->parent=P;
 
+    A->left=BR;
     if(BR){
         BR->parent=A;
     }
 
-    A->parent=B;
 
     A->balance=0;
     B->balance=0;
@@ -349,14 +346,14 @@ void rightRotate(AVL *t, node *imb){
     node *BL=B->left;
 
     B->left=A;
-    A->right=BL;
+    A->parent=B;
     B->parent=P;
+
+    A->right=BL;
 
     if(BL){
         BL->parent=A;
     }
-
-    A->parent=B;
 
     A->balance=0;
     B->balance=0;
