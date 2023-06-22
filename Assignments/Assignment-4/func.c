@@ -5,7 +5,7 @@
 void init(heap *h){
     h->A=NULL;
     h->s=100;
-    h->c=-1;
+    h->c=0;
 }
 
 void display(heap h){
@@ -24,10 +24,10 @@ void swap(int *a, int *b){
 
 
 void maxheap_insert(heap *h, int data){
-    if(h->c==-1){
-        h->A=realloc(h->A,(h->c+2)*sizeof(int));
+    if(h->c==0){
+        h->A=(int *)malloc(sizeof(int));
     }else{
-        h->A=realloc(h->A,(h->c+2)*sizeof(int));
+        h->A=realloc(h->A,(h->c+1)*sizeof(int));
     }
 
     if(!h->A){

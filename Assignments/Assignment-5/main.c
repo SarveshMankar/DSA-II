@@ -14,7 +14,6 @@ int main(){
     BFS(G, 0);
 
     printf("\nDFS:");
-    printf("\n");
     DFS(G, 0);
 
     printf("\n\nDisplaying Degree:");
@@ -35,9 +34,9 @@ int main(){
 
     printf("\nDijkstra Algorithm:\n");
     int *cost = Dijkstra(G,0);
-    for(int i=0; i<G.n; i++){
-        printf("%d ",cost[i]);
-    }
+    // for(int i=0; i<G.n; i++){
+    //     printf("%d ",cost[i]);
+    // }
 
     printf("\n\nPrim Algorithm:\n");
     PRIMS(G, 0);

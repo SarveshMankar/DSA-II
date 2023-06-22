@@ -55,19 +55,19 @@ void print(graph *G){
 void displaySPtree(SP_Tree S, int n){
 
   node *temp;
-  int cost = 0;
+//   int cost = 0;
   printf("SPANNING TREE:\n");
   for(int i = 0; i < n ; i++){
     temp = S[i];
     printf("%d : ", i);
     while(temp){
       printf("%d=> %d\t", temp->j, temp->w );
-      cost += temp->w;
+    //   cost += temp->w;
       temp = temp->next;
     }
     printf("\n");
   }
-  printf("COST => %d\n", cost);
+//   printf("COST => %d\n", cost);
 
   return;
 }
@@ -224,10 +224,6 @@ SP_Tree PRIMS(graph *G, int s){
         }
     }
 
-    // for (int i = 0; i < G->n; i++){
-    //     printf("%d %d %d\n",i, parent[i], cost[i]);
-    // }
-
     SP_Tree t = (SP_Tree)malloc(G->n*sizeof(node*));
     for (int i = 0; i < G->n; i++){
         t[i]=NULL;
@@ -250,8 +246,31 @@ SP_Tree PRIMS(graph *G, int s){
                 }
                 p->next = temp;
             }
+
+            node *temp2 = (node*)malloc(sizeof(node));
+            temp2->j = parent[i];
+            temp2->w = cost[i];
+            temp2->next = NULL;
+
+            if (t[i] == NULL){
+                t[i] = temp2;
+            }
+            else{
+                node *p = t[i];
+                while (p->next != NULL){
+                    p = p->next;
+                }
+                p->next = temp2;
+            }
         }
     }
+
+    int ans=0;
+    for(int i=0;i<G->n;i++){
+        ans+=cost[i];
+    }
+    
+    printf("\nCOST => %d\n", ans);
 
     return t;
 }

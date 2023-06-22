@@ -51,33 +51,45 @@ void BFS(graph G, int s){
 
     int v;
 
-    do
-    {
-        while (!isEmpty(&Q)){
-            v = dequeue(&Q);
-            printf("%d ", v+1);
+    while (!isEmpty(&Q)){
+        v = dequeue(&Q);
+        printf("%d ", v+1);
 
-            for(int i = 0; i < G.n; i++){
-                if(G.A[v][i] != 0 && visited[i] == 0){
-                    enqueue(&Q  , i);
-                    visited[i] = 1;
-                    count++;
-                }
+        for(int i = 0; i < G.n; i++){
+            if(G.A[v][i] != 0 && visited[i] == 0){
+                enqueue(&Q  , i);
+                visited[i] = 1;
             }
         }
+    }
 
-        // printf("\nCount: %d\n",count);
+    // do
+    // {
+    //     while (!isEmpty(&Q)){
+    //         v = dequeue(&Q);
+    //         printf("%d ", v+1);
 
-        for (int k=0; k<G.n; k++){
-            if(visited[k]==0){
-                ns=k;
-                enqueue(&Q, ns);
-                visited[k]==1;
-                count++;
-                break;
-            }
-        }
-    } while (count<G.n);
+    //         for(int i = 0; i < G.n; i++){
+    //             if(G.A[v][i] != 0 && visited[i] == 0){
+    //                 enqueue(&Q  , i);
+    //                 visited[i] = 1;
+    //                 count++;
+    //             }
+    //         }
+    //     }
+
+    //     // printf("\nCount: %d\n",count);
+
+    //     for (int k=0; k<G.n; k++){
+    //         if(visited[k]==0){
+    //             ns=k;
+    //             enqueue(&Q, ns);
+    //             visited[k]==1;
+    //             count++;
+    //             break;
+    //         }
+    //     }
+    // } while (count<G.n);
     
 
     printf("\n"); 
@@ -101,7 +113,7 @@ void DFS(graph G, int s){
     int v;
 	while(!isEmptyS(ms)){
 		v = pop(ms);
-		printf("%d ", v);
+		printf("%d ", v+1);
 		for(int i = 0; i < n; i++){
 			if(G.A[v][i] != 0 && !visited[i]){
 				push(ms, i);
@@ -241,6 +253,7 @@ int *Dijkstra(graph G, int s){
         cost[i]=G.A[s][i];
     }
     cost[s]=0;
+    visited[s]=1;
 
 
     for(int j=0;j<n;j++){
@@ -262,6 +275,9 @@ int *Dijkstra(graph G, int s){
             }
         }
 
+    }
+    for(int i=0; i<G.n; i++){
+        printf("%d ",cost[i]);
     }
 
     return cost;
