@@ -28,8 +28,8 @@ int main(){
     // node *td = (node *)malloc(sizeof(node));
     // td=deleteWithRecursion(&t, 23);
     // printf("\nDeleted Node: %d\n",td->data);
-    // deleteWithRecursion(&t, 7);
-    deleteWithoutRecursion(&t, 32);
+    // deleteWithRecursion(&t,65);
+    // deleteWithoutRecursion(&t, 32);
 
     // exit(0);
 
