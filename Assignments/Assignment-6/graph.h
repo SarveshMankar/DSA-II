@@ -20,3 +20,5 @@ void DFS(graph *G, int s);
 
 SP_Tree PRIMS(graph *G, int s);
 void old_PRIMS(graph *G, int s);
+
+void dijkstra(graph *G, int s);

@@ -26,5 +26,8 @@ int main(){
     SP_Tree t = PRIMS(G,0);
     displaySPtree(t,G->n);
 
+    dijkstra(G, 0);
+
+
     return 0;
 }

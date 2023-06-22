@@ -5,11 +5,11 @@
 void init(heap *h){
     h->A=NULL;
     h->s=100;
-    h->c=-1;
+    h->c=0;
 }
 
 void insert(heap *h, int data){    
-    h->A=realloc(h->A,(h->c+2)*sizeof(int));
+    h->A=realloc(h->A,(h->c+1)*sizeof(int));
     if(!h->A){
         return;
     }

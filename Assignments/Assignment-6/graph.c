@@ -18,7 +18,7 @@ void init(graph *G, char *filename){
         for (int j = 0; j < G->n; j++){
             int x;
             fscanf(fp,"%d",&x);
-            if (x != 0){
+            if (x != 100){
                 node *temp = (node*)malloc(sizeof(node));
                 temp->j = j;
                 temp->w = x;
@@ -273,4 +273,47 @@ SP_Tree PRIMS(graph *G, int s){
     printf("\nCOST => %d\n", ans);
 
     return t;
+}
+
+void dijkstra(graph *G, int s){
+    int n = G->n;
+    int *cost = (int *)malloc(sizeof(int)*n);
+    int *visited = (int *)calloc(n,sizeof(int));
+
+    for(int i=0; i<n; i++){
+        cost[i]=INT_MAX;
+    }
+
+    cost[s]=0;
+
+    for(int i=0;i<n;i++){
+        int mini;
+        int min=INT_MAX;
+
+        for(int j=0; j<n; j++){
+            if(visited[j]!=1 && cost[j]<min){
+                min=cost[j];
+                mini=j;
+            }
+        }
+
+        visited[mini]=1;
+
+        for(int j=0; j<n; j++){
+            node *p = G->A[mini];
+            while(p!=NULL){
+                if(visited[p->j]!=1 && cost[p->j]>cost[mini]+p->w){
+                    cost[p->j]=cost[mini]+p->w;
+                }
+                p=p->next;
+            }            
+        }
+    }    
+
+    int ans=0;
+    for(int j=0; j<n; j++){
+        ans+=cost[j];
+    }
+
+    printf("\nDijkstras's Answer: %d",ans);
 }
