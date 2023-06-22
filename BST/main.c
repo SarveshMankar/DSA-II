@@ -7,11 +7,12 @@ int main(){
     BST t = NULL;
     initBST(&t);
 
-    insertWithRecursion(&t, 10);
+    insertWithoutRecursion(&t, 10);
     insertWithRecursion(&t, 5);
     insertWithRecursion(&t, 15);
     insertWithRecursion(&t, 3);
     insertWithRecursion(&t, 7);
+    insertWithRecursion(&t, 9);
     insertWithRecursion(&t, 12);
 
     insertWithRecursion(&t, 17);
@@ -19,28 +20,18 @@ int main(){
 
     insertWithoutRecursion(&t, 32);
     insertWithoutRecursion(&t, 1);
-    // insertWithoutRecursion(&t, 8);
     insertWithoutRecursion(&t, 65);
     insertWithoutRecursion(&t, 23);
     insertWithoutRecursion(&t, 4);
+    insertWithoutRecursion(&t, 11);
 
+    // node *td = (node *)malloc(sizeof(node));
+    // td=deleteWithRecursion(&t, 23);
+    // printf("\nDeleted Node: %d\n",td->data);
+    // deleteWithRecursion(&t, 7);
+    deleteWithoutRecursion(&t, 32);
 
-
-    // insertWithRecursion(&t, 25);
-    // insertWithRecursion(&t, 20);
-    // insertWithRecursion(&t, 36);
-    // insertWithRecursion(&t, 10);
-    // insertWithRecursion(&t, 22);
-    // insertWithRecursion(&t, 30);
-    // insertWithRecursion(&t, 40);
-
-    // insertBT(&t, 10);
-    // insertBT(&t, 5);
-    // insertBT(&t, 15);
-    // insertBT(&t, 3);
-    // insertBT(&t, 7);
-    // insertBT(&t, 12);
-
+    // exit(0);
 
     printf("PreOrder Traversal with Recursion:\n");
     preOrderWithRecursion(t);
@@ -99,9 +90,15 @@ int main(){
     printf("\nPostOrder Traversal without Recursion:\n");
     postOrderWithoutRecursion(t);
     printf("\n");
+
+    printf("\nLevelOrder Traversal with Recursion:\n");
+    levelOrderWithRecursion(t);
+
+    printf("\nLevelOrder Traversal with Queue:\n");
+    levelOrderWithQueue(t);
     
     int breadth=breadthRecusrion(t);
-    printf("\nBreadth of Tree:%d\n",breadth);
+    printf("\n\nBreadth of Tree:%d\n",breadth);
 
     // printf("\nDestroying Tree:\n");
     // destroyWithRecursion(&t);
@@ -109,7 +106,7 @@ int main(){
     int diameter = diameterOfBinaryTree(t);
     printf("\nDiameter of Tree:%d\n",diameter);
 
-    printf("\nDestroying Tree!\n");
+    printf("\n\nDestroying Tree!\n");
     t=destroyWithoutRecursion(t);
 
     printf("\nWorking Well!\n");

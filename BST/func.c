@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<limits.h>
 #include "func.h"
-
 
 void initStack(stack *s){
     s->top=NULL;
@@ -57,6 +57,83 @@ stack *destroyStack(stack *s){
 }
 
 
+
+// Queue
+
+void initQueue(Queue *q){
+    q->f = NULL;
+    q->r = NULL;
+    q->count = 0;
+    q->size = 100;
+}
+
+void enqueue(Queue *Q, node *data) {
+
+    if (Q->count + 1 == Q->size) {
+        return ;
+    }
+
+    QNode * temp = Q->r;
+    
+    QNode * qnode = (QNode * ) malloc(sizeof(QNode));
+    qnode -> data = data;
+
+    if (Q->count == 0) {
+        Q->f = qnode;
+        Q->r = qnode;
+    } else {
+        temp -> next = qnode;
+    }
+
+    Q->r = qnode;
+    Q->count++;
+
+}
+
+int isEmpty(Queue *Q) {
+    return Q->count == 0;
+}
+
+int isFull(Queue *Q) {
+    return Q->size == Q->count;
+}
+
+node *dequeue(Queue *Q) {
+
+    if (Q->count == 0) {
+        return NULL;
+    }
+
+    node *ret = Q->f->data;
+    QNode * temp = Q->f;
+    Q->f = Q->f -> next;
+    free(temp);
+
+    Q->count--;
+
+    return ret;
+}
+
+node *peekFront(Queue *Q) {
+    if (Q->count == 0) {
+        return NULL;
+    }
+
+    return Q->f->data;
+}
+
+node *peekRear(Queue *Q) {
+    if (Q->count == 0) {
+        return NULL;
+    }
+	
+    return Q->r->data;
+}
+
+
+
+
+
 void initBST(BST *t){
     *t = NULL;
 }
@@ -80,6 +157,11 @@ void insertWithoutRecursion(BST *t, int key){
     node *nn = (node *) malloc(sizeof(node));
     nn->data=key;
     nn->right=nn->left=NULL;
+
+    if(!(*t)){
+        *t=nn;
+        return;
+    }
 
     node *p = *t;
     node *q = NULL;
@@ -132,7 +214,6 @@ void preOrderWithoutRecursion(BST t){
             if(preOrderStack->top){
                 p=pop(preOrderStack);
                 p=p->right;
-                // break;
             }else{
                 break;
             }
@@ -194,11 +275,11 @@ void postOrderWithRecursion(BST t){
 }
 
 void postOrderWithoutRecursion(BST t){
-    node *p=t;
-
-    if(p==NULL){
+    if(t==NULL){
         return;
     }
+
+    node *p=t;
 
     stack *s1=(stack *)malloc(sizeof(stack));
     stack *s2=(stack *)malloc(sizeof(stack));
@@ -224,6 +305,44 @@ void postOrderWithoutRecursion(BST t){
         printf("%d\t",p->data);
     }    
 
+    return;
+}
+
+void displayLevel(BST t, int curr, int level){
+    if(t==NULL){
+        return;
+    }
+    if(curr==level){
+        printf("%d\t",t->data);
+    }
+    displayLevel(t->left,curr+1,level);
+    displayLevel(t->right,curr+1,level);
+}
+
+void levelOrderWithRecursion(BST t){
+    int depth=height(t);
+    for(int i=0;i<depth;i++){
+        displayLevel(t,0,i);
+        printf("\n");
+    }
+}
+
+void levelOrderWithQueue(BST t){
+    Queue *q = (Queue *)malloc(sizeof(Queue));
+    initQueue(q);
+
+    node *temp = t;
+    while (temp){
+        printf("%d\t",temp->data);
+        if(temp->left){
+            enqueue(q,temp->left);
+        }
+        if(temp->right){
+            enqueue(q,temp->right);
+        }
+        temp=dequeue(q);
+    }
+    
     return;
 }
 
@@ -254,7 +373,6 @@ int countNodesWithoutRecursion(BST t){
             if(countNodesStack->top){
                 p=pop(countNodesStack);
                 count++;
-                // printf("%d\t",p->data);
                 p=p->right;
             }else{
                 break;
@@ -673,4 +791,96 @@ int D_height(node* t){
     }
 
     return max+1;
+}
+
+node *deleteWithRecursion(BST *t, int key){
+    if((*t)==NULL) return *(t);
+
+    if((*t)->data>key){
+        (*t)->left=deleteWithRecursion(&(*t)->left,key);
+    }else if((*t)->data<key){
+        (*t)->right=deleteWithRecursion(&(*t)->right,key);
+    }else{
+        if((*t)->left==NULL){
+            node *temp=(*t)->right;
+            free(*t);
+            return temp;
+        }else if((*t)->right==NULL){
+            node *temp=(*t)->left;
+            free(*t);
+            return temp;
+        }else{
+            node *temp=(*t)->right;
+            while (temp->left){
+                temp=temp->left;
+            }
+            (*t)->data=temp->data;
+            (*t)->right=deleteWithRecursion(&(*t)->right,temp->data);
+        }
+    }
+    return (*t);
+}
+
+node *deleteWithoutRecursion(BST *t, int key){
+    if(!(*t)) return NULL;
+
+    node *p = (*t);
+    node *q = NULL;
+
+    while (p){
+        if(p->data==key){
+            break;
+        }
+        q=p;
+
+        if(p->data>key){
+            p=p->left;
+        }else{
+            p=p->right;
+        }
+    }
+
+    if(!p) return NULL;
+
+    if(p->left==NULL && p->right==NULL){
+        if(q->left==p){
+            q->left=NULL;
+        }else{
+            q->right=NULL;
+        }
+        free(p);
+    }else if(p->left==NULL){
+        if(q->left==p){
+            q->left=p->right;
+        }else{
+            q->right=p->right;
+        }
+        free(p);
+    }else if(p->right==NULL){
+        if(q->left==p){
+            q->left=p->left;
+        }else{
+            q->right=p->left;
+        }
+        free(p);
+    }else{
+        node *temp=p->left;
+        node *parentForInorderPredecessor=NULL;
+        while (temp->right){
+            parentForInorderPredecessor=temp;
+            temp=temp->right;
+        }
+
+        if(!parentForInorderPredecessor){
+            p->data=temp->data;
+            p->left=temp->left;
+        }else{
+            p->data=temp->data;
+            parentForInorderPredecessor->right=NULL;
+        }
+        
+        free(temp);        
+    }
+
+    
 }
