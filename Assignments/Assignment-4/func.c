@@ -3,9 +3,9 @@
 #include "func.h"
 
 void init(heap *h){
-    h->A=NULL;
+    h->A=(int *)malloc(sizeof(int));
     h->s=100;
-    h->c=0;
+    h->c=-1;
 }
 
 void display(heap h){
@@ -24,10 +24,10 @@ void swap(int *a, int *b){
 
 
 void maxheap_insert(heap *h, int data){
-    if(h->c==0){
-        h->A=(int *)malloc(sizeof(int));
+    if(h->c==-1){
+        h->A=realloc(h->A,sizeof(int));
     }else{
-        h->A=realloc(h->A,(h->c+1)*sizeof(int));
+        h->A=realloc(h->A,(h->c+2)*sizeof(int));
     }
 
     if(!h->A){
@@ -110,7 +110,6 @@ void maxheap_ascendingSortUsingHeap(heap *h){
     }
 
     for(int j=0; j<nodes; j++){
-        int data = h->A[0];
         int i=0;
         
         swap(&h->A[i],&h->A[index]);

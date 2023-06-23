@@ -271,17 +271,16 @@ SpanningTree kruskalsAlgorithm(Graph g){
             for(int i = 0 ; i < n; i++){
                 if(set[i] == temp)
                     set[i] = replace;
-        }
+            }
         }
         j++;
-    }
-        while(1);
+    }while(1);
     
-        free(set);
-        free(visited);
-        
-        printf("\n%d Weight ", count);
-        return tree;
+    free(set);
+    free(visited);
+    
+    printf("\n%d Weight ", count);
+    return tree;
 }
 
 

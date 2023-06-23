@@ -42,7 +42,7 @@ void insert_Sparse(sparse **s, char *filename){
                 temp->val=val;
                 temp->row=i;
                 temp->col=j;
-                temp->down=NULL;
+                temp->down=temp->next=NULL;
 
                 if(!rowNode){
                     rowNode=temp;
